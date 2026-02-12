@@ -1,0 +1,5 @@
+.ddev/.gitignore
+.ddev/db_snapshots
+.ddev/.webimageBuild
+.ddev/.dbimageBuild
+.ddev/mutagen
