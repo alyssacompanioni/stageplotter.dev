@@ -9,7 +9,11 @@ $result = mysqli_query($connection, "SHOW TABLES");
 
 if($result) {
   echo "<h2>Database Connection Successful</h2>";
-  echo "<p>Tables in database:</p>";
+
+  echo "<h3>Database Schema</h3>";
+  echo "<p><a href='https://dbdiagram.io/d/StagePlotter-dev-6980d7d8bd82f5fce262143a' target='_blank'>View schema on dbdiagram.io</a></p>";
+  
+  echo "<h3>Tables in database:</h3>";
   echo "<ul>";
   while($row = mysqli_fetch_array($result)) {
     echo "<li>" . htmlspecialchars($row[0]) . "</li>";
