@@ -3,3 +3,4 @@
 .ddev/.webimageBuild
 .ddev/.dbimageBuild
 .ddev/mutagen
+includes/db_connection.php
