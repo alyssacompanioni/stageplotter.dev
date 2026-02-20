@@ -1,12 +1,7 @@
 <?php
   // Database Connection File.
   // Detects environment (local DDEV vs production) and connects accordingly.
-  // @author Alyssa Companioni
-
-  // I am using Docker and ddev as my local production environment instead of xampp. 
-  // In ddev, each project runs in separate Docker containers.
-  // The database container ($host) is named 'db' on the internal Docker network.
-  // For simplicity in regards to testing the production environment, I am using ddev's $username and $password defaults ('db') so I do not have to redefine these variables in the server every time testing the mysql dump in a new database. 
+  // Alyssa Companioni - Feb 2026
 
   // ---- Envvironment Detection ----
   //DDEV sets an env variable we can check for:
