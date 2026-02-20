@@ -154,9 +154,9 @@ CREATE TABLE IF NOT EXISTS `stage_plot_staplot` (
   `created_at_staplot` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at_staplot` timestamp NOT NULL DEFAULT current_timestamp(),
   `is_active_staplot` tinyint(1) NOT NULL DEFAULT 1,
-  `created_by_id_usr_staplot` int(11) NOT NULL,
+  `id_usr_staplot` int(11) NOT NULL,
   PRIMARY KEY (`id_staplot`),
-  KEY `created_by_id_usr_staplot` (`created_by_id_usr_staplot`)
+  KEY `id_usr_staplot` (`id_usr_staplot`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -228,6 +228,6 @@ ALTER TABLE `shared_plot_shrplot`
 -- Constraints for table `stage_plot_staplot`
 --
 ALTER TABLE `stage_plot_staplot`
-  ADD CONSTRAINT `stage_plot_staplot_ibfk_1` FOREIGN KEY (`created_by_id_usr_staplot`) REFERENCES `user_usr` (`id_usr`);
+  ADD CONSTRAINT `stage_plot_staplot_ibfk_1` FOREIGN KEY (`id_usr_staplot`) REFERENCES `user_usr` (`id_usr`);
 
 COMMIT;
