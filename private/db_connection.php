@@ -5,7 +5,7 @@
 
   // ---- Envvironment Detection ----
   //DDEV sets an env variable we can check for:
-  define('ENVIRONMENT', getenv('IS_DDEV_PROEJECT') ? 'development' : 'production');
+  define('ENVIRONMENT', getenv('IS_DDEV_PROJECT') ? 'development' : 'production');
 
   // ---- Error Reporting ----
   if(ENVIRONMENT === 'development') {
@@ -15,7 +15,7 @@
     ini_set('display_errors', 0); 
     error_reporting(0);
     ini_set('log_errors', 1);
-    ini_set('error_log', direname(__DIR__) . '/logs/error.log'); //outside web root
+    ini_set('error_log', dirname(__DIR__) . '/logs/error.log'); //outside web root: /var/www/html/logs/error.log
   }
 
   // ---- Credentials ----
