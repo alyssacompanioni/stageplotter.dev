@@ -172,6 +172,7 @@ CREATE TABLE IF NOT EXISTS `user_usr` (
   `last_name_usr` varchar(50) NOT NULL,
   `email_usr` varchar(100) NOT NULL,
   `phone_usr` varchar(20) DEFAULT NULL,
+  `username_usr` varchar(20) NOT NULL,
   `password_hash_usr` varchar(255) NOT NULL,
   `is_active_usr` tinyint(1) DEFAULT 1,
   `created_at_usr` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -179,6 +180,21 @@ CREATE TABLE IF NOT EXISTS `user_usr` (
   PRIMARY KEY (`id_usr`),
   UNIQUE KEY `email_usr` (`email_usr`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_role_urol` 
+--
+
+DROP TABLE IF EXISTS `user_role_urol`;
+CREATE TABLE IF NOT EXISTS `user_role_urol` (
+  `id_urol` int(11) NOT NULL AUTO_INCREMENT,
+  `role_urol` varchar(20) NOT NULL,       -- 'member', 'admin', 'super_admin'
+  PRIMARY KEY (`id_urol`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
 
 --
 -- Constraints for dumped tables
@@ -229,5 +245,20 @@ ALTER TABLE `shared_plot_shrplot`
 --
 ALTER TABLE `stage_plot_staplot`
   ADD CONSTRAINT `stage_plot_staplot_ibfk_1` FOREIGN KEY (`id_usr_staplot`) REFERENCES `user_usr` (`id_usr`);
+
+--
+-- Constraints for table `user_usr`
+--
+ALTER TABLE `user_usr`
+  ADD COLUMN `id_urol_usr` int(11) NOT NULL DEFAULT 1 AFTER `username_usr`,
+  ADD CONSTRAINT `user_usr_ibfk_1` FOREIGN KEY (`id_urol_usr`) REFERENCES `user_role_urol` (`id_urol`);
+
+-- --------------------------------------------------------
+
+--
+-- Values for table `user_role_urol:` 
+--
+
+INSERT INTO `user_role_urol` (`role_urol`) VALUES ('member'), ('admin'), ('super_admin');
 
 COMMIT;

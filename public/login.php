@@ -1,14 +1,27 @@
 <?php
 
+session_start();
 require_once __DIR__ . '/../private/db_connection.php';
 
 $errors = [];
 $username = '';
 $password = '';
 
-if (is_post_request()) {
-  $username = $POST['username'] ?? '';
-  $password = $POST['password'] ?? '';
+// If already logged in, redirect
+if (isset($_SESSION['user_id'])) {
+  header('Location: dashboard.php');
+  exit;
+}
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  //Sanitizes inputs  
+  $username = htmlspecialchars(trim($_POST['username'] ?? ''));
+  $password = $_POST['password'] ?? '';
+  
+}
+
+ {
 
   // Validations
   if (is_blank($username)) {
