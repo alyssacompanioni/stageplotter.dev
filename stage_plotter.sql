@@ -194,6 +194,9 @@ CREATE TABLE IF NOT EXISTS `user_role_urol` (
   PRIMARY KEY (`id_urol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Seed roles immediately after creating the table
+INSERT INTO `user_role_urol` (`role_urol`) VALUES ('member'), ('admin'), ('super_admin');
+
 -- --------------------------------------------------------
 
 --
@@ -252,13 +255,5 @@ ALTER TABLE `stage_plot_staplot`
 ALTER TABLE `user_usr`
   ADD COLUMN `id_urol_usr` int(11) NOT NULL DEFAULT 1 AFTER `username_usr`,
   ADD CONSTRAINT `user_usr_ibfk_1` FOREIGN KEY (`id_urol_usr`) REFERENCES `user_role_urol` (`id_urol`);
-
--- --------------------------------------------------------
-
---
--- Values for table `user_role_urol:` 
---
-
-INSERT INTO `user_role_urol` (`role_urol`) VALUES ('member'), ('admin'), ('super_admin');
 
 COMMIT;

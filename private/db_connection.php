@@ -53,14 +53,3 @@
       die('A database error occurred. Please try again later.');
     }
   }
-
-
-  mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); // throw exceptions on errors
-
-  try {
-    $connection = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
-  } catch (mysqli_sql_exception $e) {
-    if (ENVIRONMENT === 'development') {
-      
-    }
-  }
