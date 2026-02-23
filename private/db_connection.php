@@ -34,15 +34,33 @@
   }
 
   // ---- Connection ----
+  // Data Source Name:
+  $dsn = 'mysql:host=' . DB_SERVER . ';dbname=' . DB_NAME . ';charset=utf8mb4';
+
+  $options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,   // throw exceptions on errors
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,         // fetch as associative arrays by default
+    PDO::ATTR_EMULATE_PREPARES   => false,                    // use real prepared statements to prevent SQL injection at the driver level rather than PHP emulating it
+  ];
+
+  try {
+    $db = new PDO($dsn, DB_USER, DB_PASS, $options);
+  } catch (PDOException $e) {
+    if(ENVIRONMENT === 'development') {
+      die('<pre>Database Connection failed: ' . $e->getMessage() . '</pre>');
+    } else {
+      error_log('DB Connection Error: ' . $e->getMessage());
+      die('A database error occurred. Please try again later.');
+    }
+  }
+
+
   mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); // throw exceptions on errors
 
   try {
     $connection = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
   } catch (mysqli_sql_exception $e) {
     if (ENVIRONMENT === 'development') {
-      die('<pre>Database Connection failed: ' . $e->getMessage() . '</pre>');
-    } else {
-      error_log('DB Connection Error: ' . $e->getMessage());
-      die('A database error occurred. Please try again later.');
+      
     }
   }
