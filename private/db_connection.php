@@ -1,7 +1,7 @@
 <?php
   // Database Connection File.
   // Detects environment (local DDEV vs production) and connects accordingly.
-  // Alyssa Companioni - Feb 2026
+  // Alyssa Companioni
 
   // ---- Envvironment Detection ----
   //DDEV sets an env variable we can check for:
