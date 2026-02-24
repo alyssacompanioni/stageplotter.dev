@@ -5,7 +5,8 @@ require_once __DIR__ . '/../private/db_connection.php';
 echo "<h1>Capstone Project - Stage Plotter</h1>";
 echo "<p>PHP is working - yay!</p>";
 
-$result = mysqli_query($connection, "SHOW TABLES");
+// $result = mysqli_query($connection, "SHOW TABLES");
+$result = $db->query("SHOW TABLES");
 
 if($result) {
   echo "<h2>Database Connection Successful</h2>";
@@ -15,12 +16,13 @@ if($result) {
   
   echo "<h3>Tables in database:</h3>";
   echo "<ul>";
-  while($row = mysqli_fetch_array($result)) {
+  // while($row = mysqli_fetch_array($result)) {
+  while($row = $result->fetch(PDO::FETCH_NUM)) {
     echo "<li>" . htmlspecialchars($row[0]) . "</li>";
   }
   echo "</ul>";
 } else {
-  echo "<p>Error: " . htmlspecialchars(mysqli_error($connection)) . "</p>";
+  echo "<p>Error: Query failed.</p>";
 }
 
-mysqli_close($connection);
+$db = null;
