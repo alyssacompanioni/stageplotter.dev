@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../private/db_connection.php';
+require_once __DIR__ . '/../private/initialize.php';
 
 echo "<h1>Capstone Project - Stage Plotter</h1>";
 echo "<p>PHP is working - yay!</p>";
