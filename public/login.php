@@ -14,8 +14,7 @@ $password = '';
 
 // If already logged in, redirect
 if (isset($_SESSION['user_id'])) {
-  header('Location: dashboard.php');
-  exit;
+  redirect_by_role($_SESSION['role']);
 }
 
 // Handle form submission
@@ -52,18 +51,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $_SESSION['first_name'] = $user['first_name_usr'];
       $_SESSION['role'] =       $user['role_usr'];
 
-      if($user['role_usr'] === 'admin') {
-        header('Location: /admin/dashboard.php');
-      } else {
-        header('Location: /member/dashboard.php');
-      }
-      exit;
+      redirect_by_role($user['role_usr']);
     } else {
       // Intentionally vague - don't reveal which field is wrong for security measures
-      $error = 'Invalid username or password.';
+      $errors[] = 'Invalid username or password.';
     }
   }
 }
+
+/**
+ * Redirects the user to the correct dashboard based on their role
+ * 
+ * @param string $role The user's role(public, member, admin).
+ * @return void 
+ */
+
+function redirect_by_role(string $role): void {
+  $destinations = [
+    'admin'  => '/admin/dashboard.php',
+    'member' => '/member/dashboard.php',
+    'public' => '/public/dashboard.php'
+  ];
+
+  header('Location: ' . ($destinations[$role] ?? '/index.php'));
+  exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -72,25 +85,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, intial-scale=1.0">
     <title>Log In | Stage Plotter</title>
+    <link rel="stylesheet" href="/css/styles.css">
   </head>
   <body>
-    <!-- inlcude header here -->
+    <!-- include header here -->
     <main>
       <h1>Log In</h1>
 
-      <?php if(!empty($error)): ?>
-        <p class="error" role="alert"><?= $error ?></p>
-      <?php endif; ?>
+      <?php if(!empty($errors)) { ?>
+        <p class="error" role="alert"><?= var_dump($errors); ?></p>
+      <?php } ?>
 
       <form action="login.php" method="post" id="login-form">
           <label for="username">Username <span class="required" aria-label="required">*</span></label>
           <input type="text" id="username" name="username" value="<?= $username ?>" required autocomplete="username">
 
           <label for="password">Password <span class="required" aria-label="required">*</span></label>
-          <input type="text" id="password" name="password" required autocomplete="current-password">
+          <input type="password" id="password" name="password" required autocomplete="current-password">
 
           <input type="submit" value="Log in">
       </form>
+
+      <p>Don't have an account? <a href="/register.php">Sign Up</a></p>
     </main> 
     <!-- include footer here -->
     <!-- run js validation script here -->
