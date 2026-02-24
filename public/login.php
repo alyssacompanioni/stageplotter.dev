@@ -97,11 +97,11 @@ function redirect_by_role(string $role): void {
       <?php } ?>
 
       <form action="login.php" method="post" id="login-form">
-          <label for="username">Username <span class="required" aria-label="required">*</span></label>
-          <input type="text" id="username" name="username" value="<?= $username ?>" required autocomplete="username">
+          <label for="username">Username <span class="required" aria-label="required">*</span></label><br>
+          <input type="text" id="username" name="username" value="<?= $username ?>" required autocomplete="username"><br>
 
-          <label for="password">Password <span class="required" aria-label="required">*</span></label>
-          <input type="password" id="password" name="password" required autocomplete="current-password">
+          <label for="password">Password <span class="required" aria-label="required">*</span></label><br>
+          <input type="password" id="password" name="password" required autocomplete="current-password"><br>
 
           <input type="submit" value="Log in">
       </form>
