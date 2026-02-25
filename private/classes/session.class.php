@@ -10,7 +10,7 @@
 * Roles (low -> high): public (unautheticated), member, admin
 * 'public' is not stored in the DB - it means is_logged_in() === false.
 *
-*@author ALyssa Companioni
+*@author Alyssa Companioni
 *
 */
 
@@ -34,7 +34,7 @@ class Session
   ];
 
   // Constructor
-  public function __contruct() {
+  public function __construct() {
     if(session_status() == PHP_SESSION_NONE) {
       session_start();
     }

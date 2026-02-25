@@ -17,3 +17,5 @@ foreach (glob(__DIR__ . '/classes/*.class.php') as $file) {
   require_once($file);
 }
 
+DatabaseObject::set_database($db);
+$session = new Session;
