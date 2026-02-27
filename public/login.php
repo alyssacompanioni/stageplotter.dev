@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Login page for StagePlotter.dev
  * Handles the display AND processing of the login form
@@ -41,11 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute([$username]);
     $user = $stmt->fetch();
 
-    if($user && password_verify($password, $user['password_hash_usr'])) {
+    if ($user && password_verify($password, $user['password_hash_usr'])) {
       //Successful login - set session variables
       //Regenerate session ID to prevent session fixation attacks
       session_regenerate_id(true);
-      
+
       $_SESSION['user_id'] =    $user['id_usr'];
       $_SESSION['username'] =   $user['username_usr'];
       $_SESSION['first_name'] = $user['first_name_usr'];
@@ -66,7 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
  * @return void 
  */
 
-function redirect_by_role(string $role): void {
+function redirect_by_role(string $role): void
+{
   $destinations = [
     'admin'  => '/admin/dashboard.php',
     'member' => '/member/dashboard.php',
@@ -81,34 +83,37 @@ function redirect_by_role(string $role): void {
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, intial-scale=1.0">
-    <title>Log In | Stage Plotter</title>
-    <link rel="stylesheet" href="/css/styles.css">
-  </head>
-  <body>
-    <!-- include header here -->
-    <main>
-      <h1>Log In</h1>
 
-      <?php if(!empty($errors)) { ?>
-        <p class="error" role="alert"><?= var_dump($errors); ?></p>
-      <?php } ?>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, intial-scale=1.0">
+  <title>Log In | Stage Plotter</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
 
-      <form action="login.php" method="post" id="login-form">
-          <label for="username">Username <span class="required" aria-label="required">*</span></label><br>
-          <input type="text" id="username" name="username" value="<?= $username ?>" required autocomplete="username"><br>
+<body>
+  <!-- include header here -->
+  <main>
+    <h1>Log In</h1>
 
-          <label for="password">Password <span class="required" aria-label="required">*</span></label><br>
-          <input type="password" id="password" name="password" required autocomplete="current-password"><br>
+    <?php if (!empty($errors)) { ?>
+      <p class="error" role="alert"><?= var_dump($errors); ?></p>
+    <?php } ?>
 
-          <input type="submit" value="Log in">
-      </form>
+    <form action="login.php" method="post" id="login-form">
+      <label for="username">Username <span class="required" aria-label="required">*</span></label><br>
+      <input type="text" id="username" name="username" value="<?= $username ?>" required autocomplete="username"><br>
 
-      <p>Don't have an account? <a href="/register.php">Sign Up</a></p>
-    </main> 
-    <!-- include footer here -->
-    <!-- run js validation script here -->
-  </body>
+      <label for="password">Password <span class="required" aria-label="required">*</span></label><br>
+      <input type="password" id="password" name="password" required autocomplete="current-password"><br>
+
+      <input type="submit" value="Log in">
+    </form>
+
+    <p>Don't have an account? <a href="/register.php">Sign Up</a></p>
+  </main>
+  <!-- include footer here -->
+  <!-- run js validation script here -->
+</body>
+
 </html>

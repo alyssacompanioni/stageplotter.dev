@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 require_once('db_connection.php');
 
 // Autoload class definitions
 function my_autoload($class)
 {
-  if(preg_match('/\A\w+\Z/', $class)) {
+  if (preg_match('/\A\w+\Z/', $class)) {
     include('classes/' . strtolower($class) . '.class.php');
   }
 }

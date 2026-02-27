@@ -1,4 +1,5 @@
 <?php
+
 /**
  * logout.php
  * Destroys the session via the Session class and redirects home.

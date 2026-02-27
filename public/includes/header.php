@@ -1,4 +1,5 @@
 <?php
+
 /** 
  * header.php
  * Sitewide header. Displays a personalized logout link
