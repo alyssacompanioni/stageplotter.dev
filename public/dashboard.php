@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/../private/initialize.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
