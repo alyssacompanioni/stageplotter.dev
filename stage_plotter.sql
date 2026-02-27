@@ -235,3 +235,8 @@ ALTER TABLE `stage_plot_staplot`
   ADD CONSTRAINT `stage_plot_staplot_ibfk_1` FOREIGN KEY (`id_usr_staplot`) REFERENCES `user_usr` (`id_usr`);
 
 COMMIT;
+
+INSERT INTO user_usr (first_name_usr, last_name_usr, email_usr, phone_usr, username_usr, password_hash_usr, role_usr, is_active_usr, created_at_usr, updated_at_usr)
+VALUES ('Alyssa', 'Companioni', 'alyssamcompanioni@students.abtech.edu', '828-123-1234', 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 1, current_timestamp(), current_timestamp());
+-- password for above user is "password" (without quotes) - this is just a default admin account for testing and should be changed or removed in production.
+
