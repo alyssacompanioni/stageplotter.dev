@@ -24,3 +24,6 @@ if ($result) {
 }
 
 $db = null;
+?>
+
+<a href="dashboard.php">Go to Dashboard</a>
