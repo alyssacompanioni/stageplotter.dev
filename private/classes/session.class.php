@@ -43,9 +43,8 @@ class Session
   // Constructor
   public function __construct()
   {
-    if (session_status() == PHP_SESSION_NONE) {
-      session_start();
-    }
+    session_start();
+    $this->restore_from_session();
   }
 
   // Public: Auth
