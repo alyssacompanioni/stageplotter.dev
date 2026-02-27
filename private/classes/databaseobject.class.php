@@ -1,11 +1,11 @@
 <?php
-/* 
+/*
 * databaseobject.class.php
 * Creates class to manipulate the PHP Database Object for StagePlotter.dev
-* 
+*
 * Instantiates objects with data pulled from the database.
 * Defines CRUD operations, handles DB queries, and errors.
-* 
+*
 *@author Alyssa Companioni
 *
 */
@@ -16,6 +16,7 @@ class DatabaseObject
   static protected $database;
   static protected $table_name = '';
   static protected $db_columns = [];
+  public ?int $id = null;
   public $errors = [];
 
   // ============================================================
@@ -27,7 +28,7 @@ class DatabaseObject
    *
    * Should be called once at application startup before any DB operations.
    *
-   * @param mysqli $database An active database connection.
+   * @param PDO $database An active PDO database connection.
    * @return void
    */
   static public function set_database($database)
@@ -111,26 +112,6 @@ class DatabaseObject
     }
   }
 
-  /**
-   * Returns a sanitized copy of the object's attributes, safe for use in SQL queries.
-   *
-   * Runs each attribute value through the database's escape_string method to
-   * prevent SQL injection. Should always be used when building raw SQL strings.
-   *
-   * Visibility: protected — this is an internal helper for create() and update();
-   * callers outside the class should never need raw escaped SQL values directly.
-   *
-   * @return array Sanitized column name => escaped value pairs.
-   */
-  protected function sanitized_attributes()
-  {
-    $sanitized = [];
-    foreach ($this->attributes() as $key => $value) {
-      $sanitized[$key] = self::$database->escape_string($value);
-    }
-    return $sanitized;
-  }
-
   // ============================================================
   // VALIDATION
   // ============================================================
@@ -177,6 +158,7 @@ class DatabaseObject
   /**
    * Inserts the current object as a new row in the database.
    *
+   * Uses a PDO prepared statement with named placeholders built from $db_columns.
    * Runs validation first and returns false if any errors exist. On success,
    * assigns the new auto-incremented ID back to $this->id.
    *
@@ -184,7 +166,7 @@ class DatabaseObject
    * create() or update() based on whether an ID is already set. Direct access
    * to create() is intentionally restricted.
    *
-   * @return bool True on successful insert, false if validation fails or query errors.
+   * @return bool True on successful insert, false if validation fails.
    */
   protected function create()
   {
@@ -193,15 +175,17 @@ class DatabaseObject
       return false;
     }
 
-    $attributes = $this->sanitized_attributes();
-    $sql = "INSERT INTO " . static::$table_name . " (";
-    $sql .= join(', ', array_keys($attributes));
-    $sql .= ") VALUES ('";
-    $sql .= join("', '", array_values($attributes));
-    $sql .= "')";
-    $result = self::$database->query($sql);
+    $attributes   = $this->attributes();
+    $columns      = join(', ', array_keys($attributes));
+    $placeholders = ':' . join(', :', array_keys($attributes));
+
+    $sql    = "INSERT INTO " . static::$table_name . " ({$columns}) ";
+    $sql   .= "VALUES ({$placeholders})";
+    $stmt   = self::$database->prepare($sql);
+    $result = $stmt->execute($attributes);
+
     if ($result) {
-      $this->id = self::$database->insert_id;
+      $this->id = (int) self::$database->lastInsertId();
     }
     return $result;
   }
@@ -209,14 +193,15 @@ class DatabaseObject
   /**
    * Updates the existing database row for this object.
    *
-   * Matches the row using $this->id and applies the current attribute values.
+   * Uses a PDO prepared statement with named placeholders. Matches the row
+   * using $this->id and applies the current attribute values.
    * Runs validation first and returns false if any errors are present.
    *
    * Visibility: protected — external code should use save(), which determines
    * whether to call create() or update(). Keeping this protected prevents
    * callers from bypassing the save() routing logic.
    *
-   * @return bool True on successful update, false if validation fails or query errors.
+   * @return bool True on successful update, false if validation fails.
    */
   protected function update()
   {
@@ -225,18 +210,19 @@ class DatabaseObject
       return false;
     }
 
-    $attributes = $this->sanitized_attributes();
+    $attributes      = $this->attributes();
     $attribute_pairs = [];
-    foreach ($attributes as $key => $value) {
-      $attribute_pairs[] = "{$key}='{$value}'";
+    foreach (array_keys($attributes) as $key) {
+      $attribute_pairs[] = "{$key} = :{$key}";
     }
 
-    $sql = "UPDATE " . static::$table_name . " SET ";
+    $sql  = "UPDATE " . static::$table_name . " SET ";
     $sql .= join(', ', $attribute_pairs);
-    $sql .= " WHERE id='" . self::$database->escape_string($this->id) . "' ";
-    $sql .= "LIMIT 1";
-    $result = self::$database->query($sql);
-    return $result;
+    $sql .= " WHERE id = :id LIMIT 1";
+
+    $attributes['id'] = $this->id;
+    $stmt = self::$database->prepare($sql);
+    return $stmt->execute($attributes);
   }
 
   /**
@@ -262,8 +248,9 @@ class DatabaseObject
    * Deletes the database row corresponding to this object.
    *
    * Uses $this->id to identify the target row. After deletion, the PHP object
-   * instance still exists in memory (even though the database record does not) and * its properties remain readable, but
-   * further save operations (e.g. update()) should not be called on it.
+   * instance still exists in memory (even though the database record does not)
+   * and its properties remain readable, but further save operations (e.g.
+   * update()) should not be called on it.
    *
    * Visibility: public — deleting a record is a standard operation that external
    * code (controllers, etc.) needs to trigger directly.
@@ -272,11 +259,10 @@ class DatabaseObject
    */
   public function delete()
   {
-    $sql = "DELETE FROM " . static::$table_name . " ";
-    $sql .= "WHERE id='" . self::$database->escape_string($this->id) . "' ";
-    $sql .= "LIMIT 1";
-    $result = self::$database->query($sql);
-    return $result;
+    $sql  = "DELETE FROM " . static::$table_name . " ";
+    $sql .= "WHERE id = :id LIMIT 1";
+    $stmt = self::$database->prepare($sql);
+    return $stmt->execute(['id' => $this->id]);
   }
 
   // ============================================================
@@ -284,33 +270,29 @@ class DatabaseObject
   // ============================================================
 
   /**
-   * Executes a raw SQL query and returns an array of instantiated objects.
+   * Executes a parameterized SQL query and returns an array of instantiated objects.
    *
-   * This is the core query runner used by all finder methods. It executes the
-   * provided SQL, fetches each row as an associative array, and converts it
-   * into a subclass instance via instantiate().
+   * This is the core query runner used by all finder methods. It prepares and
+   * executes the provided SQL with optional bound parameters, fetches each row,
+   * and converts it into a subclass instance via instantiate().
    *
    * Visibility: public — subclasses and external code may need to run custom
    * queries that go beyond find_all() or find_by_id(). Exposing this method
    * provides that flexibility while keeping query building in one place.
    *
-   * @param string $sql A complete, valid SQL SELECT query string.
+   * @param string $sql    A complete, valid SQL SELECT query string.
+   * @param array  $params Optional array of values to bind to placeholders.
    * @return array An array of instantiated subclass objects, or empty on no results.
    */
-  static public function find_by_sql($sql)
+  static public function find_by_sql($sql, $params = [])
   {
-    $result = self::$database->query($sql);
-    if (!$result) {
-      exit("Database query failed.");
-    }
+    $stmt = self::$database->prepare($sql);
+    $stmt->execute($params);
 
-    // Convert results into objects:
     $object_array = [];
-    while ($record = $result->fetch_assoc()) {
+    while ($record = $stmt->fetch()) {
       $object_array[] = static::instantiate($record);
     }
-
-    $result->free();
     return $object_array;
   }
 
@@ -344,9 +326,8 @@ class DatabaseObject
    */
   static public function find_by_id($id)
   {
-    $sql = "SELECT * FROM " . static::$table_name . " ";
-    $sql .= "WHERE id='" . self::$database->escape_string($id) . "'";
-    $obj_array = static::find_by_sql($sql);
+    $sql       = "SELECT * FROM " . static::$table_name . " WHERE id = ?";
+    $obj_array = static::find_by_sql($sql, [$id]);
     if (!empty($obj_array)) {
       return array_shift($obj_array);
     } else {
