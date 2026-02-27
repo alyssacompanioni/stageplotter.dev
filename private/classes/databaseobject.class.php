@@ -309,6 +309,7 @@ class DatabaseObject
     while ($record = $result->fetch_assoc()) {
       $object_array[] = static::instantiate($record);
     }
+    return $object_array;
   }
 
   /**
