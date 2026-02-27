@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors[] = "Password cannot be blank.";
   } else {
     // Query the database
-    $stmt = $db->prepare("SELECT id_usr,
+    $stmt = $pdo->prepare("SELECT id_usr,
                                  username_usr,
                                  password_hash_usr,
                                  first_name_usr,
@@ -46,11 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       //Regenerate session ID to prevent session fixation attacks
       session_regenerate_id(true);
 
-      $_SESSION['user_id'] =    $user['id_usr'];
-      $_SESSION['username'] =   $user['username_usr'];
-      $_SESSION['first_name'] = $user['first_name_usr'];
-      $_SESSION['role'] =       $user['role_usr'];
-
+      $session->login($user);
       redirect_by_role($user['role_usr']);
     } else {
       // Intentionally vague - don't reveal which field is wrong for security measures
@@ -71,7 +67,7 @@ function redirect_by_role(string $role): void
   $destinations = [
     'admin'  => '/admin/dashboard.php',
     'member' => '/member/dashboard.php',
-    'public' => '/public/dashboard.php'
+    'public' => '/dashboard.php'
   ];
 
   header('Location: ' . ($destinations[$role] ?? '/index.php'));
@@ -96,7 +92,10 @@ function redirect_by_role(string $role): void
     <h1>Log In</h1>
 
     <?php if (!empty($errors)) { ?>
-      <p class="error" role="alert"><?= var_dump($errors); ?></p>
+      <p class="error" role="alert"><?php foreach ($errors as $error) {
+                                      echo htmlspecialchars($error) . "<br>";
+                                    }
+                                    ?></p>
     <?php } ?>
 
     <form action="login.php" method="post" id="login-form">
