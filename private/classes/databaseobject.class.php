@@ -18,6 +18,7 @@ class DatabaseObject
   static protected $db_columns = [];
   public ?int $id = null;
   public $errors = [];
+  // Note: $id defaults to null so that isset($this->id) in save() correctly returns false for a new object that hasn't been inserted yet, routing it to create() instead of update()
 
   // ============================================================
   // DATABASE SETUP
