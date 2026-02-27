@@ -13,9 +13,9 @@ spl_autoload_register('my_autoload');
 
 // Use this if autoload fails:
 // Manually loads all files in classes folder with a loop
-foreach (glob(__DIR__ . '/classes/*.class.php') as $file) {
-  require_once($file);
-}
+// foreach (glob(__DIR__ . '/classes/*.class.php') as $file) {
+//   require_once($file);
+// }
 
 DatabaseObject::set_database($db);
 $session = new Session;

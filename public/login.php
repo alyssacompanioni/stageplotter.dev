@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors[] = "Password cannot be blank.";
   } else {
     // Query the database
-    $stmt = $pdo->prepare("SELECT id_usr,
+    $stmt = $db->prepare("SELECT id_usr,
                                  username_usr,
                                  password_hash_usr,
                                  first_name_usr,
@@ -43,9 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($user && password_verify($password, $user['password_hash_usr'])) {
       //Successful login - set session variables
-      //Regenerate session ID to prevent session fixation attacks
-      session_regenerate_id(true);
-
       $session->login($user);
       redirect_by_role($user['role_usr']);
     } else {
@@ -81,7 +78,7 @@ function redirect_by_role(string $role): void
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, intial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Log In | Stage Plotter</title>
   <link rel="stylesheet" href="/css/styles.css">
 </head>
