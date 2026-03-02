@@ -1,4 +1,5 @@
 <?php
+
 /**
  * header.php
  * Sitewide header. Displays a personalized logout link
@@ -19,11 +20,14 @@
       <?php if ($session->is_logged_in()) { ?>
 
         <?php if ($session->has_role('super_admin')) { ?>
-          <li><a href="/super_admin/dashboard.php">Super Admin</a></li>
+          <li><a href="/super_admin/dashboard.php">Super Admin Dashboard</a>
+          </li>
+          <li><a href="/super_admin/manage_users.php">Manage Users</a></li>
         <?php } elseif ($session->has_role('admin')) { ?>
           <li><a href="/admin/dashboard.php">Admin Dashboard</a></li>
+          <li><a href="/admin/manage_members.php">Manage Members</a></li>
         <?php } elseif ($session->has_role('member')) { ?>
-          <li><a href="/member/dashboard.php">Dashboard</a></li>
+          <li><a href="/member/dashboard.php">Member Dashboard</a></li>
         <?php } ?>
 
         <li>
