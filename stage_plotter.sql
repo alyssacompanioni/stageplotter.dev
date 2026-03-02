@@ -152,7 +152,8 @@ CREATE TABLE IF NOT EXISTS `stage_plot_staplot` (
   `width_staplot` decimal(6,2) NOT NULL DEFAULT 50.00,
   `depth_staplot` decimal(6,2) NOT NULL DEFAULT 40.00,
   `created_at_staplot` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at_staplot` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at_staplot` timestamp NOT NULL DEFAULT current_timestamp()
+                                          ON UPDATE current_timestamp(),
   `is_active_staplot` tinyint(1) NOT NULL DEFAULT 1,
   `id_usr_staplot` int(11) NOT NULL,
   PRIMARY KEY (`id_staplot`),
@@ -177,7 +178,8 @@ CREATE TABLE IF NOT EXISTS `user_usr` (
   `role_usr` ENUM('member', 'admin') NOT NULL DEFAULT 'member',
   `is_active_usr` tinyint(1) DEFAULT 1,
   `created_at_usr` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at_usr` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at_usr` timestamp NOT NULL DEFAULT current_timestamp()
+                                      ON UPDATE current_timestamp(),
   PRIMARY KEY (`id_usr`),
   UNIQUE KEY `email_usr` (`email_usr`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -236,7 +238,15 @@ ALTER TABLE `stage_plot_staplot`
 
 COMMIT;
 
+--
+-- DUMP admin user for testing
+-- username: admin
+-- password: password (hashed in the database)
+--
+-- Note: This is just a default admin account for testing and should be changed or removed in production.
+--
+
 INSERT INTO user_usr (first_name_usr, last_name_usr, email_usr, phone_usr, username_usr, password_hash_usr, role_usr, is_active_usr, created_at_usr, updated_at_usr)
 VALUES ('Alyssa', 'Companioni', 'alyssamcompanioni@students.abtech.edu', '828-123-1234', 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 1, current_timestamp(), current_timestamp());
--- password for above user is "password" (without quotes) - this is just a default admin account for testing and should be changed or removed in production.
+
 
