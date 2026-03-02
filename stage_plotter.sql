@@ -239,15 +239,21 @@ ALTER TABLE `stage_plot_staplot`
 
 COMMIT;
 
+-- Note: The following are just default admin and super_admin accounts for testing and should be changed or removed in production.
 --
 -- DUMP admin user for testing
 -- username: admin
 -- password: password (hashed in the database)
 --
--- Note: This is just a default admin account for testing and should be changed or removed in production.
---
 
 INSERT INTO user_usr (first_name_usr, last_name_usr, email_usr, phone_usr, username_usr, password_hash_usr, role_usr, is_active_usr, created_at_usr, updated_at_usr)
 VALUES ('Alyssa', 'Companioni', 'alyssamcompanioni@students.abtech.edu', '828-123-1234', 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 1, current_timestamp(), current_timestamp());
 
+--
+-- DUMP admin user for testing
+-- username: superadmin
+-- password: password (hashed in the database)
+--
 
+INSERT INTO user_usr (first_name_usr, last_name_usr, email_usr, phone_usr, username_usr, password_hash_usr, role_usr, is_active_usr, created_at_usr, updated_at_usr)
+VALUES ('Alyssa', 'Companioni', 'alyssamcompanioni@google.com', '828-123-1234', 'superadmin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'super_admin', 1, current_timestamp(), current_timestamp());
