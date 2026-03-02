@@ -12,7 +12,7 @@
 
 class DatabaseObject
 {
-
+  static protected $pk = 'id';   // subclasses override this
   static protected $database;
   static protected $table_name = '';
   static protected $db_columns = [];
@@ -57,7 +57,10 @@ class DatabaseObject
   {
     $object = new static;
     foreach ($record as $property => $value) {
-      if (property_exists($object, $property)) {
+      // Map the custom PK column to $this->id (the parent's in-memory identifier)
+      if ($property === static::$pk && $property !== 'id') {
+        $object->id = (int) $value;
+      } elseif (property_exists($object, $property)) {
         $object->$property = $value;
       }
     }
@@ -84,7 +87,7 @@ class DatabaseObject
   {
     $attributes = [];
     foreach (static::$db_columns as $column) {
-      if ($column == 'id') {
+      if ($column == static::$pk) {
         continue;
       }
       $attributes[$column] = $this->$column;
@@ -219,9 +222,9 @@ class DatabaseObject
 
     $sql  = "UPDATE " . static::$table_name . " SET ";
     $sql .= join(', ', $attribute_pairs);
-    $sql .= " WHERE id = :id LIMIT 1";
+    $sql .= " WHERE " . static::$pk . " = :_pk_val LIMIT 1";
 
-    $attributes['id'] = $this->id;
+    $attributes['_pk_val'] = $this->id;
     $stmt = self::$database->prepare($sql);
     return $stmt->execute($attributes);
   }
@@ -261,9 +264,9 @@ class DatabaseObject
   public function delete()
   {
     $sql  = "DELETE FROM " . static::$table_name . " ";
-    $sql .= "WHERE id = :id LIMIT 1";
+    $sql .= "WHERE " . static::$pk . " = :_pk_val LIMIT 1";
     $stmt = self::$database->prepare($sql);
-    return $stmt->execute(['id' => $this->id]);
+    return $stmt->execute(['_pk_val' => $this->id]);
   }
 
   // ============================================================
@@ -327,7 +330,7 @@ class DatabaseObject
    */
   static public function find_by_id($id)
   {
-    $sql       = "SELECT * FROM " . static::$table_name . " WHERE id = ?";
+    $sql       = "SELECT * FROM " . static::$table_name . " WHERE " . static::$pk . " = ?";
     $obj_array = static::find_by_sql($sql, [$id]);
     if (!empty($obj_array)) {
       return array_shift($obj_array);

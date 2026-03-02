@@ -13,7 +13,7 @@ class StagePlot extends DatabaseObject
   protected static $table_name = 'stage_plot_tbl';
   protected static $db_columns = ['id_stage_plot', 'user_id_usr', 'name_stage_plot', 'description_stage_plot', 'created_at_stage_plot', 'updated_at_stage_plot'];
 
-  public $id_stage_plot;
+  static protected $pk = 'id_staplot'; // custom primary key column name
   public $user_id_usr;
   public $name_stage_plot;
   public $description_stage_plot;
