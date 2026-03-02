@@ -1,4 +1,5 @@
 <?php
+
 /**
  * plotelement.class.php
  * Represents a single element placed on a stage plot canvas.
@@ -88,8 +89,8 @@ class PlotElement extends DatabaseObject
   static public function find_by_plot(int $staplot_id): array
   {
     $sql = "SELECT * FROM " . static::$table_name
-         . " WHERE id_staplot_pele = ?"
-         . " ORDER BY z_index_pele ASC";
+      . " WHERE id_staplot_pele = ?"
+      . " ORDER BY z_index_pele ASC";
     return static::find_by_sql($sql, [$staplot_id]);
   }
 

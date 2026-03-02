@@ -1,4 +1,5 @@
 <?php
+
 /**
  * stageplot.class.php
  * Represents a stage plot record in stage_plot_staplot.
@@ -72,8 +73,8 @@ class StagePlot extends DatabaseObject
   static public function find_by_user(int $user_id): array
   {
     $sql = "SELECT * FROM " . static::$table_name
-         . " WHERE id_usr_staplot = ? AND is_active_staplot = 1"
-         . " ORDER BY title_staplot ASC";
+      . " WHERE id_usr_staplot = ? AND is_active_staplot = 1"
+      . " ORDER BY title_staplot ASC";
     return static::find_by_sql($sql, [$user_id]);
   }
 
@@ -88,7 +89,7 @@ class StagePlot extends DatabaseObject
   static public function find_owned_by(int $id, int $user_id): static|false
   {
     $sql     = "SELECT * FROM " . static::$table_name
-             . " WHERE id_staplot = ? AND id_usr_staplot = ? LIMIT 1";
+      . " WHERE id_staplot = ? AND id_usr_staplot = ? LIMIT 1";
     $results = static::find_by_sql($sql, [$id, $user_id]);
     return !empty($results) ? $results[0] : false;
   }
@@ -131,10 +132,10 @@ class StagePlot extends DatabaseObject
     if ($date === '') {
       $this->errors[] = 'Gig date is required.';
     } elseif (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date) || !checkdate(
-        (int) substr($date, 5, 2),
-        (int) substr($date, 8, 2),
-        (int) substr($date, 0, 4)
-      )) {
+      (int) substr($date, 5, 2),
+      (int) substr($date, 8, 2),
+      (int) substr($date, 0, 4)
+    )) {
       $this->errors[] = 'Gig date must be a valid date (YYYY-MM-DD).';
     } else {
       $this->gig_date_staplot = $date;

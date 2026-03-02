@@ -1,4 +1,5 @@
 <?php
+
 /**
  * manage_users.php
  * Lists all admin and member accounts and lets super_admins activate or

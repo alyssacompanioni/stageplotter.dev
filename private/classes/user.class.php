@@ -1,4 +1,5 @@
 <?php
+
 /**
  * user.class.php
  * Represents a user account in user_usr.
@@ -48,8 +49,8 @@ class User extends DatabaseObject
   static public function find_all_members(): array
   {
     $sql = "SELECT * FROM " . static::$table_name
-         . " WHERE role_usr = 'member'"
-         . " ORDER BY last_name_usr ASC, first_name_usr ASC";
+      . " WHERE role_usr = 'member'"
+      . " ORDER BY last_name_usr ASC, first_name_usr ASC";
     return static::find_by_sql($sql);
   }
 
@@ -62,8 +63,8 @@ class User extends DatabaseObject
   static public function find_members_and_admins(): array
   {
     $sql = "SELECT * FROM " . static::$table_name
-         . " WHERE role_usr IN ('member', 'admin')"
-         . " ORDER BY role_usr DESC, last_name_usr ASC, first_name_usr ASC";
+      . " WHERE role_usr IN ('member', 'admin')"
+      . " ORDER BY role_usr DESC, last_name_usr ASC, first_name_usr ASC";
     return static::find_by_sql($sql);
   }
 

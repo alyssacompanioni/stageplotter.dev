@@ -1,4 +1,5 @@
 <?php
+
 /**
  * register.php
  * Handles display and processing of the new user registration form.
@@ -140,36 +141,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       <label for="first_name">First Name <span class="required" aria-label="required">*</span></label><br>
       <input type="text" id="first_name" name="first_name"
-             value="<?= htmlspecialchars($first_name) ?>"
-             maxlength="50" required autocomplete="given-name"><br>
+        value="<?= htmlspecialchars($first_name) ?>"
+        maxlength="50" required autocomplete="given-name"><br>
 
       <label for="last_name">Last Name <span class="required" aria-label="required">*</span></label><br>
       <input type="text" id="last_name" name="last_name"
-             value="<?= htmlspecialchars($last_name) ?>"
-             maxlength="50" required autocomplete="family-name"><br>
+        value="<?= htmlspecialchars($last_name) ?>"
+        maxlength="50" required autocomplete="family-name"><br>
 
       <label for="email">Email <span class="required" aria-label="required">*</span></label><br>
       <input type="email" id="email" name="email"
-             value="<?= htmlspecialchars($email) ?>"
-             maxlength="100" required autocomplete="email"><br>
+        value="<?= htmlspecialchars($email) ?>"
+        maxlength="100" required autocomplete="email"><br>
 
       <label for="phone">Phone <span class="optional">(optional)</span></label><br>
       <input type="tel" id="phone" name="phone"
-             value="<?= htmlspecialchars($phone) ?>"
-             maxlength="20" autocomplete="tel"><br>
+        value="<?= htmlspecialchars($phone) ?>"
+        maxlength="20" autocomplete="tel"><br>
 
       <label for="username">Username <span class="required" aria-label="required">*</span></label><br>
       <input type="text" id="username" name="username"
-             value="<?= htmlspecialchars($username) ?>"
-             maxlength="20" required autocomplete="username"><br>
+        value="<?= htmlspecialchars($username) ?>"
+        maxlength="20" required autocomplete="username"><br>
 
       <label for="password">Password <span class="required" aria-label="required">*</span></label><br>
       <input type="password" id="password" name="password"
-             minlength="8" required autocomplete="new-password"><br>
+        minlength="8" required autocomplete="new-password"><br>
 
       <label for="confirm_password">Confirm Password <span class="required" aria-label="required">*</span></label><br>
       <input type="password" id="confirm_password" name="confirm_password"
-             minlength="8" required autocomplete="new-password"><br>
+        minlength="8" required autocomplete="new-password"><br>
 
       <input type="submit" value="Create Account">
     </form>

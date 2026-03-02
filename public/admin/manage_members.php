@@ -1,4 +1,5 @@
 <?php
+
 /**
  * manage_members.php
  * Lists all member accounts and lets admins activate or deactivate them.
