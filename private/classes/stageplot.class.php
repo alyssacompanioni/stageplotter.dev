@@ -21,6 +21,7 @@ class StagePlot extends DatabaseObject
     'id_staplot',
     'id_usr_staplot',
     'title_staplot',
+    'gig_date_staplot',
     'description_staplot',
     'width_staplot',
     'depth_staplot',
@@ -30,6 +31,7 @@ class StagePlot extends DatabaseObject
   // Properties match SQL column names exactly so instantiate() maps them automatically.
   public ?int    $id_usr_staplot       = null;
   public string  $title_staplot        = '';
+  public string  $gig_date_staplot     = '';   // 'YYYY-MM-DD'
   public ?string $description_staplot  = null;
   public float   $width_staplot        = 50.00;
   public float   $depth_staplot        = 40.00;
@@ -50,6 +52,7 @@ class StagePlot extends DatabaseObject
   {
     $this->id_usr_staplot      = isset($args['id_usr_staplot'])      ? (int)   $args['id_usr_staplot']      : null;
     $this->title_staplot       = $args['title_staplot']              ?? '';
+    $this->gig_date_staplot    = $args['gig_date_staplot']           ?? '';
     $this->description_staplot = $args['description_staplot']        ?? null;
     $this->width_staplot       = isset($args['width_staplot'])       ? (float) $args['width_staplot']       : 50.00;
     $this->depth_staplot       = isset($args['depth_staplot'])       ? (float) $args['depth_staplot']       : 40.00;
@@ -122,6 +125,19 @@ class StagePlot extends DatabaseObject
       $this->errors[] = 'Title must be ' . self::MAX_TITLE . ' characters or fewer.';
     } else {
       $this->title_staplot = $title;
+    }
+
+    $date = trim($this->gig_date_staplot);
+    if ($date === '') {
+      $this->errors[] = 'Gig date is required.';
+    } elseif (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date) || !checkdate(
+        (int) substr($date, 5, 2),
+        (int) substr($date, 8, 2),
+        (int) substr($date, 0, 4)
+      )) {
+      $this->errors[] = 'Gig date must be a valid date (YYYY-MM-DD).';
+    } else {
+      $this->gig_date_staplot = $date;
     }
 
     if ($this->description_staplot !== null && strlen($this->description_staplot) > self::MAX_DESC) {
