@@ -2,18 +2,22 @@
 
 /**
  * manage_library.php
- * Lets super_admins upload and browse the shared SVG plot-element image library.
+ * Lets admins and super_admins upload and browse the shared SVG
+ * plot-element image library.
  *
- * Requires: super_admin role.
+ * Requires: admin role or higher.
  *
  * @author Alyssa Companioni
  */
-require_once __DIR__ . '/../../private/initialize.php';
-$session->require_role('super_admin');
+require_once __DIR__ . '/../private/initialize.php';
+$session->require_role('admin');
 
-define('PLOT_ELEMENT_DIR', __DIR__ . '/../assets/plot_elements/');
+define('PLOT_ELEMENT_DIR', __DIR__ . '/assets/plot_elements/');
 
 // ── Handle SVG upload POST ────────────────────────────────────────────────────
+// strtolower(...) — converts to lowercase. MyGuitar.svg → myguitar
+// preg_replace('/[^a-z0-9_\-]/', '_', ...) — replaces every character that is not a letter, digit, underscore, or hyphen with an underscore. The [^...] means "anything NOT in this set."
+// The result is rejoined with .svg to ensure the file has the correct extension and a safe filename.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['svg_file'])) {
   if ($_FILES['svg_file']['error'] !== UPLOAD_ERR_OK) {
     $session->message('Upload error. Please try again.');
@@ -28,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['svg_file'])) {
       $filename = $base . '.svg';
       $dest     = PLOT_ELEMENT_DIR . $filename;
 
+      // Appends a Unix timestamp if the filename already exists to avoid overwriting
       if (file_exists($dest)) {
         $filename = $base . '_' . time() . '.svg';
         $dest     = PLOT_ELEMENT_DIR . $filename;
@@ -61,7 +66,7 @@ $flash = $session->message();
 </head>
 
 <body>
-  <?php require_once '../includes/header.php'; ?>
+  <?php require_once 'includes/header.php'; ?>
   <main>
     <h1>Plot Element Image Library</h1>
 
