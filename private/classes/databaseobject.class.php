@@ -72,16 +72,16 @@ class DatabaseObject
   // ============================================================
 
   /**
-   * Returns an associative array of the object's DB column values, excluding 'id'.
+   * Returns an associative array of the object's DB column values, excluding the PK.
    *
-   * Used internally to build INSERT and UPDATE queries. The 'id' column is
+   * Used internally to build INSERT and UPDATE queries. The PK column ($pk) is
    * excluded because it is auto-assigned by the database on insert and used
    * as a WHERE condition on update — it should never appear in SET clauses.
    *
    * Visibility: public — subclasses or external code may need to inspect
    * current attribute values (e.g. for debugging or serialization).
    *
-   * @return array Column name => current value pairs, excluding 'id'.
+   * @return array Column name => current value pairs, excluding the PK column.
    */
   public function attributes()
   {

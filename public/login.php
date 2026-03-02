@@ -19,8 +19,7 @@ if (isset($_SESSION['user_id'])) {
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // Sanitizes inputs  
-  $username = htmlspecialchars(trim($_POST['username'] ?? ''));
+  $username = trim($_POST['username'] ?? '');
   $password = $_POST['password'] ?? '';
 
   // Server-side validations
@@ -55,16 +54,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 /**
  * Redirects the user to the correct dashboard based on their role
  * 
- * @param string $role The user's role(public, member, admin).
+ * @param string $role The user's role ('member', 'admin', or 'super_admin').
  * @return void 
  */
 
 function redirect_by_role(string $role): void
 {
   $destinations = [
+    'super_admin' => '/super_admin/dashboard.php',
     'admin'  => '/admin/dashboard.php',
     'member' => '/member/dashboard.php',
-    'public' => '/dashboard.php'
   ];
 
   header('Location: ' . ($destinations[$role] ?? '/index.php'));
@@ -97,7 +96,7 @@ function redirect_by_role(string $role): void
 
     <form action="login.php" method="post" id="login-form">
       <label for="username">Username <span class="required" aria-label="required">*</span></label><br>
-      <input type="text" id="username" name="username" value="<?= $username ?>" required autocomplete="username"><br>
+      <input type="text" id="username" name="username" value="<?= htmlspecialchars($username) ?>" required autocomplete="username"><br>
 
       <label for="password">Password <span class="required" aria-label="required">*</span></label><br>
       <input type="password" id="password" name="password" required autocomplete="current-password"><br>

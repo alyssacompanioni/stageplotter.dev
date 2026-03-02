@@ -216,7 +216,7 @@ class Session
   }
 
   /**
-   * Returns false if the session has been idle longer that MAX_LOGIN_AGE
+   * Returns false if the session has been idle longer than MAX_LOGIN_AGE
    */
   private function session_is_fresh(): bool
   {
