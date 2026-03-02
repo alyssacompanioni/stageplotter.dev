@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../../private/initialize.php';
+$session->require_role('member');
 ?>
 
 <!DOCTYPE html>
