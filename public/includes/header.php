@@ -23,9 +23,11 @@
           <li><a href="/super_admin/dashboard.php">Super Admin Dashboard</a>
           </li>
           <li><a href="/super_admin/manage_users.php">Manage Users</a></li>
+          <li><a href="../manage_library.php">Manage Library</a></li>
         <?php } elseif ($session->has_role('admin')) { ?>
           <li><a href="/admin/dashboard.php">Admin Dashboard</a></li>
           <li><a href="/admin/manage_members.php">Manage Members</a></li>
+          <li><a href="../manage_library.php">Manage Library</a></li>
         <?php } elseif ($session->has_role('member')) { ?>
           <li><a href="/member/dashboard.php">Member Dashboard</a></li>
         <?php } ?>
