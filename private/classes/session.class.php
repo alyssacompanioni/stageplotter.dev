@@ -8,7 +8,7 @@
  * Provides role-aware access checks using a numeric hierarchy
  * so that higher roles automatically pass lower-level checks.
  *
- * Roles (low → high): public (unauthenticated), member, admin.
+ * Roles (low → high): public (unauthenticated), member, admin, super_admin.
  * 'public' is not stored in the DB — it simply means is_logged_in() === false.
  *
  * Usage (after initialize.php is loaded):
@@ -34,10 +34,11 @@ class Session
   // Session expires after 24 hours of inactivity 
   public const MAX_LOGIN_AGE = 60 * 60 * 24;
 
-  // Role hierarchy 
+  // Role hierarchy — higher number passes all lower-level has_role() checks.
   private const ROLE_HIERARCHY = [
-    'member' => 1,
-    'admin'  => 2,
+    'member'      => 1,
+    'admin'       => 2,
+    'super_admin' => 3,
   ];
 
   // Constructor
@@ -89,9 +90,9 @@ class Session
 
   /**
    * Returns true if the logged-in user meets or exceeds the given role.
-   * Admins automatically pass member-level checks.
-   * 
-   * @param string $required_role 'member' or 'admin'
+   * Higher roles automatically pass all lower-level checks.
+   *
+   * @param string $required_role 'member', 'admin', or 'super_admin'
    * @return bool
    */
   public function has_role(string $required_role): bool
@@ -109,8 +110,8 @@ class Session
   /**
    * Enforces a minimum role. Redirects to login.php if not met.
    * Use at the top of every protected page.
-   * 
-   * @param string $required_role 'member' or 'admin'
+   *
+   * @param string $required_role 'member', 'admin', or 'super_admin'
    * @return void
    */
   public function require_role(string $required_role): void
@@ -167,7 +168,7 @@ class Session
   }
 
   /**
-   * @return string 'member', 'admin', or '' (public/guest/nonmember)
+   * @return string 'member', 'admin', 'super_admin', or '' (public/guest)
    */
   public function get_role(): string
   {

@@ -176,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `user_usr` (
   `phone_usr` varchar(20) DEFAULT NULL,
   `username_usr` varchar(20) NOT NULL,
   `password_hash_usr` varchar(255) NOT NULL,
-  `role_usr` ENUM('member', 'admin') NOT NULL DEFAULT 'member',
+  `role_usr` ENUM('member', 'admin', 'super_admin') NOT NULL DEFAULT 'member',
   `is_active_usr` tinyint(1) DEFAULT 1,
   `created_at_usr` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at_usr` timestamp NOT NULL DEFAULT current_timestamp()
