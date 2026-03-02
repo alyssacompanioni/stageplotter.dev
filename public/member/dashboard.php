@@ -16,6 +16,12 @@ require_once __DIR__ . '/../../private/initialize.php';
   <?php require_once '../includes/header.php'; ?>
   <main>
     <h1>Member Dashboard</h1>
-    <p>This will be the dashboard for members, who will have complete stage-plot functionality minus admin privileges.</p>
+    <p>This will be the dashboard for members, who will have complete stage-plot functionality. Members will be able to: </p>
+    <ul>
+      <li>Drag-and-drop to create stage plots</li>
+      <li>Create input lists</li>
+      <li>Label each plot with a gig date and venue</li>
+      <li>View a history of their past stage plots</li>
+    </ul>
   </main>
 </body>

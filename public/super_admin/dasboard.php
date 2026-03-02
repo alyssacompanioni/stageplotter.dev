@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../../private/initialize.php';
-$session->require_role('admin');
+$session->require_role('super_admin');
 ?>
 
 <!DOCTYPE html>
@@ -9,14 +9,14 @@ $session->require_role('admin');
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard | Stage Plotter</title>
+  <title>Super Admin Dashboard | Stage Plotter</title>
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
   <?php require_once '../includes/header.php'; ?>
   <main>
-    <h1>Admin Dashboard</h1>
-    <p>This will be the dashboard for admins, who will have complete stage-plot functionality in addition to admin privileges - activating and deactivating members, and maintaining a library of vector images.</p>
+    <h1>Super Admin Dashboard</h1>
+    <p>This will be the dashboard for superadmins, who will have complete stage-plot functionality, admin privileges, and the ability to activate/deactivate admins.</p>
   </main>
 </body>
