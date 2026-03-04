@@ -45,6 +45,11 @@
   background: #f0f0f0;
 }
 
+.user-icon {
+  border-radius: 50%;
+  color: #000000;
+} 
+
 .nav-greeting {
   font-weight: 600;
   color: #555;

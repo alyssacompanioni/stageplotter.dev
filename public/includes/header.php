@@ -12,17 +12,16 @@
 ?>
 
 <header>
-  <a href="/index.php" class="site-title">Stage Plotter</a>
+  <a href="/index.php" class="logo">Stage Plotter</a>
 
   <nav aria-label="Main navigation">
     <ul>
-      <li>Logo Here</li>
       <?php if ($session->is_logged_in()) { ?>
 
       <li><span class="nav-greeting">Hi, <?= htmlspecialchars($session->first_name) ?></span></li>
         <li class="user-menu">
           <button class="user-menu-toggle" aria-expanded="false" aria-haspopup="true" aria-label="Open user menu">
-            <img src="/assets/user.svg" alt="User menu" width="24" height="24">
+            <img src="/assets/user.svg" alt="User menu" width="24" height="24" class="user-icon">
           </button>
         
         <ul class="user-dropdown" hidden>
