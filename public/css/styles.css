@@ -1,3 +1,42 @@
+/*** styles.css ***/
+/* Global styles */
+
+html {
+  font:
+    16px/1.5 "Segoe UI",
+    Tahoma,
+    Geneva,
+    Verdana,
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* General styles */
+body {
+  width: 100%;
+  margin: 0;
+  min-height: 100vh;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header styles */
+header {
+  align-items: center;
+  background-color: #401394;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 24px;
+}
+
 /* User menu dropdown */
 .user-menu {
   list-style: none;

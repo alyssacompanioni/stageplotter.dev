@@ -12,7 +12,8 @@
 ?>
 
 <header>
-  <a href="/index.php" class="logo">Stage Plotter</a>
+  <!-- Include Logo Here -->
+  <a href="/index.php"><div class="logo">Stage Plotter</div></a>
 
   <nav aria-label="Main navigation">
     <ul>
