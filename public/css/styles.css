@@ -184,6 +184,23 @@ header ul {
 /*********************
   * Dashboard Styles *
   *******************/
+#dashboard-wrapper {
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 24px;
+}
+
+#dashboard-wrapper header {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  margin-bottom: 16px;
+}
+
+#dashboard-wrapper main {
+  flex: 3;
+}
+
 .plot-toolbar-actions {
   position: relative;
 }

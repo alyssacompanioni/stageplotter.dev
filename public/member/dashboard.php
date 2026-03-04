@@ -15,7 +15,7 @@ $session->require_role('member');
 
 <body>
   <?php require_once '../includes/header.php'; ?>
-  <div class="wrapper">
+  <div class="wrapper" id="dashboard-wrapper">
     <main>
       <h1>Stage Plotter Dashboard</h1>
       <header>
@@ -45,6 +45,15 @@ $session->require_role('member');
         <!-- This is where the stage plot will be rendered -->
       </div>
     </main>
+    <section id="palette">
+      <header>
+        <button id="instrument-palette-toggle" class="btn btn-secondary" aria-label="Toggle instrument palette">Instruments</button>
+        <button id="equipment-palette-toggle" class="btn btn-secondary" aria-label="Toggle equipment palette">Equipment</button>
+        <button id="input-palette-toggle" class="btn btn-secondary" aria-label="Toggle input palette">Inputs</button>
+      </header>
+      <!-- Load icons if instrument or equipment palette is active -->
+      <!-- Display input list if input palette is active -->
+    </section>
   </div>
   <?php require_once '../includes/footer.php'; ?>
 </body>
