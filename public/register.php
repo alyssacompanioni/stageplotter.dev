@@ -121,63 +121,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up | Stage Plotter</title>
-  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
   <?php require_once __DIR__ . '/includes/header.php'; ?>
-  <main>
-    <h1>Create an Account</h1>
+  <div class="wrapper">
+    <main>
+      <h1>Create an Account</h1>
 
-    <?php if (!empty($errors)) { ?>
-      <ul class="error" role="alert">
-        <?php foreach ($errors as $error) { ?>
-          <li><?= htmlspecialchars($error) ?></li>
-        <?php } ?>
-      </ul>
-    <?php } ?>
+      <?php if (!empty($errors)) { ?>
+        <ul class="error" role="alert">
+          <?php foreach ($errors as $error) { ?>
+            <li><?= htmlspecialchars($error) ?></li>
+          <?php } ?>
+        </ul>
+      <?php } ?>
 
-    <form action="register.php" method="post" id="register-form">
+      <form action="register.php" method="post" id="register-form">
 
-      <label for="first_name">First Name <span class="required" aria-label="required">*</span></label><br>
-      <input type="text" id="first_name" name="first_name"
-        value="<?= htmlspecialchars($first_name) ?>"
-        maxlength="50" required autocomplete="given-name"><br>
+        <label for="first_name">First Name <span class="required" aria-label="required">*</span></label><br>
+        <input type="text" id="first_name" name="first_name"
+          value="<?= htmlspecialchars($first_name) ?>"
+          maxlength="50" required autocomplete="given-name"><br>
 
-      <label for="last_name">Last Name <span class="required" aria-label="required">*</span></label><br>
-      <input type="text" id="last_name" name="last_name"
-        value="<?= htmlspecialchars($last_name) ?>"
-        maxlength="50" required autocomplete="family-name"><br>
+        <label for="last_name">Last Name <span class="required" aria-label="required">*</span></label><br>
+        <input type="text" id="last_name" name="last_name"
+          value="<?= htmlspecialchars($last_name) ?>"
+          maxlength="50" required autocomplete="family-name"><br>
 
-      <label for="email">Email <span class="required" aria-label="required">*</span></label><br>
-      <input type="email" id="email" name="email"
-        value="<?= htmlspecialchars($email) ?>"
-        maxlength="100" required autocomplete="email"><br>
+        <label for="email">Email <span class="required" aria-label="required">*</span></label><br>
+        <input type="email" id="email" name="email"
+          value="<?= htmlspecialchars($email) ?>"
+          maxlength="100" required autocomplete="email"><br>
 
-      <label for="phone">Phone <span class="optional">(optional)</span></label><br>
-      <input type="tel" id="phone" name="phone"
-        value="<?= htmlspecialchars($phone) ?>"
-        maxlength="20" autocomplete="tel"><br>
+        <label for="phone">Phone <span class="optional">(optional)</span></label><br>
+        <input type="tel" id="phone" name="phone"
+          value="<?= htmlspecialchars($phone) ?>"
+          maxlength="20" autocomplete="tel"><br>
 
-      <label for="username">Username <span class="required" aria-label="required">*</span></label><br>
-      <input type="text" id="username" name="username"
-        value="<?= htmlspecialchars($username) ?>"
-        maxlength="20" required autocomplete="username"><br>
+        <label for="username">Username <span class="required" aria-label="required">*</span></label><br>
+        <input type="text" id="username" name="username"
+          value="<?= htmlspecialchars($username) ?>"
+          maxlength="20" required autocomplete="username"><br>
 
-      <label for="password">Password <span class="required" aria-label="required">*</span></label><br>
-      <input type="password" id="password" name="password"
-        minlength="8" required autocomplete="new-password"><br>
+        <label for="password">Password <span class="required" aria-label="required">*</span></label><br>
+        <input type="password" id="password" name="password"
+          minlength="8" required autocomplete="new-password"><br>
 
-      <label for="confirm_password">Confirm Password <span class="required" aria-label="required">*</span></label><br>
-      <input type="password" id="confirm_password" name="confirm_password"
-        minlength="8" required autocomplete="new-password"><br>
+        <label for="confirm_password">Confirm Password <span class="required" aria-label="required">*</span></label><br>
+        <input type="password" id="confirm_password" name="confirm_password"
+          minlength="8" required autocomplete="new-password"><br>
 
-      <input type="submit" value="Create Account">
-    </form>
+        <input type="submit" value="Create Account">
+      </form>
 
-    <p>Already have an account? <a href="/login.php">Log In</a></p>
-  </main>
-  <!-- include footer here -->
+      <p>Already have an account? <a href="/login.php">Log In</a></p>
+    </main>
+  </div>
+  <?php require_once 'includes/footer.php'; ?>
 </body>
 
 </html>

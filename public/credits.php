@@ -1,17 +1,19 @@
+<?php require_once __DIR__ . '/../private/initialize.php'; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Credits</title>
-    <link rel="stylesheet" href="styles.css">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Credits</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
 
-  <body>
-    <header>
-      <h1>Credits</h1>
-    </header>
+<body>
+  <?php require_once 'includes/header.php'; ?>
+  <div class="wrapper">
+    <h1>Credits</h1>
     <main>
       <section>
         <h2>Special Thanks</h2>
@@ -34,4 +36,6 @@
       </section>
 
     </main>
-    
+  </div>
+  <?php require_once 'includes/footer.php'; ?>
+</body>
