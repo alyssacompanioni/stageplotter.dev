@@ -1,7 +1,7 @@
 /* User menu dropdown */
 .user-menu {
-  position: relative;
   list-style: none;
+  position: relative;
 }
 
 .user-menu-checkbox {
@@ -9,27 +9,27 @@
 }
 
 .user-menu-toggle {
+  align-items: center;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
   display: flex;
-  align-items: center;
+  padding: 4px;
 }
 
 .user-dropdown {
-  display: none;
-  position: absolute;
-  right: 0;
-  top: calc(100% + 8px);
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: none;
   list-style: none;
   margin: 0;
-  padding: 6px 0;
   min-width: 200px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 6px 0;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
   z-index: 100;
 }
 
@@ -43,10 +43,10 @@
 
 .user-dropdown a,
 .user-dropdown .nav-greeting {
+  color: #333;
   display: block;
   padding: 8px 16px;
   text-decoration: none;
-  color: #333;
   white-space: nowrap;
 }
 
@@ -57,10 +57,10 @@
 .user-icon {
   border-radius: 50%;
   color: #000000;
-} 
+}
 
 .nav-greeting {
-  font-weight: 600;
-  color: #555;
   border-bottom: 1px solid #eee;
+  color: #555;
+  font-weight: 600;
 }
