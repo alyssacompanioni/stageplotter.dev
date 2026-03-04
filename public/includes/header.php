@@ -20,11 +20,12 @@
 
         <li><span class="nav-greeting">Hi, <?= htmlspecialchars($session->first_name) ?></span></li>
         <li class="user-menu">
-          <button class="user-menu-toggle" aria-expanded="false" aria-haspopup="true" aria-label="Open user menu">
+          <input type="checkbox" id="user-menu-toggle" class="user-menu-checkbox">
+          <label for="user-menu-toggle" class="user-menu-toggle" aria-label="Open user menu">
             <img src="/assets/user.svg" alt="User menu" width="24" height="24" class="user-icon">
-          </button>
+          </label>
 
-          <ul class="user-dropdown" hidden>
+          <ul class="user-dropdown">
 
             <?php if ($session->has_role('super_admin')) { ?>
               <li><a href="/index.php">Home</a></li>
@@ -57,25 +58,3 @@
     </ul>
   </nav>
 </header>
-
-<script>
-  (function() {
-    var toggle = document.querySelector('.user-menu-toggle');
-    if (!toggle) return;
-    var dropdown = document.querySelector('.user-dropdown');
-
-    toggle.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var expanded = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!expanded));
-      dropdown.hidden = expanded;
-    });
-
-    document.addEventListener('click', function(e) {
-      if (!toggle.closest('.user-menu').contains(e.target)) {
-        toggle.setAttribute('aria-expanded', 'false');
-        dropdown.hidden = true;
-      }
-    });
-  })();
-</script>

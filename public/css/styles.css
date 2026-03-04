@@ -4,6 +4,10 @@
   list-style: none;
 }
 
+.user-menu-checkbox {
+  display: none;
+}
+
 .user-menu-toggle {
   background: none;
   border: none;
@@ -14,6 +18,7 @@
 }
 
 .user-dropdown {
+  display: none;
   position: absolute;
   right: 0;
   top: calc(100% + 8px);
@@ -26,6 +31,10 @@
   min-width: 200px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 100;
+}
+
+.user-menu-checkbox:checked ~ .user-dropdown {
+  display: block;
 }
 
 .user-dropdown li {
