@@ -25,15 +25,19 @@ $session->require_role('member');
           <input type="text"  id="plot-venue"    class="plot-field" placeholder="Venue (optional)"   maxlength="100">
         </div>
         <div class="plot-toolbar-actions">
-          <ul>
-            <li><button id="clear-stage-btn" class="btn btn-ghost">Clear Stage</button></li>
+          <input type="checkbox" id="plot-toolbar-toggle" class="user-menu-checkbox">
+          <label for="plot-toolbar-toggle" class="user-menu-toggle" aria-label="Open plot actions menu">
+            <img src="/assets/gear.svg" alt="Plot actions" width="24" height="24">
+          </label>
+          <ul class="user-dropdown">
             <li><button id="new-plot-btn" class="btn btn-primary">New Plot</button></li>
             <li><button id="load-plot-btn" class="btn btn-secondary">Load Plot</button></li>
-            <li><button id="save-plot-btn"   class="btn btn-primary">Save Plot</button></li>
-            <li><button id="share-plot-btn"  class="btn btn-secondary">Share Plot</button></li>
+            <li><button id="save-plot-btn" class="btn btn-primary">Save Plot</button></li>
+            <li><button id="share-plot-btn" class="btn btn-secondary">Share Plot</button></li>
             <li><button id="export-plot-btn" class="btn btn-secondary">Export Plot</button></li>
-            <li><button id="print-plot-btn"  class="btn btn-secondary">Print Plot</button></li>
+            <li><button id="print-plot-btn" class="btn btn-secondary">Print Plot</button></li>
             <li><button id="change-dimensions-btn" class="btn btn-secondary">Change Dimensions</button></li>
+            <li><button id="clear-stage-btn" class="btn btn-ghost">Clear Stage</button></li>
           </ul>
         </div>
       </header>

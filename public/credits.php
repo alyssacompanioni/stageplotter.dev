@@ -29,8 +29,10 @@
       <section>
         <h2>Icon Attributions</h2>
         <ul>
-          <li>electric guitar by Melvin Salas from <a href="https://thenounproject.com/browse/icons/term/electric-guitar/" target="_blank" title="electric guitar Icons">Noun Project</a> (CC BY 3.0)</li>
-          <li>User by Baboon designs from <a href="https://thenounproject.com/browse/icons/term/user/" target="_blank" title="User Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Electric Guitar" icon by Melvin Salas from <a href="https://thenounproject.com/browse/icons/term/electric-guitar/" target="_blank" title="electric guitar Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"User" icon by Baboon designs from <a href="https://thenounproject.com/browse/icons/term/user/" target="_blank" title="User Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Gear" icon by Nursa from <a href="https://thenounproject.com/browse/icons/term/gear/" target="_blank" title="Gear Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li><a target="_blank" href="https://icons8.com/icon/2969/settings">Settings</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></li>
 
         </ul>
       </section>

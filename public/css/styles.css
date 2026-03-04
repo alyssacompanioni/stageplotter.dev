@@ -150,15 +150,23 @@ header ul {
 }
 
 .user-dropdown a,
+.user-dropdown button,
 .user-dropdown .nav-greeting {
+  background: none;
+  border: none;
   color: #333;
+  cursor: pointer;
   display: block;
+  font: inherit;
   padding: 8px 16px;
+  text-align: left;
   text-decoration: none;
   white-space: nowrap;
+  width: 100%;
 }
 
-.user-dropdown a:hover {
+.user-dropdown a:hover,
+.user-dropdown button:hover {
   background: #f0f0f0;
 }
 
@@ -176,6 +184,10 @@ header ul {
 /*********************
   * Dashboard Styles *
   *******************/
+.plot-toolbar-actions {
+  position: relative;
+}
+
 /* Stage Plot Canvas Styles */
 #stage-plot-canvas {
   background-color: var(--blue1);
