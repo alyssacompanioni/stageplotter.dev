@@ -17,14 +17,26 @@ $session->require_role('member');
   <?php require_once '../includes/header.php'; ?>
   <div class="wrapper">
     <main>
-      <h1>Member Dashboard</h1>
-      <p>This will be the dashboard for members, who will have complete stage-plot functionality. Members will be able to: </p>
-      <ul>
-        <li>Drag-and-drop to create stage plots</li>
-        <li>Create input lists</li>
-        <li>Label each plot with a gig date and venue</li>
-        <li>View a history of their past stage plots</li>
-      </ul>
+      <h1>Stage Plotter Dashboard</h1>
+      <header>
+        <div class="plot-meta-fields">
+          <input type="text"  id="plot-title"    class="plot-field" placeholder="Plot title *"       maxlength="50">
+          <input type="date"  id="plot-gig-date" class="plot-field" title="Gig date">
+          <input type="text"  id="plot-venue"    class="plot-field" placeholder="Venue (optional)"   maxlength="100">
+        </div>
+        <div class="plot-toolbar-actions">
+          <ul>
+            <li><button id="clear-stage-btn" class="btn btn-ghost">Clear Stage</button></li>
+            <li><button id="new-plot-btn" class="btn btn-primary">New Plot</button></li>
+            <li><button id="load-plot-btn" class="btn btn-secondary">Load Plot</button></li>
+            <li><button id="save-plot-btn"   class="btn btn-primary">Save Plot</button></li>
+            <li><button id="share-plot-btn"  class="btn btn-secondary">Share Plot</button></li>
+            <li><button id="export-plot-btn" class="btn btn-secondary">Export Plot</button></li>
+            <li><button id="print-plot-btn"  class="btn btn-secondary">Print Plot</button></li>
+            <li><button id="change-dimensions-btn" class="btn btn-secondary">Change Dimensions</button></li>
+          </ul>
+        </div>
+      </header>
       <div id="stage-plot-canvas">
         <!-- This is where the stage plot will be rendered -->
       </div>

@@ -79,35 +79,37 @@ function redirect_by_role(string $role): void
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Log In | Stage Plotter</title>
-  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
   <?php require_once __DIR__ . '/includes/header.php'; ?>
-  <main>
-    <h1>Log In</h1>
+  <div class="wrapper">
+    <main>
+      <h1>Log In</h1>
 
-    <?php if (!empty($errors)) { ?>
-      <p class="error" role="alert"><?php foreach ($errors as $error) {
-                                      echo htmlspecialchars($error) . "<br>";
-                                    }
-                                    ?></p>
-    <?php } ?>
+      <?php if (!empty($errors)) { ?>
+        <p class="error" role="alert"><?php foreach ($errors as $error) {
+                                        echo htmlspecialchars($error) . "<br>";
+                                      }
+                                      ?></p>
+      <?php } ?>
 
-    <form action="login.php" method="post" id="login-form">
-      <label for="username">Username <span class="required" aria-label="required">*</span></label><br>
-      <input type="text" id="username" name="username" value="<?= htmlspecialchars($username) ?>" required autocomplete="username"><br>
+      <form action="login.php" method="post" id="login-form">
+        <label for="username">Username <span class="required" aria-label="required">*</span></label><br>
+        <input type="text" id="username" name="username" value="<?= htmlspecialchars($username) ?>" required autocomplete="username"><br>
 
-      <label for="password">Password <span class="required" aria-label="required">*</span></label><br>
-      <input type="password" id="password" name="password" required autocomplete="current-password"><br>
+        <label for="password">Password <span class="required" aria-label="required">*</span></label><br>
+        <input type="password" id="password" name="password" required autocomplete="current-password"><br>
 
-      <input type="submit" value="Log in">
-    </form>
+        <input type="submit" value="Log in">
+      </form>
 
-    <p>Don't have an account? <a href="/register.php">Sign Up</a></p>
-  </main>
-  <!-- include footer here -->
-  <!-- run js validation script here -->
+      <p>Don't have an account? <a href="/register.php">Sign Up</a></p>
+    </main>
+  </div>
+  <?php require_once __DIR__ . '/includes/footer.php'; ?>
+  <!-- Don't forget js validation  -->
 </body>
 
 </html>

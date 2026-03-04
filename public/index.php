@@ -1,33 +1,4 @@
-<?php
-
-require_once __DIR__ . '/../private/initialize.php';
-
-// echo "<h1>Welcome to StagePlotter.dev</h1>";
-// echo "<p>PHP is working - yay!</p>";
-
-// $result = $db->query("SHOW TABLES");
-
-// if ($result) {
-//   echo "<h2>Database Connection Successful</h2>";
-
-//   echo "<h3>Database Schema</h3>";
-//   echo "<p><a href='https://dbdiagram.io/d/StagePlotter-dev-6980d7d8bd82f5fce262143a' target='_blank'>View schema on dbdiagram.io</a></p>";
-
-//   echo "<h3>Tables in database:</h3>";
-//   echo "<ul>";
-//   while ($row = $result->fetch(PDO::FETCH_NUM)) {
-//     echo "<li>" . htmlspecialchars($row[0]) . "</li>";
-//   }
-//   echo "</ul>";
-// } else {
-//   echo "<p>Error: Query failed.</p>";
-// }
-
-// <a href="dashboard.php">Go to Dashboard</a>
-// $db = null;
-
-// 
-?>
+<?php require_once __DIR__ . '/../private/initialize.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
