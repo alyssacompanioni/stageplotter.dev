@@ -1,54 +1,6 @@
 /*** styles.css ***/
 /* Global styles */
 
-:root {
-  /* Portfolio Colors */
-  --primary-dark: #0f1120;
-  --primary-teal: #0097b2;
-  --light-cyan: #62e1e9;
-  --blue-gray: #cfe2f3;
-  --teal-hover: #0077b6;
-  --text-light: #ffffff;
-  --text-gray: #9ca3af;
-  --section-bg: #ffffff;
-  --hover-bg: #f8fafc;
-  --border-color: #e5e7eb;
-  --dark-lighter: #1a1d2e;
-
-  /* StagePlotter Color Ideas */
-  --black-emerald: #122220;
-  --coastal-pine: #3e5954;
-  --ocean-deep: #2a4d69;
-  --seafoam-green: #77b1a9;
-  --linen-clay: #c6c2bb;
-
-  /** Stage Lighting Colors **/
-  --amber: #ffb347;
-  --lavender: #b497bd;
-  --pink: #ff69b4;
-  --steel-blue: #4682b4;
-  --teal: #008080;
-
-  /* Blues, Greens, Oranges */
-  --blue1: #9cb6c5;
-  --blue2: #8baec4;
-  --blue3: #73a2bc;
-  --blue4: #287194;
-  --blue5: #195d84;
-  --green1: #6b967b;
-  --green2: #29605a;
-  --green3: #0f494a;
-  --green4: #083231;
-  --orange1: #f0aa52;
-  --orange2: #efa335;
-  --orange3: #e68939;
-  --orange4: #dc6b3f;
-  --red1: #d74132;
-  --red2: #d62d30;
-  --red3: #ad2029;
-  --red4: #952032;
-}
-
 html {
   font:
     16px/1.5 "Segoe UI",
@@ -64,32 +16,25 @@ html {
 
 /* General styles */
 body {
+  width: 100%;
   margin: 0;
   min-height: 100vh;
-  width: 100%;
 }
 
 .wrapper {
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
   min-height: 100vh;
 }
 
 /* Header styles */
 header {
   align-items: center;
-  background-color: var(--primary-dark);
-  color: #000;
+  background-color: #401394;
+  color: #fff;
   display: flex;
   justify-content: space-between;
   padding: 12px 24px;
-}
-
-header ul {
-  display: flex;
-  gap: 16px;
-  list-style: none;
 }
 
 /* User menu dropdown */
@@ -117,6 +62,8 @@ header ul {
   border-radius: 6px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   display: none;
+  list-style: none;
+  margin: 0;
   min-width: 200px;
   padding: 6px 0;
   position: absolute;
