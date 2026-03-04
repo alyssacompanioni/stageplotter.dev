@@ -86,7 +86,7 @@ $flash = $session->message();
       <ul class="svg-library">
         <?php foreach ($svgs as $svg_path) {
           $svg_name = basename($svg_path);
-          $svg_url  = '/assets/plot_elements/' . $svg_name;
+          $svg_url  = '../assets/plot_elements/' . $svg_name;
         ?>
           <li>
             <img src="<?= htmlspecialchars($svg_url) ?>" alt="<?= htmlspecialchars($svg_name) ?>">
