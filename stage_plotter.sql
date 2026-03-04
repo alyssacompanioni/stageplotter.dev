@@ -149,6 +149,7 @@ CREATE TABLE IF NOT EXISTS `stage_plot_staplot` (
   `id_staplot` int(11) NOT NULL AUTO_INCREMENT,
   `title_staplot` varchar(50) NOT NULL,
   `gig_date_staplot` date NOT NULL,
+  `venue_staplot` varchar(100) DEFAULT NULL,
   `description_staplot` varchar(255) DEFAULT NULL,
   `width_staplot` decimal(6,2) NOT NULL DEFAULT 50.00,
   `depth_staplot` decimal(6,2) NOT NULL DEFAULT 40.00,

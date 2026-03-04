@@ -23,6 +23,7 @@ class StagePlot extends DatabaseObject
     'id_usr_staplot',
     'title_staplot',
     'gig_date_staplot',
+    'venue_staplot',
     'description_staplot',
     'width_staplot',
     'depth_staplot',
@@ -33,6 +34,7 @@ class StagePlot extends DatabaseObject
   public ?int    $id_usr_staplot       = null;
   public string  $title_staplot        = '';
   public string  $gig_date_staplot     = '';   // 'YYYY-MM-DD'
+  public ?string $venue_staplot        = null;
   public ?string $description_staplot  = null;
   public float   $width_staplot        = 50.00;
   public float   $depth_staplot        = 40.00;
@@ -43,6 +45,7 @@ class StagePlot extends DatabaseObject
   const MAX_WIDTH    = 200.0;
   const MAX_DEPTH    = 150.0;
   const MAX_TITLE    = 50;
+  const MAX_VENUE    = 100;
   const MAX_DESC     = 255;
 
   // ============================================================
@@ -54,6 +57,7 @@ class StagePlot extends DatabaseObject
     $this->id_usr_staplot      = isset($args['id_usr_staplot'])      ? (int)   $args['id_usr_staplot']      : null;
     $this->title_staplot       = $args['title_staplot']              ?? '';
     $this->gig_date_staplot    = $args['gig_date_staplot']           ?? '';
+    $this->venue_staplot       = $args['venue_staplot']              ?? null;
     $this->description_staplot = $args['description_staplot']        ?? null;
     $this->width_staplot       = isset($args['width_staplot'])       ? (float) $args['width_staplot']       : 50.00;
     $this->depth_staplot       = isset($args['depth_staplot'])       ? (float) $args['depth_staplot']       : 40.00;
@@ -139,6 +143,10 @@ class StagePlot extends DatabaseObject
       $this->errors[] = 'Gig date must be a valid date (YYYY-MM-DD).';
     } else {
       $this->gig_date_staplot = $date;
+    }
+
+    if ($this->venue_staplot !== null && strlen($this->venue_staplot) > self::MAX_VENUE) {
+      $this->errors[] = 'Venue must be ' . self::MAX_VENUE . ' characters or fewer.';
     }
 
     if ($this->description_staplot !== null && strlen($this->description_staplot) > self::MAX_DESC) {
