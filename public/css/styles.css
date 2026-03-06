@@ -90,7 +90,7 @@ img {
  *******************************/
 header {
   align-items: center;
-  background: var(--black-emerald);
+  background: var(--dark-lighter);
   color: #fff;
   display: flex;
   justify-content: space-between;
@@ -191,7 +191,6 @@ header ul {
 
 #dashboard-wrapper header {
   display: flex;
-  margin-bottom: 16px;
 }
 
 #dashboard-wrapper h1 {
@@ -276,7 +275,7 @@ header ul {
  ** Footer Styles **
  *********************/
 footer {
-  background-color: #64666f;
+  background-color: #545454;
   background-image: url('/assets/brand/footer-blue.svg');
   background-repeat: repeat-x;
   background-size: auto 100%;
@@ -285,5 +284,9 @@ footer {
   padding: 12px 24px;
   text-align: center;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+}
+
+.credits {
+  text-align: right;
 }
