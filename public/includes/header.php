@@ -12,7 +12,7 @@
 ?>
 
 <header>
-  <a href="/index.php" class="logo"><img src="/assets/brand/logo.svg" alt="Stage Plotter logo."></a>
+  <a href="/index.php" class="logo"><img src="/assets/brand/logo-blue.svg" alt="Stage Plotter logo."></a>
 
   <nav aria-label="Main navigation">
     <ul>
