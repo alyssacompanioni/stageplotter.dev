@@ -74,6 +74,11 @@ body {
   margin: 0;
 }
 
+img {
+  height: auto;
+  max-width: 150px;
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
