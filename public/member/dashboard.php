@@ -47,14 +47,21 @@ $session->require_role('member');
           <!-- This is where the stage plot will be rendered -->
         </div>
       </div>
-      <section class="palette">
+      <section class="palette-container">
         <header>
           <button id="instrument-palette-toggle" class="btn btn-secondary" aria-label="Toggle instrument palette">Instruments</button>
           <button id="equipment-palette-toggle" class="btn btn-secondary" aria-label="Toggle equipment palette">Equipment</button>
           <button id="input-palette-toggle" class="btn btn-secondary" aria-label="Toggle input palette">Inputs</button>
         </header>
-        <!-- Load icons if instrument or equipment palette is active -->
-        <!-- Display input list if input palette is active -->
+        <div class="palette">
+          <div class="element-type">
+            <!-- Load instrument and equipment icons here when their respective palettes are active -->
+            <!-- Display input list if input palette is active -->
+          </div>
+          <div class="element-card-container">
+            <!-- This is where draggable instrument/equipment icons and input list items will be rendered -->
+          </div>
+        </div>
       </section>
     </main>
   </div>

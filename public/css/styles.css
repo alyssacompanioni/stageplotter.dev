@@ -185,7 +185,8 @@ header ul {
   *******************/
 #dashboard-wrapper {
   display: flex;
-  padding: 24px;
+  margin: 0 auto;
+  max-width: 1600px;
 }
 
 #dashboard-wrapper header {
@@ -243,7 +244,7 @@ header ul {
 /**********************
  * Palette Styles *
  **********************/
-.palette {
+.palette-container {
   background: var(--section-bg);
   border: 1px solid var(--border-color);
   grid-column: 1;
@@ -252,11 +253,35 @@ header ul {
   grid-template-rows: subgrid;
 }
 
+.palette-container header {
+  border-bottom: 1px solid var(--border-color);
+  margin: 0;
+}
+
+.palette {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+.element-type {
+  background-color: var(--blue-gray);
+  border-right: 1px solid var(--border-color);
+  padding: 12px;
+}
+
+.element-card-container {
+  background-color: var(--green1);
+}
 /*********************
  ** Footer Styles **
  *********************/
 footer {
+  background-color: #64666f;
+  background-image: url('/assets/brand/footer.svg');
+  background-repeat: repeat-x;
+  background-size: auto 100%;
   color: #fff;
+  height: 200px;
   padding: 12px 24px;
   text-align: center;
   display: flex;
