@@ -101,7 +101,7 @@ header ul {
 }
 
 /* User menu, general dropdown menu styles */
-#user-menu {
+.user-menu {
   list-style: none;
   position: relative;
 }
@@ -210,13 +210,23 @@ header ul {
   grid-template-rows: subgrid;
 }
 
+.plot-meta-fields {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.plot-field {
+  padding: 1px 6px;
+}
+
 .plot-settings {
   position: relative;
 }
 
 /* Stage Plot Canvas Styles */
 /* Maybe use Cart.js for this? */
-#stage-plot-canvas {
+.stage-plot-canvas {
   background-color: var(--blue1);
   border: 1px solid var(--blue5);
   height: 600px;

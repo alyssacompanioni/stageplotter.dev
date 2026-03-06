@@ -43,7 +43,7 @@ $session->require_role('member');
             </ul>
           </div>
         </header>
-        <div id="stage-plot-canvas">
+        <div class="stage-plot-canvas">
           <!-- This is where the stage plot will be rendered -->
         </div>
       </div>

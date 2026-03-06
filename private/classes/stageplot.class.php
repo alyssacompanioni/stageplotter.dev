@@ -135,14 +135,14 @@ class StagePlot extends DatabaseObject
     $date = trim($this->gig_date_staplot);
     if ($date === '') {
       $this->errors[] = 'Gig date is required.';
-    } elseif (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date) || !checkdate(
-      (int) substr($date, 5, 2),
-      (int) substr($date, 8, 2),
-      (int) substr($date, 0, 4)
-    )) {
-      $this->errors[] = 'Gig date must be a valid date (YYYY-MM-DD).';
+    } elseif (
+      !preg_match('/^(\d{2})\/(\d{2})\/(\d{4})$/', $date, $m) ||
+      !checkdate((int) $m[1], (int) $m[2], (int) $m[3])
+    ) {
+      $this->errors[] = 'Gig date must be a valid date in mm/dd/yyyy format.';
     } else {
-      $this->gig_date_staplot = $date;
+      // Cast mm/dd/yyyy → YYYY-MM-DD for the DATE column
+      $this->gig_date_staplot = sprintf('%04d-%02d-%02d', (int) $m[3], (int) $m[1], (int) $m[2]);
     }
 
     if ($this->venue_staplot !== null && strlen($this->venue_staplot) > self::MAX_VENUE) {
