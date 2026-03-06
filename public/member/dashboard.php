@@ -19,7 +19,7 @@ $session->require_role('member');
   <div class="wrapper" id="dashboard-wrapper">
     <main>
       <h1>Stage Plotter Dashboard</h1>
-      <div id="canvas-container">
+      <div class="canvas-container">
         <header id="plot-toolbar">
           <div class="plot-meta-fields">
             <input type="text" id="plot-title" class="plot-field" placeholder="Plot title *" maxlength="50">

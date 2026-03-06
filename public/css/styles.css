@@ -202,7 +202,7 @@ header ul {
 }
 
 /* Canvas Container Styles */
-#canvas-container {
+.canvas-container {
   border: 1px solid var(--border-color);
   grid-column: 2 / -1;
   grid-row: 1 / -1;
@@ -238,7 +238,7 @@ header ul {
 /**********************
  * Palette Styles *
  **********************/
-#palette {
+.palette {
   background: var(--section-bg);
   border: 1px solid var(--border-color);
   grid-column: 1;
