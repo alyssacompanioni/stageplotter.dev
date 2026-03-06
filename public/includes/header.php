@@ -23,7 +23,7 @@
         <li class="user-menu">
           <input type="checkbox" id="dropdown-menu-toggle" class="dropdown-menu-checkbox">
           <label for="dropdown-menu-toggle" class="dropdown-menu-toggle" aria-label="Open user menu">
-            <img src="/assets/user.svg" alt="User menu" width="24" height="24" class="user-icon">
+            <img src="/assets/icons/user.svg" alt="User menu" width="24" height="24" class="user-icon">
           </label>
 
           <ul class="dropdown-menu">
