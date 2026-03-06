@@ -20,13 +20,13 @@
       <?php if ($session->is_logged_in()) { ?>
 
         <li><span class="nav-greeting">Hi, <?= htmlspecialchars($session->first_name) ?></span></li>
-        <li class="user-menu">
-          <input type="checkbox" id="user-menu-toggle" class="user-menu-checkbox">
-          <label for="user-menu-toggle" class="user-menu-toggle" aria-label="Open user menu">
+        <li id="user-menu">
+          <input type="checkbox" id="dropdown-menu-toggle" class="dropdown-menu-checkbox">
+          <label for="dropdown-menu-toggle" class="dropdown-menu-toggle" aria-label="Open user menu">
             <img src="/assets/user.svg" alt="User menu" width="24" height="24" class="user-icon">
           </label>
 
-          <ul class="user-dropdown">
+          <ul class="dropdown-menu">
 
             <?php if ($session->has_role('super_admin')) { ?>
               <li><a href="/index.php">Home</a></li>

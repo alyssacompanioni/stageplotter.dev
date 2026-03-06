@@ -80,9 +80,9 @@ body {
   min-height: 90vh;
 }
 
-/*******************
- * Sitewide Header Styles *
- *******************/
+/*******************************
+ * Sitewide Header, Nav Styles *
+ *******************************/
 header {
   align-items: center;
   background: var(--ocean-deep);
@@ -100,17 +100,17 @@ header ul {
   padding: 0;
 }
 
-/* User menu dropdown */
-.user-menu {
+/* User menu, general dropdown menu styles */
+#user-menu {
   list-style: none;
   position: relative;
 }
 
-.user-menu-checkbox {
+.dropdown-menu-checkbox {
   display: none;
 }
 
-.user-menu-toggle {
+.dropdown-menu-toggle {
   align-items: center;
   background: none;
   border: none;
@@ -119,7 +119,7 @@ header ul {
   padding: 4px;
 }
 
-.user-dropdown {
+.dropdown-menu {
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 6px;
@@ -135,17 +135,17 @@ header ul {
   z-index: 100;
 }
 
-.user-menu-checkbox:checked ~ .user-dropdown {
+.dropdown-menu-checkbox:checked ~ .dropdown-menu {
   display: block;
 }
 
-.user-dropdown li {
+.dropdown-menu li {
   padding: 0;
 }
 
-.user-dropdown a,
-.user-dropdown button,
-.user-dropdown .nav-greeting {
+.dropdown-menu a,
+.dropdown-menu button,
+.dropdown-menu .nav-greeting {
   background: none;
   border: none;
   color: #333;
@@ -159,8 +159,8 @@ header ul {
   width: 100%;
 }
 
-.user-dropdown a:hover,
-.user-dropdown button:hover {
+.dropdown-menu a:hover,
+.dropdown-menu button:hover {
   background: #f0f0f0;
 }
 

@@ -11,6 +11,7 @@ $session->require_role('member');
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Member Dashboard | Stage Plotter</title>
   <link rel="stylesheet" href="/css/styles.css">
+  <script src="/js/dashboard.js" defer></script>
 </head>
 
 <body>
@@ -22,15 +23,15 @@ $session->require_role('member');
         <header id="plot-toolbar">
           <div class="plot-meta-fields">
             <input type="text" id="plot-title" class="plot-field" placeholder="Plot title *" maxlength="50">
-            <input type="date" id="plot-gig-date" class="plot-field" title="Gig date">
+            <input type="text" id="plot-gig-date" class="plot-field" placeholder="Gig Date: mm/dd/yyyy *" maxlength="10">
             <input type="text" id="plot-venue" class="plot-field" placeholder="Venue (optional)" maxlength="100">
           </div>
           <div class="plot-settings">
-            <input type="checkbox" id="plot-toolbar-toggle" class="user-menu-checkbox">
-            <label for="plot-toolbar-toggle" class="user-menu-toggle" aria-label="Open plot actions menu">
+            <input type="checkbox" id="plot-toolbar-toggle" class="dropdown-menu-checkbox">
+            <label for="plot-toolbar-toggle" class="dropdown-menu-toggle" aria-label="Open plot actions menu">
               <img src="/assets/gear.svg" alt="Plot actions" width="24" height="24">
             </label>
-            <ul class="user-dropdown" id="plot-toolbar">
+            <ul class="dropdown-menu" id="plot-toolbar">
               <li><button id="new-plot-btn" class="btn btn-primary">New Plot</button></li>
               <li><button id="load-plot-btn" class="btn btn-secondary">Load Plot</button></li>
               <li><button id="save-plot-btn" class="btn btn-primary">Save Plot</button></li>
