@@ -47,7 +47,7 @@ $session->require_role('member');
           <!-- This is where the stage plot will be rendered -->
         </div>
       </div>
-      <section id="palette">
+      <section class="palette">
         <header>
           <button id="instrument-palette-toggle" class="btn btn-secondary" aria-label="Toggle instrument palette">Instruments</button>
           <button id="equipment-palette-toggle" class="btn btn-secondary" aria-label="Toggle equipment palette">Equipment</button>
