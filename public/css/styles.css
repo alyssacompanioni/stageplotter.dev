@@ -23,11 +23,10 @@
   --linen-clay: #c6c2bb;
 
   /** Stage Lighting Colors **/
-  --amber: #ffb347;
-  --lavender: #b497bd;
-  --pink: #ff69b4;
-  --steel-blue: #4682b4;
-  --teal: #008080;
+  --yellow: #e6d258;
+  --amber: #ffc968;
+  --blue: #89adff;
+  --purple: #9c8dff;
 
   /* Blues, Greens, Oranges */
   --blue1: #9cb6c5;
@@ -279,11 +278,11 @@ footer {
   background-image: url('/assets/brand/footer-blue.svg');
   background-repeat: repeat-x;
   background-size: auto 100%;
+  display: flex;
   color: #fff;
   height: 200px;
   padding: 12px 24px;
   text-align: center;
-  display: flex;
   justify-content: flex-end;
 }
 
