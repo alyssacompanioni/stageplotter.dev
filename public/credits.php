@@ -30,9 +30,11 @@
         <h2>Icon Attributions</h2>
         <ul>
           <li>"Electric Guitar" icon by Melvin Salas from <a href="https://thenounproject.com/browse/icons/term/electric-guitar/" target="_blank" title="electric guitar Icons">Noun Project</a> (CC BY 3.0)</li>
-          <li>"User" icon by Baboon designs from <a href="https://thenounproject.com/browse/icons/term/user/" target="_blank" title="User Icons">Noun Project</a> (CC BY 3.0)</li>
-          <li>"Gear" icon by Nursa from <a href="https://thenounproject.com/browse/icons/term/gear/" target="_blank" title="Gear Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"User" icon by Baboon designs from <a href="https://thenounproject.com/browse/icons/term/user/" target="_blank" title="User Icons">Noun Project</a> (CC BY 3.0)</li>      
           <li><a target="_blank" href="https://icons8.com/icon/2969/settings">Settings</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></li>
+          <li><a href="https://www.flaticon.com/free-icons/cowbell" title="cowbell icons">Cowbell icon created by Kiranshastry - Flaticon</a></li>
+          <li><a target="_blank" href="https://icons8.com/icon/9397/timpani">Timpani</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></li>
+          <a target="_blank" href="https://icons8.com/icon/13141/timpani">Timpani</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
 
         </ul>
       </section>

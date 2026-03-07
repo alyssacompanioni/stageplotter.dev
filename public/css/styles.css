@@ -26,7 +26,12 @@
   --yellow: #e6d258;
   --amber: #ffc968;
   --blue: #89adff;
+  --blue2: #689eff;
   --purple: #9c8dff;
+  
+  --dark-blue: #1b2333;
+  --medium-blue: #5a72aa;
+  
 
   /* Blues, Greens, Oranges */
   --blue1: #9cb6c5;
@@ -96,7 +101,7 @@ img {
  *******************************/
 header {
   align-items: center;
-  background: var(--dark-lighter);
+  background: var(--dark-blue);
   color: #fff;
   display: flex;
   justify-content: space-between;
