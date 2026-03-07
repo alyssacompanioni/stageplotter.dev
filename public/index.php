@@ -11,8 +11,8 @@
 </head>
 
 <body>
+  <?php require_once __DIR__ . '/includes/header.php'; ?>
   <div class="wrapper">
-    <?php require_once __DIR__ . '/includes/header.php'; ?>
     <main>
       <h1>Welcome to StagePlotter!</h1>
       <h2>Browse and Search Existing Stage Plots</h2>
