@@ -80,7 +80,7 @@ $session->require_role('member');
                 $filename = basename($file);
                 $label = ucwords(str_replace(['-', '_'], ' ', pathinfo($filename, PATHINFO_FILENAME)));
             ?>
-                <div class="element-card">
+                <div class="element-card" draggable="true">
                   <img src="/assets/instruments/<?= htmlspecialchars($active_element_type) ?>/<?= htmlspecialchars($filename) ?>" alt="<?= htmlspecialchars($label) ?> Icon." width="48" height="48">
                   <p><?= htmlspecialchars($label) ?></p>
                 </div>
