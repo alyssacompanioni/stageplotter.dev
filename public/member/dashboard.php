@@ -55,17 +55,17 @@ $session->require_role('member');
             <button id="input-palette-toggle" class="btn btn-secondary" aria-label="Toggle input palette">Inputs</button>
           </header>
           <div class="palette">
-            <div class="element-type">
+            <form method="get" class="element-type">
               <!-- Load instrument and equipment icons here when their respective palettes are active -->
-              <button id="guitars-button-toggle" class="btn btn-secondary" aria-label="Toggle guitar icons">Guitars</button>
-              <button id="percussion-button-toggle" class="btn btn-secondary" aria-label="Toggle percussion icons">Percussion</button>
-              <button id="keys-button-toggle" class="btn btn-secondary" aria-label="Toggle keyboard icons">Keys</button>
-              <button id="strings-button-toggle" class="btn btn-secondary" aria-label="Toggle strings icons">Strings</button>
-              <button id="winds-button-toggle" class="btn btn-secondary" aria-label="Toggle wind icons">Winds</button>
-              <button id="amps-button-toggle" class="btn btn-secondary" aria-label="Toggle amp icons">Amps</button>
-              <button id="misc-button-toggle" class="btn btn-secondary" aria-label="Toggle miscellaneous icons">Misc</button>
+              <button type="submit" name="element_type" id="guitars-button-toggle" value="guitars" class="btn btn-secondary" aria-label="Toggle guitar icons">Guitars</button>
+              <button type="submit" name="element_type" id="percussion-button-toggle" value="percussion" class="btn btn-secondary" aria-label="Toggle percussion icons">Percussion</button>
+              <button type="submit" name="element_type" id="keys-button-toggle" value="keys" class="btn btn-secondary" aria-label="Toggle keyboard icons">Keys</button>
+              <button type="submit" name="element_type" id="strings-button-toggle" value="strings" class="btn btn-secondary" aria-label="Toggle strings icons">Strings</button>
+              <button type="submit" name="element_type" id="winds-button-toggle" value="winds" class="btn btn-secondary" aria-label="Toggle wind icons">Winds</button>
+              <button type="submit" name="element_type" id="amps-button-toggle" value="amps" class="btn btn-secondary" aria-label="Toggle amp icons">Amps</button>
+              <button type="submit" name="element_type" id="misc-button-toggle" value="misc" class="btn btn-secondary" aria-label="Toggle miscellaneous icons">Misc</button>
               <!-- Display input list if input palette is active -->
-            </div>
+            </form>
             <div class="element-card-container">
               <!-- This is where draggable instrument/equipment icons and input list items will be rendered -->
               <?php
