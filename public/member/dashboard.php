@@ -68,58 +68,26 @@ $session->require_role('member');
             </div>
             <div class="element-card-container">
               <!-- This is where draggable instrument/equipment icons and input list items will be rendered -->
-              <div class="element-card">
-                <img src="/assets/instruments/guitars/acoustic-guitar.svg" alt="Acoustic Guitar Icon." width="48" height="48">
-                <p>Acoustic Guitar</p>
-              </div>
-              <div class="element-card">
-                <img src="/assets/instruments/guitars/acoustic-sunburst-guitar.svg" alt="Acoustic Sunburst Guitar Icon." width="48" height="48">
-                <p>Acoustic Sunburst Guitar</p>
-              </div>
-              <div class="element-card">
-                <img src="/assets/instruments/guitars/lp-electric-guitar.svg" alt="Les PaulElectric Guitar Icon." width="48" height="48">
-                <p>Electric Guitar</p>
-              </div>
-              <div class="element-card">
-                <img src="/assets/instruments/guitars/strat-electric-guitar.svg" alt="Strat Electric Guitar Icon." width="48" height="48">
-                <p>Strat Electric Guitar</p>
-              </div>
-              <div class="element-card">
-                <img src="/assets/instruments/guitars/flying-v-electric-guitar.svg" alt="Flying V Electric Guitar Icon." width="48" height="48">
-                <p>Flying V Electric Guitar</p>
-              </div>
-              <div class="element-card">
-                <img src="/assets/instruments/guitars/wooden-strat-electric-guitar.svg" alt="Wooden Strat Electric Guitar Icon." width="48" height="48">
-                <p>Wooden Strat Electric Guitar</p>
-              </div>
-              <div class="element-card">
-                <img src="/assets/instruments/guitars/four-string-bass-guitar.svg" alt="Four String Bass Guitar Icon." width="48" height="48">
-                <p>Four String Bass Guitar</p>
-              </div>
-              <div class="element-card">
-                <img src="/assets/instruments/guitars/five-string-bass-guitar.svg" alt="Five String Bass Guitar Icon." width="48" height="48">
-                <p>Five String Bass Guitar</p>
-              </div>
-              <div class="element-card">
-                <img src="/assets/instruments/guitars/six-string-bass-guitar.svg" alt="Six String Bass Guitar Icon." width="48" height="48">
-                <p>Six String Bass Guitar</p>
-              </div>
-              <div class="element-card">
-                <img src="/assets/instruments/guitars/banjo.svg" alt="Banjo Icon." width="48" height="48">
-                <p>Banjo</p>
-              </div>
-              <div class="element-card">
-                <img src="/assets/instruments/guitars/mandolin.svg" alt="Mandolin Icon." width="48" height="48">
-                <p>Mandolin</p>
-              </div>
-              <div class="element-card">
-                <img src="/assets/instruments/guitars/ukulele.svg" alt="Ukulele Icon." width="48" height="48">
-                <p>Ukulele</p>
-              </div>
-              <div class="element-card">
-                <img src="/assets/instruments/guitars/lute.svg" alt="Lute Icon." width="48" height="48">
-                <p>Lute</p>
-              </div>
+              <?php
+                $active_element_type = $_GET['element_type'] ?? 'guitars';
+                $valid_categories = ['guitars', 'percussion', 'keys', 'strings', 'winds', 'amps', 'misc'];
+
+                if (in_array($active_element_type, $valid_categories)):
+                  $category_dir = $_SERVER['DOCUMENT_ROOT'] . '/assets/instruments/' . $active_element_type . '/';
+                  $category_files = glob($category_dir . '*.{svg,png}', GLOB_BRACE) ?: [];
+                  sort($category_files);
+                  foreach ($category_files as $file):
+                    $filename = basename($file);
+                    $label = ucwords(str_replace(['-', '_'], ' ', pathinfo($filename, PATHINFO_FILENAME)));
+                ?>
+                <div class="element-card">
+                  <img src="/assets/instruments/<?= htmlspecialchars($active_element_type) ?>/<?= htmlspecialchars($filename) ?>" alt="<?= htmlspecialchars($label) ?> Icon." width="48" height="48">
+                  <p><?= htmlspecialchars($label) ?></p>
+                </div>
+                <?php
+                  endforeach;
+                endif;
+              ?>
             </div>
         </section>
       </main>
