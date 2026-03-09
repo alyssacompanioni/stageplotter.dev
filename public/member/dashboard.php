@@ -57,6 +57,13 @@ $session->require_role('member');
         <div class="palette">
           <div class="element-type">
             <!-- Load instrument and equipment icons here when their respective palettes are active -->
+             <button id="guitars-button-toggle" class="btn btn-secondary" aria-label="Toggle guitar icons">Guitars</button>
+              <button id="percussion-button-toggle" class="btn btn-secondary" aria-label="Toggle percussion icons">Percussion</button>
+              <button id="keys-button-toggle" class="btn btn-secondary" aria-label="Toggle keyboard icons">Keys</button>
+              <button id="strings-button-toggle" class="btn btn-secondary" aria-label="Toggle strings icons">Strings</button>
+              <button id="winds-button-toggle" class="btn btn-secondary" aria-label="Toggle wind icons">Winds</button>
+              <button id="amps-button-toggle" class="btn btn-secondary" aria-label="Toggle amp icons">Amps</button>
+              <button id="misc-button-toggle" class="btn btn-secondary" aria-label="Toggle miscellaneous icons">Misc</button>
             <!-- Display input list if input palette is active -->
           </div>
           <div class="element-card-container">
