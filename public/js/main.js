@@ -28,5 +28,17 @@ canvas.addEventListener('drop', (e) => {
 });
 
 function placeElement(data, x, y) {
-  
+  const el = document.createElement('div');
+  el.className = 'placed-element';
+  el.style.position = 'absolute';
+  el.style.left = x + 'px';
+  el.style.top = y + 'px';
+
+  el.innerHTML = `<img src="${data.src}" alt="${data.label} Icon." width="48" height="48"><p>${data.label}</p>`;
+
+  canvas.appendChild(el);
 }
+
+// function moveElement(el, x, y ) {
+
+// }

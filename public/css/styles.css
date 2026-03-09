@@ -239,13 +239,14 @@ header ul {
 }
 
 /* Stage Plot Canvas Styles */
-/* Maybe use Cart.js for this? */
+/* Note: [position: relative;] is essential so the placed-elements can be absolutely positioned/anchored to it. */
 .stage-plot-canvas {
   background-color: var(--blue1);
   border: 1px solid var(--blue5);
   height: 600px;
   margin: 24px auto;
   padding: 12px;
+  position: relative; 
   width: 90%;
 }
 
