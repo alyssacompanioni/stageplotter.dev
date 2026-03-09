@@ -279,6 +279,42 @@ header ul {
 
 .element-card-container {
   background-color: var(--green1);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 8px;
+  padding: 12px;
+  align-content: start;
+}
+
+.element-card {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  cursor: grab;
+}
+
+.element-card img {
+  display: block;
+  width: 48px;
+  height: 48px;
+}
+
+.element-card p {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 2px 4px;
+  background-color: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 0.6rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  text-align: center;
+  pointer-events: none;
 }
 /*********************
  ** Footer Styles **
