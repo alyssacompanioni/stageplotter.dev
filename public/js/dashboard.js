@@ -1,13 +1,47 @@
-const cards = document.querySelectorAll('.element-card');
+// ─── Palette ───────────────────────────────────────────────────────────────────
 
-cards.forEach(card => {
-  card.addEventListener('dragstart', (e) => {
-    e.dataTransfer.setData('text/plain', JSON.stringify({
-      src: card.querySelector('img').src,
-      label: card.querySelector('p').textContent
-    }));
-  });
+const cardContainer = document.querySelector('.element-card-container');
+
+// Event delegation — works for both the initial PHP-rendered cards and any
+// cards injected dynamically when the user switches instrument category.
+cardContainer.addEventListener('dragstart', (e) => {
+  const card = e.target.closest('.element-card');
+  if (!card) return;
+  e.dataTransfer.setData('text/plain', JSON.stringify({
+    src:   card.querySelector('img').src,
+    label: card.querySelector('p').textContent
+  }));
 });
+
+// Intercept category button clicks so switching categories fetches icons via
+// AJAX instead of reloading the page (which would clear the canvas).
+document.querySelector('.element-type').addEventListener('click', (e) => {
+  const btn = e.target.closest('button[value]');
+  if (!btn) return;
+  e.preventDefault();
+  switchPalette(btn.value);
+});
+
+/**
+ * Fetches icons for the given category and repopulates the card container.
+ * @param {string} category - e.g. 'guitars', 'percussion'
+ */
+async function switchPalette(category) {
+  try {
+    const res  = await fetch('/api/get_palette.php?category=' + encodeURIComponent(category));
+    const data = await res.json();
+    if (!data.success) return;
+
+    cardContainer.innerHTML = data.icons.map(icon => `
+      <div class="element-card" draggable="true">
+        <img src="${icon.src}" alt="${icon.label} Icon." width="48" height="48">
+        <p>${icon.label}</p>
+      </div>
+    `).join('');
+  } catch {
+    // Silently fail — the existing cards remain visible
+  }
+}
 
 const canvas = document.querySelector('.stage-plot-canvas');
 
