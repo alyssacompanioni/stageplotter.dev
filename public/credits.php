@@ -34,7 +34,9 @@
           <li><a target="_blank" href="https://icons8.com/icon/2969/settings">Settings</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></li>
           <li><a href="https://www.flaticon.com/free-icons/cowbell" title="cowbell icons">Cowbell icon created by Kiranshastry - Flaticon</a></li>
           <li><a target="_blank" href="https://icons8.com/icon/9397/timpani">Timpani</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></li>
-          <a target="_blank" href="https://icons8.com/icon/13141/timpani">Timpani</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+          <li><a target="_blank" href="https://icons8.com/icon/13141/timpani">Timpani</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></li>
+          <li><a target="_blank" href="https://www.svgrepo.com/svg/370237/layer-up" title="layer-up icon">Layer Up</a> icon by <a target="_blank" href="https://www.svgrepo.com/">SVGrepo</a></li>
+          <li><a target="_blank" href="https://www.svgrepo.com/svg/370233/layer-down" title="layer-down icon">Layer Down</a> icon by <a target="_blank" href="https://www.svgrepo.com/">SVGrepo</a></li>
 
         </ul>
       </section>

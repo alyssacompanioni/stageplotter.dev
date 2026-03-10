@@ -246,8 +246,8 @@ header ul {
 }
 
 .placed-element.selected {
-  outline: 2px solid var(--orange2);
-  outline-offset: 3px;
+  transform: scale(1.3);
+  
 }
 
 /* Label tooltip — hidden by default, shown on hover, hidden when selected */
@@ -363,6 +363,10 @@ header ul {
   display: flex;
   justify-content: center;
   cursor: grab;
+}
+
+.element-card:hover {
+  transform: scale(1.3);
 }
 
 .element-card img {

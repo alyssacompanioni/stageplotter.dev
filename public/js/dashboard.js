@@ -59,8 +59,8 @@ function placeElement(data, x, y) {
       <button data-action="rotate-right" title="Rotate Right">↻</button>
       <button data-action="rotate-left" title="Rotate Left">↺</button>
       <button data-action="flip-h" title="Flip Horizontal">↔</button>
-      <button data-action="layer-up" title="Layer Up">↑</button>
-      <button data-action="layer-down" title="Layer Down">↓</button>
+      <button data-action="layer-up" title="Layer Up"><img src="/assets/icons/layer-up-white.svg" alt="Layer Up" width="16" height="16"></button>
+      <button data-action="layer-down" title="Layer Down"><img src="/assets/icons/layer-down-white.svg" alt="Layer Down" width="16" height="16"></button>
     </div>
     <img src="${data.src}" alt="${data.label} Icon." width="${size}" height="${size}">
     <p>${data.label}</p>
@@ -117,7 +117,7 @@ canvas.addEventListener('click', (e) => {
  * @param {HTMLElement} el - The placed element whose image transform should be updated.
  */
 function applyTransform(el) {
-  const img = el.querySelector('img');
+  const img = el.querySelector(':scope > img');
   const rotation = parseInt(el.dataset.rotation || '0');
   const flipped = el.dataset.flipped === 'true';
   img.style.transform = `rotate(${rotation}deg) scaleX(${flipped ? -1 : 1})`;
@@ -137,7 +137,7 @@ function handleAction(action) {
       break;
 
     case 'duplicate': {
-      const img = selectedEl.querySelector('img');
+      const img = selectedEl.querySelector(':scope > img');
       const label = selectedEl.querySelector('p').textContent;
       placeElement({
         src: img.src,
@@ -153,7 +153,7 @@ function handleAction(action) {
     case 'enlarge': {
       const size = parseInt(selectedEl.dataset.size) + 8;
       selectedEl.dataset.size = size;
-      const img = selectedEl.querySelector('img');
+      const img = selectedEl.querySelector(':scope > img');
       img.width = size;
       img.height = size;
       break;
@@ -162,7 +162,7 @@ function handleAction(action) {
     case 'decrease': {
       const size = Math.max(16, parseInt(selectedEl.dataset.size) - 8);
       selectedEl.dataset.size = size;
-      const img = selectedEl.querySelector('img');
+      const img = selectedEl.querySelector(':scope > img');
       img.width = size;
       img.height = size;
       break;
