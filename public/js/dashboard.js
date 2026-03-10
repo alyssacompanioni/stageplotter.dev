@@ -59,8 +59,8 @@ function placeElement(data, x, y) {
       <button data-action="rotate-right" title="Rotate Right">↻</button>
       <button data-action="rotate-left" title="Rotate Left">↺</button>
       <button data-action="flip-h" title="Flip Horizontal">↔</button>
-      <button data-action="layer-up" title="Layer Up"><img src="/assets/icons/layer-up-white.svg" alt="Layer Up" width="16" height="16"></button>
-      <button data-action="layer-down" title="Layer Down"><img src="/assets/icons/layer-down-white.svg" alt="Layer Down" width="16" height="16"></button>
+      <button data-action="layer-up" title="Layer Up"><img src="/assets/icons/layer-up.svg" alt="Layer Up" width="16" height="16"></button>
+      <button data-action="layer-down" title="Layer Down"><img src="/assets/icons/layer-down.svg" alt="Layer Down" width="16" height="16"></button>
     </div>
     <img src="${data.src}" alt="${data.label} Icon." width="${size}" height="${size}">
     <p>${data.label}</p>
