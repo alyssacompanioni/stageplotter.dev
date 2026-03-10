@@ -20,10 +20,10 @@ canvas.addEventListener('dragover', (e) => {
 });
 
 canvas.addEventListener('drop', (e) => {
-  e.preventDefault();
+  e.preventDefault(); // Prevents default browser behavior (e.g., opening the image)
   const data = JSON.parse(e.dataTransfer.getData('text/plain'));
 
-  //Calculate drop position relative to canvas
+  // Calculate drop position relative to canvas
   const rect = canvas.getBoundingClientRect();
   const x = e.clientX - rect.left;
   const y = e.clientY - rect.top;
