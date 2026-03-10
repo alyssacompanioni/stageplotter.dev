@@ -31,6 +31,12 @@ canvas.addEventListener('drop', (e) => {
   placeElement(data, x, y);
 });
 
+/**
+ * Places a new element on the canvas at the specified coordinates.
+ * @param {Object} data - The data for the element, including src and label.
+ * @param {number} x - The x-coordinate for the element's position on the canvas.
+ * @param {number} y - The y-coordinate for the element's position on the canvas.
+ */
 function placeElement(data, x, y) {
   const el = document.createElement('div');
   el.className = 'placed-element';
@@ -52,8 +58,9 @@ canvas.addEventListener('mousedown', (e) => {
 });
 
 /**
- *
- * @param {*} el
+ * Handles the mousedown event on a placed element, enabling it to be dragged around the canvas.
+ * @param {MouseEvent} e - The mousedown event object.
+ * @param {HTMLElement} el - The placed element that was clicked on.
  */
 function mouseDownHandler(e, el) {
   activeEl = el;
@@ -64,6 +71,10 @@ function mouseDownHandler(e, el) {
   canvas.addEventListener('mouseup', mouseUpHandler);
 }
 
+/**
+ * Handles the mousemove event while dragging a placed element.
+ * @param {MouseEvent} e - The mousemove event object.
+ */
 function mouseMoveHandler(e) {
   newX = startX - e.clientX;
   newY = startY - e.clientY;
@@ -77,6 +88,10 @@ function mouseMoveHandler(e) {
   console.log({newX, newY});
 }
 
+/**
+ * Handles the end of the mousemove event by repositioning a placed element at the final coordinates and removing the mousemove event listener.
+ * @param {MouseEvent} e - The mouseup event object.
+ */
 function mouseUpHandler(e) {
   canvas.removeEventListener('mousemove', mouseMoveHandler);
 }
