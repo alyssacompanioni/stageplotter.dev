@@ -413,3 +413,74 @@ footer {
 .credits {
   text-align: right;
 }
+
+/**********************
+ * Load Plot Modal    *
+ **********************/
+.modal-overlay {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.55);
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 2000;
+}
+
+.modal-overlay[hidden] {
+  display: none;
+}
+
+.modal {
+  background: var(--section-bg);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 24px;
+  width: 420px;
+}
+
+.modal h2 {
+  margin: 0 0 16px;
+}
+
+.load-plot-list {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+}
+
+.load-plot-item {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 8px;
+  padding: 10px 14px;
+  transition: background 0.15s;
+}
+
+.load-plot-item:hover {
+  background: var(--hover-bg);
+}
+
+.load-plot-title {
+  font-weight: 600;
+}
+
+.load-plot-meta {
+  color: var(--text-gray);
+  font-size: 0.85rem;
+}
+
+.load-plot-empty {
+  color: var(--text-gray);
+  padding: 12px 0;
+  text-align: center;
+}
