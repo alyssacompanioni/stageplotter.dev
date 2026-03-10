@@ -240,6 +240,77 @@ header ul {
 
 /* Stage Plot Canvas Styles */
 /* Note: [position: relative;] is essential so the placed-elements can be absolutely positioned/anchored to it. */
+.placed-element {
+  cursor: grab;
+  position: absolute;
+}
+
+.placed-element.selected {
+  outline: 2px solid var(--orange2);
+  outline-offset: 3px;
+}
+
+/* Label tooltip — hidden by default, shown on hover, hidden when selected */
+.placed-element p {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.placed-element:hover p {
+  display: block;
+}
+
+.placed-element.selected p {
+  display: none;
+}
+
+/* Element toolbar — hidden by default, shown when element is selected */
+.element-toolbar {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--dark-blue);
+  border: 1px solid var(--medium-blue);
+  border-radius: 6px;
+  padding: 3px;
+  gap: 2px;
+  white-space: nowrap;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.placed-element.selected .element-toolbar {
+  display: flex;
+}
+
+.element-toolbar button {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+
+.element-toolbar button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
 .stage-plot-canvas {
   background-color: var(--blue1);
   border: 1px solid var(--blue5);
