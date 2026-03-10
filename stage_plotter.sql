@@ -21,35 +21,6 @@ USE `stage_plotter`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `element_name_enam`
---
-
-DROP TABLE IF EXISTS `element_name_enam`;
-CREATE TABLE IF NOT EXISTS `element_name_enam` (
-  `id_enam` int(11) NOT NULL AUTO_INCREMENT,
-  `id_etyp_enam` int(11) NOT NULL,
-  `name_enam` varchar(55) NOT NULL,
-  PRIMARY KEY (`id_enam`),
-  KEY `id_etyp_enam` (`id_etyp_enam`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `element_type_etyp`
---
-
-DROP TABLE IF EXISTS `element_type_etyp`;
-CREATE TABLE IF NOT EXISTS `element_type_etyp` (
-  `id_etyp` int(11) NOT NULL AUTO_INCREMENT,
-  `type_etyp` varchar(50) NOT NULL,
-  `icon_key_etyp` varchar(50) NOT NULL,
-  PRIMARY KEY (`id_etyp`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `input_list_channel_inplstch`
 --
 
@@ -87,20 +58,19 @@ CREATE TABLE IF NOT EXISTS `input_list_inplst` (
 
 DROP TABLE IF EXISTS `plot_element_pele`;
 CREATE TABLE IF NOT EXISTS `plot_element_pele` (
-  `id_pele` int(11) NOT NULL AUTO_INCREMENT,
-  `id_staplot_pele` int(11) NOT NULL,
-  `id_etyp_pele` int(11) NOT NULL,
-  `x_pos_pele` decimal(6,2) NOT NULL,
-  `y_pos_pele` decimal(6,2) NOT NULL,
-  `rotation_pele` smallint(6) NOT NULL DEFAULT 0,
-  `width_pele` decimal(6,2) NOT NULL,
-  `depth_pele` decimal(6,2) NOT NULL,
-  `z_index_pele` int(11) NOT NULL DEFAULT 1,
-  `id_enam_pele` int(11) NOT NULL,
+  `id_pele`        int(11)                                                            NOT NULL AUTO_INCREMENT,
+  `id_staplot_pele` int(11)                                                           NOT NULL,
+  `x_pos_pele`     decimal(6,2)                                                       NOT NULL,
+  `y_pos_pele`     decimal(6,2)                                                       NOT NULL,
+  `rotation_pele`  smallint(6)                                                        NOT NULL DEFAULT 0,
+  `z_index_pele`   int(11)                                                            NOT NULL DEFAULT 1,
+  `px_size_pele`   int(11)                                                            NOT NULL DEFAULT 48,
+  `src_pele`       varchar(255)                                                       NOT NULL DEFAULT '',
+  `type_pele`      enum('Guitar','Percussion','Keys','Strings','Winds','Amps','Misc') NOT NULL DEFAULT 'Misc',
+  `name_pele`      varchar(100)                                                       NOT NULL DEFAULT '',
+  `flipped_pele`   tinyint(1)                                                         NOT NULL DEFAULT 0,
   PRIMARY KEY (`id_pele`),
-  KEY `id_staplot_pele` (`id_staplot_pele`),
-  KEY `id_etyp_pele` (`id_etyp_pele`),
-  KEY `id_enam_pele` (`id_enam_pele`)
+  KEY `id_staplot_pele` (`id_staplot_pele`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -193,12 +163,6 @@ CREATE TABLE IF NOT EXISTS `user_usr` (
 --
 
 --
--- Constraints for table `element_name_enam`
---
-ALTER TABLE `element_name_enam`
-  ADD CONSTRAINT `element_name_enam_ibfk_1` FOREIGN KEY (`id_etyp_enam`) REFERENCES `element_type_etyp` (`id_etyp`);
-
---
 -- Constraints for table `input_list_channel_inplstch`
 --
 ALTER TABLE `input_list_channel_inplstch`
@@ -215,9 +179,7 @@ ALTER TABLE `input_list_inplst`
 -- Constraints for table `plot_element_pele`
 --
 ALTER TABLE `plot_element_pele`
-  ADD CONSTRAINT `plot_element_pele_ibfk_1` FOREIGN KEY (`id_staplot_pele`) REFERENCES `stage_plot_staplot` (`id_staplot`),
-  ADD CONSTRAINT `plot_element_pele_ibfk_2` FOREIGN KEY (`id_etyp_pele`) REFERENCES `element_type_etyp` (`id_etyp`),
-  ADD CONSTRAINT `plot_element_pele_ibfk_3` FOREIGN KEY (`id_enam_pele`) REFERENCES `element_name_enam` (`id_enam`);
+  ADD CONSTRAINT `plot_element_pele_ibfk_1` FOREIGN KEY (`id_staplot_pele`) REFERENCES `stage_plot_staplot` (`id_staplot`);
 
 --
 -- Constraints for table `plot_permission_pltperm`
