@@ -250,3 +250,178 @@ function mouseUpHandler(e) {
 
   activeEl = null;
 }
+
+// ─── Save / Load ───────────────────────────────────────────────────────────────
+
+// Tracks the database ID of the currently loaded plot (null = unsaved new plot).
+let currentPlotId = null;
+
+/**
+ * Collects the current canvas state into a plain array ready to POST to the API.
+ * Uses the src pathname (not the full absolute URL) so paths stay portable.
+ * @returns {Array<Object>}
+ */
+function serializeCanvas() {
+  const elements = [];
+  canvas.querySelectorAll('.placed-element').forEach(el => {
+    const img = el.querySelector(':scope > img');
+    elements.push({
+      src:      new URL(img.src).pathname,
+      label:    el.querySelector('p').textContent,
+      x:        parseFloat(el.style.left),
+      y:        parseFloat(el.style.top),
+      rotation: parseInt(el.dataset.rotation || '0'),
+      flipped:  el.dataset.flipped === 'true',
+      size:     parseInt(el.dataset.size || '48'),
+      z_index:  Math.max(1, parseInt(el.style.zIndex || '1')),
+    });
+  });
+  return elements;
+}
+
+/**
+ * Saves the current plot (creates new or updates existing) via the API.
+ * Stores the returned plot_id so subsequent saves perform an update.
+ */
+async function savePlot() {
+  const title   = document.getElementById('plot-title').value.trim();
+  const gigDate = document.getElementById('plot-gig-date').value.trim();
+  const venue   = document.getElementById('plot-venue').value.trim();
+
+  if (!title || !gigDate) {
+    alert('Title and Gig Date are required to save.');
+    return;
+  }
+
+  closeDropdown();
+
+  try {
+    const res  = await fetch('/api/save_plot.php', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({
+        plot_id:  currentPlotId,
+        title,
+        gig_date: gigDate,
+        venue:    venue || null,
+        elements: serializeCanvas(),
+      }),
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      currentPlotId = data.plot_id;
+      alert('Plot saved!');
+    } else {
+      alert('Save failed:\n' + (data.errors ? data.errors.join('\n') : data.error));
+    }
+  } catch {
+    alert('Error: could not reach the server.');
+  }
+}
+
+/**
+ * Fetches the user's saved plots and opens the load modal.
+ */
+async function showLoadModal() {
+  closeDropdown();
+
+  try {
+    const res  = await fetch('/api/load_plots.php');
+    const data = await res.json();
+
+    if (!data.success) {
+      alert('Could not load plots.');
+      return;
+    }
+
+    const list = document.getElementById('load-plot-list');
+    list.innerHTML = '';
+
+    if (data.plots.length === 0) {
+      list.innerHTML = '<li class="load-plot-empty">No saved plots found.</li>';
+    } else {
+      data.plots.forEach(plot => {
+        const li = document.createElement('li');
+        li.className = 'load-plot-item';
+        li.innerHTML = `
+          <span class="load-plot-title">${plot.title}</span>
+          <span class="load-plot-meta">${plot.gig_date}${plot.venue ? ' — ' + plot.venue : ''}</span>
+        `;
+        li.addEventListener('click', () => loadPlot(plot.id));
+        list.appendChild(li);
+      });
+    }
+
+    document.getElementById('load-plot-modal').removeAttribute('hidden');
+  } catch {
+    alert('Error: could not reach the server.');
+  }
+}
+
+/**
+ * Loads a saved plot from the API, clears the canvas, and restores all elements.
+ * @param {number} plotId
+ */
+async function loadPlot(plotId) {
+  closeLoadModal();
+
+  try {
+    const res  = await fetch('/api/load_plot.php?id=' + plotId);
+    const data = await res.json();
+
+    if (!data.success) {
+      alert('Could not load plot.');
+      return;
+    }
+
+    // Restore meta fields
+    document.getElementById('plot-title').value    = data.title;
+    document.getElementById('plot-gig-date').value = data.gig_date;
+    document.getElementById('plot-venue').value    = data.venue ?? '';
+    currentPlotId = data.plot_id;
+
+    // Clear the canvas and redraw elements
+    deselectAll();
+    canvas.querySelectorAll('.placed-element').forEach(el => el.remove());
+
+    data.elements.forEach(el => {
+      placeElement({
+        src:      el.src,
+        label:    el.label,
+        rotation: String(el.rotation),
+        flipped:  el.flipped ? 'true' : 'false',
+        size:     el.size,
+        zIndex:   String(el.z_index),
+      }, el.x, el.y);
+    });
+  } catch {
+    alert('Error: could not reach the server.');
+  }
+}
+
+/**
+ * Closes the load plot modal.
+ */
+function closeLoadModal() {
+  document.getElementById('load-plot-modal').setAttribute('hidden', '');
+}
+
+/**
+ * Closes the plot actions dropdown by unchecking its toggle checkbox.
+ */
+function closeDropdown() {
+  document.getElementById('plot-toolbar-toggle').checked = false;
+}
+
+// ─── Button wiring ─────────────────────────────────────────────────────────────
+
+document.getElementById('save-plot-btn').addEventListener('click', savePlot);
+document.getElementById('load-plot-btn').addEventListener('click', showLoadModal);
+document.getElementById('load-modal-cancel').addEventListener('click', closeLoadModal);
+document.getElementById('clear-stage-btn').addEventListener('click', () => {
+  closeDropdown();
+  deselectAll();
+  canvas.querySelectorAll('.placed-element').forEach(el => el.remove());
+});

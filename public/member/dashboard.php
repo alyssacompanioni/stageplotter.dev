@@ -94,4 +94,14 @@ $session->require_role('member');
     </main>
   </div>
   <?php require_once '../includes/footer.php'; ?>
+
+  <div id="load-plot-modal" class="modal-overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="load-modal-title">
+      <h2 id="load-modal-title">Load Plot</h2>
+      <ul id="load-plot-list" class="load-plot-list">
+        <!-- Populated by showLoadModal() in dashboard.js -->
+      </ul>
+      <button id="load-modal-cancel" class="btn btn-ghost">Cancel</button>
+    </div>
+  </div>
 </body>
