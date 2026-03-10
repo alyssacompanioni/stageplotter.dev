@@ -11,6 +11,10 @@ cards.forEach(card => {
 
 const canvas = document.querySelector('.stage-plot-canvas');
 
+canvas.addEventListener('dragstart', (e) => {
+  if (e.target.closest('.placed-element')) e.preventDefault();
+});
+
 canvas.addEventListener('dragover', (e) => {
   e.preventDefault(); // Allows dropping
 });
@@ -39,6 +43,41 @@ function placeElement(data, x, y) {
   canvas.appendChild(el);
 }
 
-// function moveElement(el, x, y ) {
+let activeEl = null;
 
-// }
+// Listen for a mousedown event on the canvas and check if the event was on a placed element. If so, enable dragging it around the canvas
+canvas.addEventListener('mousedown', (e) => {
+  const el = e.target.closest('.placed-element');
+  if (el) mouseDownHandler(e, el);
+});
+
+/**
+ *
+ * @param {*} el
+ */
+function mouseDownHandler(e, el) {
+  activeEl = el;
+  startX = e.clientX;
+  startY = e.clientY;
+  
+  canvas.addEventListener('mousemove', mouseMoveHandler);
+  canvas.addEventListener('mouseup', mouseUpHandler);
+}
+
+function mouseMoveHandler(e) {
+  newX = startX - e.clientX;
+  newY = startY - e.clientY;
+
+  startX = e.clientX;
+  startY = e.clientY;
+
+  activeEl.style.left = (activeEl.offsetLeft - newX) + 'px';
+  activeEl.style.top = (activeEl.offsetTop - newY) + 'px';
+
+  console.log({newX, newY});
+}
+
+function mouseUpHandler(e) {
+  canvas.removeEventListener('mousemove', mouseMoveHandler);
+}
+
