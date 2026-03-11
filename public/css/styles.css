@@ -157,6 +157,15 @@ ul.error li {
   padding: 2px 0;
 }
 
+/* Inline field error — injected by forms.js */
+span.field-error {
+  color: var(--red1);
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+  margin-top: 2px;
+}
+
 /* Error paragraph — used on login.php */
 p.error {
   background: #fef2f2;

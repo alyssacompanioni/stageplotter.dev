@@ -133,6 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <title>My Profile | Stage Plotter</title>
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+  <script src="/js/forms.js" defer></script>
 </head>
 
 <body>
