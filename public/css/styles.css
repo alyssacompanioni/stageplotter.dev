@@ -496,3 +496,32 @@ footer {
   padding: 12px 0;
   text-align: center;
 }
+
+/**********************
+ * Profile Page       *
+ **********************/
+.profile-main {
+  max-width: 560px;
+  padding: 32px 0;
+}
+
+.profile-section {
+  background: var(--section-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 24px;
+  padding: 24px;
+}
+
+.profile-section h2 {
+  margin: 0 0 16px;
+}
+
+.form-success {
+  background: #d1fae5;
+  border: 1px solid #6ee7b7;
+  border-radius: 4px;
+  color: #065f46;
+  margin-bottom: 12px;
+  padding: 8px 12px;
+}

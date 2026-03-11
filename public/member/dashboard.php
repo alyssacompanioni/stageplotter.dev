@@ -33,13 +33,13 @@ $session->require_role('member');
               <img src="/assets/icons/gear.svg" alt="Plot actions" width="24" height="24">
             </label>
             <ul class="dropdown-menu" id="plot-toolbar">
-              <li><button id="new-plot-btn" class="btn btn-primary">New Plot</button></li>
-              <li><button id="load-plot-btn" class="btn btn-secondary">Load Plot</button></li>
-              <li><button id="save-plot-btn" class="btn btn-primary">Save Plot</button></li>
-              <li><button id="share-plot-btn" class="btn btn-secondary">Share Plot</button></li>
-              <li><button id="export-plot-btn" class="btn btn-secondary">Export Plot</button></li>
-              <li><button id="print-plot-btn" class="btn btn-secondary">Print Plot</button></li>
-              <li><button id="change-dimensions-btn" class="btn btn-secondary">Change Dimensions</button></li>
+              <li><button id="new-plot-btn" class="btn">New Plot</button></li>
+              <li><button id="load-plot-btn" class="btn">Load Plot</button></li>
+              <li><button id="save-plot-btn" class="btn">Save Plot</button></li>
+              <li><button id="share-plot-btn" class="btn">Share Plot</button></li>
+              <li><button id="export-plot-btn" class="btn">Export Plot</button></li>
+              <li><button id="print-plot-btn" class="btn">Print Plot</button></li>
+              <li><button id="change-dimensions-btn" class="btn">Change Dimensions</button></li>
               <li><button id="clear-stage-btn" class="btn btn-ghost">Clear Stage</button></li>
             </ul>
           </div>
@@ -50,9 +50,9 @@ $session->require_role('member');
       </div>
       <section class="palette-container">
         <header>
-          <button id="instrument-palette-toggle" class="btn btn-secondary" aria-label="Toggle instrument palette">Instruments</button>
-          <button id="equipment-palette-toggle" class="btn btn-secondary" aria-label="Toggle equipment palette">Equipment</button>
-          <button id="input-palette-toggle" class="btn btn-secondary" aria-label="Toggle input palette">Inputs</button>
+          <button id="instrument-palette-toggle" class="btn" aria-label="Toggle instrument palette">Instruments</button>
+          <button id="equipment-palette-toggle" class="btn" aria-label="Toggle equipment palette">Equipment</button>
+          <button id="input-palette-toggle" class="btn" aria-label="Toggle input palette">Inputs</button>
         </header>
         <div class="palette">
           <div class="element-type">
@@ -76,7 +76,7 @@ $session->require_role('member');
             ?>
               <button type="button"
                       value="<?= htmlspecialchars($slug) ?>"
-                      class="btn btn-secondary element-type-btn"
+                      class="btn element-type-btn"
                       aria-label="Show <?= htmlspecialchars($label) ?> icons">
                 <?php if ($icon_src): ?>
                   <img src="<?= htmlspecialchars($icon_src) ?>" alt="" width="32" height="32" aria-hidden="true">
