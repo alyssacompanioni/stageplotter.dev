@@ -349,6 +349,18 @@ header ul {
   padding: 12px;
 }
 
+.btn {
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  margin: 4px 0;
+}
+
+.btn:hover {
+  transform: scale(1.1);
+}
+
 .element-card-container {
   background-color: var(--green1);
   display: grid;

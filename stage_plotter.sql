@@ -213,7 +213,7 @@ INSERT INTO user_usr (first_name_usr, last_name_usr, email_usr, phone_usr, usern
 VALUES ('Alyssa', 'Companioni', 'alyssamcompanioni@students.abtech.edu', '828-123-1234', 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 1, current_timestamp(), current_timestamp());
 
 --
--- DUMP admin user for testing
+-- DUMP super_admin user for testing
 -- username: superadmin
 -- password: password (hashed in the database)
 --
