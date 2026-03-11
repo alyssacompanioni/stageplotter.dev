@@ -290,6 +290,38 @@ function mouseUpHandler(e) {
 // Tracks the database ID of the currently loaded plot (null = unsaved new plot).
 let currentPlotId = null;
 
+// JSON snapshot of the canvas + meta fields at the time of the last save or load.
+// null means nothing has been saved/loaded yet this session.
+let lastSavedState = null;
+
+/**
+ * Returns a JSON string representing the full current plot state (meta + elements).
+ * Used to detect unsaved changes.
+ * @returns {string}
+ */
+function getCurrentState() {
+  return JSON.stringify({
+    title:    document.getElementById('plot-title').value.trim(),
+    gig_date: document.getElementById('plot-gig-date').value.trim(),
+    venue:    document.getElementById('plot-venue').value.trim(),
+    elements: serializeCanvas(),
+  });
+}
+
+/**
+ * Returns true if the canvas has been modified since the last save or load.
+ * @returns {boolean}
+ */
+function hasUnsavedChanges() {
+  const current = getCurrentState();
+  if (lastSavedState === null) {
+    // Nothing has been saved yet — treat any content as unsaved
+    const state = JSON.parse(current);
+    return state.elements.length > 0 || state.title !== '' || state.gig_date !== '' || state.venue !== '';
+  }
+  return current !== lastSavedState;
+}
+
 /**
  * Collects the current canvas state into a plain array ready to POST to the API.
  * Uses the src pathname (not the full absolute URL) so paths stay portable.
@@ -345,13 +377,17 @@ async function savePlot() {
     const data = await res.json();
 
     if (data.success) {
-      currentPlotId = data.plot_id;
+      currentPlotId  = data.plot_id;
+      lastSavedState = getCurrentState();
       alert('Plot saved!');
+      return true;
     } else {
       alert('Save failed:\n' + (data.errors ? data.errors.join('\n') : data.error));
+      return false;
     }
   } catch {
     alert('Error: could not reach the server.');
+    return false;
   }
 }
 
@@ -430,9 +466,44 @@ async function loadPlot(plotId) {
         zIndex:   String(el.z_index),
       }, el.x, el.y);
     });
+
+    lastSavedState = getCurrentState();
   } catch {
     alert('Error: could not reach the server.');
   }
+}
+
+/**
+ * Resets the canvas and all plot meta fields to a blank state.
+ */
+function resetPlot() {
+  deselectAll();
+  canvas.querySelectorAll('.placed-element').forEach(el => el.remove());
+  document.getElementById('plot-title').value    = '';
+  document.getElementById('plot-gig-date').value = '';
+  document.getElementById('plot-venue').value    = '';
+  currentPlotId  = null;
+  lastSavedState = null;
+}
+
+/**
+ * Starts a new blank plot. If there are unsaved changes, prompts the user to
+ * save first or confirm discarding before resetting.
+ */
+async function newPlot() {
+  closeDropdown();
+
+  if (hasUnsavedChanges()) {
+    const wantToSave = confirm('You have unsaved changes. Save before starting a new plot?');
+    if (wantToSave) {
+      const saved = await savePlot();
+      if (!saved) return; // Save failed or missing required fields — stay on current plot
+    } else {
+      if (!confirm('Discard unsaved changes and start a new plot?')) return;
+    }
+  }
+
+  resetPlot();
 }
 
 /**
@@ -451,6 +522,7 @@ function closeDropdown() {
 
 // ─── Button wiring ─────────────────────────────────────────────────────────────
 
+document.getElementById('new-plot-btn').addEventListener('click', newPlot);
 document.getElementById('save-plot-btn').addEventListener('click', savePlot);
 document.getElementById('load-plot-btn').addEventListener('click', showLoadModal);
 document.getElementById('load-modal-cancel').addEventListener('click', closeLoadModal);
