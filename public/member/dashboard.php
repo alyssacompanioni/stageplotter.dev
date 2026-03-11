@@ -55,39 +55,38 @@ $session->require_role('member');
           <button id="input-palette-toggle" class="btn btn-secondary" aria-label="Toggle input palette">Inputs</button>
         </header>
         <div class="palette">
-          <form method="get" class="element-type">
-            <!-- Load instrument and equipment icons here when their respective palettes are active -->
-            <button type="submit" name="element_type" id="guitars-button-toggle" value="guitars" class="btn btn-secondary" aria-label="Toggle guitar icons">Guitars</button>
-            <button type="submit" name="element_type" id="percussion-button-toggle" value="percussion" class="btn btn-secondary" aria-label="Toggle percussion icons">Percussion</button>
-            <button type="submit" name="element_type" id="keys-button-toggle" value="keys" class="btn btn-secondary" aria-label="Toggle keyboard icons">Keys</button>
-            <button type="submit" name="element_type" id="strings-button-toggle" value="strings" class="btn btn-secondary" aria-label="Toggle strings icons">Strings</button>
-            <button type="submit" name="element_type" id="winds-button-toggle" value="winds" class="btn btn-secondary" aria-label="Toggle wind icons">Winds</button>
-            <button type="submit" name="element_type" id="amps-button-toggle" value="amps" class="btn btn-secondary" aria-label="Toggle amp icons">Amps</button>
-            <button type="submit" name="element_type" id="misc-button-toggle" value="misc" class="btn btn-secondary" aria-label="Toggle miscellaneous icons">Misc</button>
-            <!-- Display input list if input palette is active -->
-          </form>
+          <div class="element-type">
+            <?php
+            $categories = [
+              'guitars'    => 'Guitars',
+              'percussion' => 'Percussion',
+              'keys'       => 'Keys',
+              'strings'    => 'Strings',
+              'winds'      => 'Winds',
+              'amps'       => 'Amps',
+              'misc'       => 'Misc',
+            ];
+            foreach ($categories as $slug => $label):
+              $dir        = $_SERVER['DOCUMENT_ROOT'] . '/assets/instruments/' . $slug . '/';
+              $files      = glob($dir . '*.{svg,png}', GLOB_BRACE) ?: [];
+              sort($files);
+              $icon_src   = !empty($files)
+                ? '/assets/instruments/' . $slug . '/' . basename($files[0])
+                : null;
+            ?>
+              <button type="button"
+                      value="<?= htmlspecialchars($slug) ?>"
+                      class="btn btn-secondary element-type-btn"
+                      aria-label="Show <?= htmlspecialchars($label) ?> icons">
+                <?php if ($icon_src): ?>
+                  <img src="<?= htmlspecialchars($icon_src) ?>" alt="" width="32" height="32" aria-hidden="true">
+                <?php endif; ?>
+                <span><?= htmlspecialchars($label) ?></span>
+              </button>
+            <?php endforeach; ?>
+          </div>
           <div class="element-card-container">
-            <!-- This is where draggable instrument/equipment icons and input list items will be rendered -->
-            <?php
-            $active_element_type = $_GET['element_type'] ?? 'guitars';
-            $valid_categories = ['guitars', 'percussion', 'keys', 'strings', 'winds', 'amps', 'misc'];
-
-            if (in_array($active_element_type, $valid_categories)):
-              $category_dir = $_SERVER['DOCUMENT_ROOT'] . '/assets/instruments/' . $active_element_type . '/';
-              $category_files = glob($category_dir . '*.{svg,png}', GLOB_BRACE) ?: [];
-              sort($category_files);
-              foreach ($category_files as $file):
-                $filename = basename($file);
-                $label = ucwords(str_replace(['-', '_'], ' ', pathinfo($filename, PATHINFO_FILENAME)));
-            ?>
-                <div class="element-card" draggable="true">
-                  <img src="/assets/instruments/<?= htmlspecialchars($active_element_type) ?>/<?= htmlspecialchars($filename) ?>" alt="<?= htmlspecialchars($label) ?> Icon." width="48" height="48">
-                  <p><?= htmlspecialchars($label) ?></p>
-                </div>
-            <?php
-              endforeach;
-            endif;
-            ?>
+            <!-- Populated on page load by switchPalette() in dashboard.js -->
           </div>
         </div>
       </section>

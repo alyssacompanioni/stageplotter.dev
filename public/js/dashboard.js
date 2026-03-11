@@ -459,3 +459,6 @@ document.getElementById('clear-stage-btn').addEventListener('click', () => {
   deselectAll();
   canvas.querySelectorAll('.placed-element').forEach(el => el.remove());
 });
+
+// Load the default palette category on page load.
+switchPalette('guitars');
