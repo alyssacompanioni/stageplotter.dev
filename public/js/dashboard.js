@@ -630,6 +630,82 @@ async function exportPlot() {
     pdf.text(el.label, x + w / 2, y + w + 3, { align: 'center' });
   }
 
+  // ── Page 2: Inputs (channels + details) ─────────────────────────────────────
+
+  const channels = Array.from(document.querySelectorAll('#channel-list .channel-row')).map(row => ({
+    num:   row.querySelector('.channel-num').value.trim(),
+    label: row.querySelector('.channel-label').value.trim(),
+  })).filter(ch => ch.num || ch.label);
+
+  const details = document.getElementById('inputs-details').value.trim();
+
+  if (channels.length > 0 || details) {
+    pdf.addPage();
+    let y = margin;
+
+    // Page title
+    pdf.setFontSize(16);
+    pdf.setTextColor(30, 30, 30);
+    pdf.text('Inputs', margin, y + 6);
+    y += 14;
+
+    // ── Channel list
+    if (channels.length > 0) {
+      const colNum   = margin;
+      const colLabel = margin + 18;
+      const rowH     = 7;
+
+      // Header
+      pdf.setFontSize(8);
+      pdf.setTextColor(100, 100, 100);
+      pdf.text('CH', colNum, y);
+      pdf.text('Description', colLabel, y);
+      y += 4;
+
+      // Divider
+      pdf.setDrawColor(180, 180, 180);
+      pdf.line(margin, y, pageW - margin, y);
+      y += 5;
+
+      // Rows
+      pdf.setFontSize(10);
+      channels.forEach((ch, i) => {
+        if (y + rowH > pageH - margin) {
+          pdf.addPage();
+          y = margin;
+        }
+        // Alternating row background
+        if (i % 2 === 0) {
+          pdf.setFillColor(240, 244, 248);
+          pdf.rect(margin, y - 4, pageW - margin * 2, rowH, 'F');
+        }
+        pdf.setTextColor(30, 30, 30);
+        pdf.text(ch.num,   colNum,   y);
+        pdf.text(ch.label, colLabel, y);
+        y += rowH;
+      });
+
+      y += 6;
+    }
+
+    // ── Details
+    if (details) {
+      pdf.setFontSize(12);
+      pdf.setTextColor(30, 30, 30);
+      pdf.text('Details', margin, y);
+      y += 6;
+
+      pdf.setFontSize(10);
+      pdf.setTextColor(50, 50, 50);
+      const lines = pdf.splitTextToSize(details, pageW - margin * 2);
+      lines.forEach(line => {
+        if (y + 6 > pageH - margin) { pdf.addPage(); y = margin; }
+        pdf.text(line, margin, y);
+        y += 6;
+      });
+    }
+  }
+
   const filename = title.replace(/[^a-z0-9]/gi, '_').replace(/_+/g, '_') + '.pdf';
   pdf.save(filename);
 
