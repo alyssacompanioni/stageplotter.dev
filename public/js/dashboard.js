@@ -661,5 +661,75 @@ document.getElementById('clear-stage-btn').addEventListener('click', () => {
   canvas.querySelectorAll('.placed-element').forEach(el => el.remove());
 });
 
+// ─── Inputs Panel ──────────────────────────────────────────────────────────────
+
+const palette      = document.querySelector('.palette');
+const inputsPanel  = document.getElementById('inputs-panel');
+const channelList  = document.getElementById('channel-list');
+const channelsView = document.getElementById('channels-view');
+const detailsView  = document.getElementById('details-view');
+
+/**
+ * Creates and returns a new channel list item with a number input, text input,
+ * and a delete button.
+ */
+function createChannelRow(placeholder = '', channelNum = null) {
+  const li = document.createElement('li');
+  li.className = 'channel-row';
+  li.innerHTML = `
+    <input type="number" class="channel-num" min="1" max="999" placeholder="#"${channelNum !== null ? ` value="${channelNum}"` : ''}>
+    <input type="text" class="channel-label" placeholder="${placeholder}">
+    <button class="btn btn-ghost channel-delete-btn" aria-label="Delete channel">✕</button>
+  `;
+  li.querySelector('.channel-delete-btn').addEventListener('click', () => li.remove());
+  return li;
+}
+
+/** Shows the inputs panel and hides the regular palette. */
+function showInputsPanel() {
+  palette.setAttribute('hidden', '');
+  inputsPanel.removeAttribute('hidden');
+
+  // Default to channels tab
+  channelsView.removeAttribute('hidden');
+  detailsView.setAttribute('hidden', '');
+  document.getElementById('channels-tab-btn').classList.add('active-tab');
+  document.getElementById('details-tab-btn').classList.remove('active-tab');
+
+  // Seed with 5 rows if empty
+  if (channelList.children.length === 0) {
+    const placeholders = ['Electric guitar', 'Keyboard', 'Snare...', '', ''];
+    for (let i = 0; i < 5; i++) channelList.appendChild(createChannelRow(placeholders[i], i + 1));
+  }
+}
+
+/** Hides the inputs panel and shows the regular palette. */
+function showPalette() {
+  inputsPanel.setAttribute('hidden', '');
+  palette.removeAttribute('hidden');
+}
+
+document.getElementById('instrument-palette-toggle').addEventListener('click', showPalette);
+document.getElementById('equipment-palette-toggle').addEventListener('click', showPalette);
+document.getElementById('input-palette-toggle').addEventListener('click', showInputsPanel);
+
+document.getElementById('add-channel-btn').addEventListener('click', () => {
+  channelList.appendChild(createChannelRow());
+});
+
+document.getElementById('channels-tab-btn').addEventListener('click', () => {
+  channelsView.removeAttribute('hidden');
+  detailsView.setAttribute('hidden', '');
+  document.getElementById('channels-tab-btn').classList.add('active-tab');
+  document.getElementById('details-tab-btn').classList.remove('active-tab');
+});
+
+document.getElementById('details-tab-btn').addEventListener('click', () => {
+  detailsView.removeAttribute('hidden');
+  channelsView.setAttribute('hidden', '');
+  document.getElementById('details-tab-btn').classList.add('active-tab');
+  document.getElementById('channels-tab-btn').classList.remove('active-tab');
+});
+
 // Load the default palette category on page load.
 switchPalette('guitars');

@@ -90,6 +90,20 @@ $session->require_role('member');
             <!-- Populated on page load by switchPalette() in dashboard.js -->
           </div>
         </div>
+
+        <div id="inputs-panel" class="inputs-panel" hidden>
+          <div class="inputs-panel-tabs">
+            <button id="channels-tab-btn" class="btn inputs-tab-btn">Channels</button>
+            <button id="details-tab-btn" class="btn inputs-tab-btn">Details</button>
+          </div>
+          <div id="channels-view">
+            <ol id="channel-list" class="channel-list"></ol>
+            <button id="add-channel-btn" class="btn">+ Add Channel</button>
+          </div>
+          <div id="details-view" hidden>
+            <textarea id="inputs-details" placeholder="Notes about gear details, musician info, etc."></textarea>
+          </div>
+        </div>
       </section>
     </main>
   </div>

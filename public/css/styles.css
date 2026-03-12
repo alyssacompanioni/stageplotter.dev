@@ -445,6 +445,10 @@ header ul {
   margin: 0;
 }
 
+.palette[hidden] {
+  display: none;
+}
+
 .palette {
   display: grid;
   grid-template-columns: 1fr 3fr;
@@ -511,6 +515,83 @@ header ul {
   text-align: center;
   pointer-events: none;
 }
+/***********************
+ * Inputs Panel Styles *
+ ***********************/
+.inputs-panel[hidden] {
+  display: none;
+}
+
+.inputs-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.inputs-panel-tabs {
+  display: flex;
+  gap: 6px;
+}
+
+.inputs-tab-btn {
+  flex: 1;
+  background: var(--blue-gray);
+  color: #333;
+}
+
+.inputs-tab-btn.active-tab {
+  background: var(--primary-teal);
+  color: #fff;
+}
+
+.channel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  list-style: decimal;
+  padding-left: 24px;
+  margin: 0;
+}
+
+.channel-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.channel-num {
+  width: 56px;
+  padding: 4px 6px;
+  text-align: center;
+}
+
+.channel-label {
+  flex: 1;
+  padding: 4px 6px;
+}
+
+.channel-delete-btn {
+  padding: 4px 8px;
+  color: var(--red1);
+  flex-shrink: 0;
+}
+
+#add-channel-btn {
+  display: block;
+  margin: 8px auto 0;
+}
+
+#inputs-details {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 200px;
+  padding: 8px;
+  resize: vertical;
+  font: inherit;
+}
+
 /*********************
  ** Footer Styles **
  *********************/
