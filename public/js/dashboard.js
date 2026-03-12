@@ -304,6 +304,7 @@ function getCurrentState() {
     gig_date: document.getElementById('plot-gig-date').value.trim(),
     venue:    document.getElementById('plot-venue').value.trim(),
     elements: serializeCanvas(),
+    inputs:   serializeInputs(),
   });
 }
 
@@ -345,6 +346,22 @@ function serializeCanvas() {
 }
 
 /**
+ * Collects the current inputs panel state (channels + details) into a plain object.
+ * @returns {{ channels: Array<{num: string, label: string}>, details: string }}
+ */
+function serializeInputs() {
+  const channels = Array.from(document.querySelectorAll('#channel-list .channel-row')).map(row => ({
+    num:   row.querySelector('.channel-num').value.trim(),
+    label: row.querySelector('.channel-label').value.trim(),
+  })).filter(ch => ch.num || ch.label);
+
+  return {
+    channels,
+    details: document.getElementById('inputs-details').value.trim(),
+  };
+}
+
+/**
  * Saves the current plot (creates new or updates existing) via the API.
  * Stores the returned plot_id so subsequent saves perform an update.
  */
@@ -370,6 +387,7 @@ async function savePlot() {
         gig_date: gigDate,
         venue:    venue || null,
         elements: serializeCanvas(),
+        inputs:   serializeInputs(),
       }),
     });
 
@@ -466,6 +484,21 @@ async function loadPlot(plotId) {
       }, el.x, el.y);
     });
 
+    // Restore inputs panel
+    const inputs = data.inputs ?? { channels: [], details: '' };
+    document.getElementById('channel-list').innerHTML  = '';
+    document.getElementById('inputs-details').value    = inputs.details || '';
+    if (inputs.channels.length > 0) {
+      inputs.channels.forEach(ch => {
+        document.getElementById('channel-list').appendChild(createChannelRow('', ch.num, ch.label));
+      });
+    } else {
+      const placeholders = ['Electric guitar', 'Keyboard', 'Snare...', '', ''];
+      for (let i = 0; i < 5; i++) {
+        document.getElementById('channel-list').appendChild(createChannelRow(placeholders[i], i + 1));
+      }
+    }
+
     lastSavedState = getCurrentState();
   } catch {
     alert('Error: could not reach the server.');
@@ -481,6 +514,8 @@ function resetPlot() {
   document.getElementById('plot-title').value    = '';
   document.getElementById('plot-gig-date').value = '';
   document.getElementById('plot-venue').value    = '';
+  document.getElementById('inputs-details').value = '';
+  document.getElementById('channel-list').innerHTML = '';
   currentPlotId  = null;
   lastSavedState = null;
 }
@@ -749,14 +784,14 @@ const detailsView  = document.getElementById('details-view');
  * Creates and returns a new channel list item with a number input, text input,
  * and a delete button.
  */
-function createChannelRow(placeholder = '', channelNum = null) {
+function createChannelRow(placeholder = '', channelNum = null, labelValue = '') {
   const li = document.createElement('li');
   li.className = 'channel-row';
   li.draggable = true;
   li.innerHTML = `
     <span class="channel-drag-handle" aria-hidden="true">⠿</span>
     <input type="number" class="channel-num" min="1" max="999" placeholder="#"${channelNum !== null ? ` value="${channelNum}"` : ''}>
-    <input type="text" class="channel-label" placeholder="${placeholder}">
+    <input type="text" class="channel-label" placeholder="${placeholder}"${labelValue ? ` value="${labelValue}"` : ''}>
     <button class="btn btn-ghost channel-delete-btn" aria-label="Delete channel">✕</button>
   `;
   li.querySelector('.channel-delete-btn').addEventListener('click', () => li.remove());

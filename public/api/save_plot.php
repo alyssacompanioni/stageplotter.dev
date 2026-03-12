@@ -93,6 +93,37 @@ foreach (($body['elements'] ?? []) as $el) {
   $element->save();
 }
 
+// ── Save inputs (channels + details) ──────────────────────────────────────
+$inputs   = $body['inputs'] ?? [];
+$details  = trim((string) ($inputs['details'] ?? '')) ?: null;
+$channels = is_array($inputs['channels'] ?? null) ? $inputs['channels'] : [];
+
+// Upsert the input_list row (unique per plot)
+$db->prepare("
+  INSERT INTO input_list_inplst (id_staplot_inplst, notes_inplst)
+  VALUES (?, ?)
+  ON DUPLICATE KEY UPDATE notes_inplst = VALUES(notes_inplst)
+")->execute([$plot->id, $details]);
+
+$list_id = $db->prepare("SELECT id_inplst FROM input_list_inplst WHERE id_staplot_inplst = ?");
+$list_id->execute([$plot->id]);
+$list_id = (int) $list_id->fetchColumn();
+
+// Replace all channels for this input list
+$db->prepare("DELETE FROM input_list_channel_inplstch WHERE id_inplst_inplstch = ?")
+   ->execute([$list_id]);
+
+$insert_ch = $db->prepare("
+  INSERT INTO input_list_channel_inplstch (id_inplst_inplstch, channel_num_inplstch, label_inplstch)
+  VALUES (?, ?, ?)
+");
+foreach ($channels as $ch) {
+  $num   = (int) ($ch['num'] ?? 0);
+  $label = substr(trim((string) ($ch['label'] ?? '')), 0, 100);
+  if ($num < 1 || $num > 999) continue;
+  $insert_ch->execute([$list_id, $num, $label]);
+}
+
 echo json_encode(['success' => true, 'plot_id' => $plot->id]);
 
 // ── Helper ─────────────────────────────────────────────────────────────────

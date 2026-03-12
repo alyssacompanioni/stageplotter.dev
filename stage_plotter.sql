@@ -29,9 +29,9 @@ CREATE TABLE IF NOT EXISTS `input_list_channel_inplstch` (
   `id_inplstch` int(11) NOT NULL AUTO_INCREMENT,
   `id_inplst_inplstch` int(11) NOT NULL,
   `channel_num_inplstch` int(11) NOT NULL,
-  `id_pele_inplstch` int(11) NOT NULL,
+  `label_inplstch` varchar(100) NOT NULL DEFAULT '',
+  `id_pele_inplstch` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_inplstch`),
-  UNIQUE KEY `id_pele_inplstch` (`id_pele_inplstch`),
   UNIQUE KEY `input_list_channel_inplstch_index_0` (`id_inplst_inplstch`,`channel_num_inplstch`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -45,7 +45,7 @@ DROP TABLE IF EXISTS `input_list_inplst`;
 CREATE TABLE IF NOT EXISTS `input_list_inplst` (
   `id_inplst` int(11) NOT NULL AUTO_INCREMENT,
   `id_staplot_inplst` int(11) NOT NULL,
-  `notes_inplst` varchar(255) DEFAULT NULL,
+  `notes_inplst` text DEFAULT NULL,
   PRIMARY KEY (`id_inplst`),
   UNIQUE KEY `id_staplot_inplst` (`id_staplot_inplst`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -166,7 +166,6 @@ CREATE TABLE IF NOT EXISTS `user_usr` (
 -- Constraints for table `input_list_channel_inplstch`
 --
 ALTER TABLE `input_list_channel_inplstch`
-  ADD CONSTRAINT `input_list_channel_inplstch_ibfk_1` FOREIGN KEY (`id_pele_inplstch`) REFERENCES `plot_element_pele` (`id_pele`),
   ADD CONSTRAINT `input_list_channel_inplstch_ibfk_2` FOREIGN KEY (`id_inplst_inplstch`) REFERENCES `input_list_inplst` (`id_inplst`);
 
 --

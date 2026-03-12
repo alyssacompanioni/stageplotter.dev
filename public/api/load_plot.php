@@ -48,6 +48,31 @@ $elements = array_map(function (PlotElement $el): array {
   ];
 }, $raw_elements);
 
+// ── Fetch inputs (channels + details) ─────────────────────────────────────
+$stmt = $db->prepare("
+  SELECT il.notes_inplst, ic.channel_num_inplstch, ic.label_inplstch
+  FROM input_list_inplst il
+  LEFT JOIN input_list_channel_inplstch ic ON ic.id_inplst_inplstch = il.id_inplst
+  WHERE il.id_staplot_inplst = ?
+  ORDER BY ic.channel_num_inplstch ASC
+");
+$stmt->execute([$plot->id]);
+$input_rows = $stmt->fetchAll();
+
+$details  = '';
+$channels = [];
+foreach ($input_rows as $row) {
+  if ($details === '' && $row['notes_inplst'] !== null) {
+    $details = $row['notes_inplst'];
+  }
+  if ($row['channel_num_inplstch'] !== null) {
+    $channels[] = [
+      'num'   => (int)    $row['channel_num_inplstch'],
+      'label' => (string) $row['label_inplstch'],
+    ];
+  }
+}
+
 echo json_encode([
   'success'  => true,
   'plot_id'  => $plot->id,
@@ -55,6 +80,7 @@ echo json_encode([
   'gig_date' => db_date_to_display($plot->gig_date_staplot),
   'venue'    => $plot->venue_staplot,
   'elements' => $elements,
+  'inputs'   => ['channels' => $channels, 'details' => $details],
 ]);
 
 // ── Helper ─────────────────────────────────────────────────────────────────
