@@ -274,9 +274,8 @@ function mouseMoveHandler(e) {
 
 /**
  * Handles the end of a drag, selects the element on a plain click (no movement), and cleans up listeners.
- * @param {MouseEvent} e - The mouseup event object.
  */
-function mouseUpHandler(e) {
+function mouseUpHandler() {
   canvas.removeEventListener('mousemove', mouseMoveHandler);
   canvas.removeEventListener('mouseup', mouseUpHandler);
 
@@ -520,8 +519,138 @@ function closeDropdown() {
   document.getElementById('plot-toolbar-toggle').checked = false;
 }
 
+/**
+ * Renders an element image to a PNG data URL at the given resolution,
+ * applying rotation (degrees, clockwise) and optional horizontal flip —
+ * matching what applyTransform() does on the live canvas.
+ * @param {string}  src         - Same-origin image path
+ * @param {number}  sizePx      - Output canvas size in pixels
+ * @param {number}  rotationDeg - Rotation in degrees
+ * @param {boolean} flipped     - Whether to flip horizontally
+ * @returns {Promise<string>} PNG data URL
+ */
+function rasterizeElement(src, sizePx, rotationDeg, flipped) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const cvs = document.createElement('canvas');
+      cvs.width  = sizePx;
+      cvs.height = sizePx;
+      const ctx  = cvs.getContext('2d');
+
+      // Scale to fit while preserving aspect ratio, centered — mirrors the
+      // browser's default preserveAspectRatio="xMidYMid meet" on <img> elements.
+      const natW  = img.naturalWidth  || sizePx;
+      const natH  = img.naturalHeight || sizePx;
+      const ratio = Math.min(sizePx / natW, sizePx / natH);
+      const drawW = natW * ratio;
+      const drawH = natH * ratio;
+
+      ctx.translate(sizePx / 2, sizePx / 2);
+      if (rotationDeg) ctx.rotate((rotationDeg * Math.PI) / 180);
+      if (flipped)     ctx.scale(-1, 1);
+      ctx.drawImage(img, -drawW / 2, -drawH / 2, drawW, drawH);
+      resolve(cvs.toDataURL('image/png'));
+    };
+    img.onerror = reject;
+    img.src = src;
+  });
+}
+
+/**
+ * Exports the current stage plot as a downloadable PDF.
+ * Builds the PDF programmatically with jsPDF — no screenshot, no rendering
+ * artifacts. Each element is rasterized individually so rotation and flip
+ * are applied precisely.
+ */
+async function exportPlot() {
+  closeDropdown();
+  deselectAll();
+
+  const title    = document.getElementById('plot-title').value.trim() || 'Stage Plot';
+  const gigDate  = document.getElementById('plot-gig-date').value.trim();
+  const venue    = document.getElementById('plot-venue').value.trim();
+  const canvasEl = document.querySelector('.stage-plot-canvas');
+  const canvasW  = canvasEl.offsetWidth;
+  const canvasH  = canvasEl.offsetHeight;
+  const elements = serializeCanvas();
+
+  const { jsPDF } = window.jspdf;
+  const pdf    = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+  const pageW  = pdf.internal.pageSize.getWidth();   // 297 mm
+  const pageH  = pdf.internal.pageSize.getHeight();  // 210 mm
+  const margin = 10;
+  let   cursorY = margin;
+
+  // ── Title
+  pdf.setFontSize(18);
+  pdf.setTextColor(30, 30, 30);
+  pdf.text(title, margin, cursorY + 6);
+  cursorY += 10;
+
+  // ── Subtitle (date + venue)
+  const subtitle = [gigDate, venue].filter(Boolean).join(' \u2014 ');
+  if (subtitle) {
+    pdf.setFontSize(11);
+    pdf.setTextColor(85, 85, 85);
+    pdf.text(subtitle, margin, cursorY + 4);
+    cursorY += 8;
+  }
+  cursorY += 2;
+
+  // ── Stage background — scale to fill remaining page area proportionally
+  const plotW  = pageW - margin * 2;
+  const plotH  = pageH - cursorY - margin;
+  const scale  = Math.min(plotW / canvasW, plotH / canvasH);
+  const plotX  = margin;
+  const plotY  = cursorY;
+
+  pdf.setFillColor(156, 182, 197); // #9cb6c5 (--blue1)
+  pdf.rect(plotX, plotY, canvasW * scale, canvasH * scale, 'F');
+
+  // ── Place each element
+  for (const el of elements) {
+    const sizePx = Math.round(el.size * 4); // 4× for sharpness
+    let dataUrl;
+    try {
+      dataUrl = await rasterizeElement(el.src, sizePx, el.rotation, el.flipped);
+    } catch {
+      continue; // skip if image fails to load
+    }
+
+    const x = plotX + el.x * scale;
+    const y = plotY + el.y * scale;
+    const w = el.size * scale;
+
+    pdf.addImage(dataUrl, 'PNG', x, y, w, w);
+
+    // Label centered below the element
+    pdf.setFontSize(7);
+    pdf.setTextColor(255, 255, 255);
+    pdf.text(el.label, x + w / 2, y + w + 3, { align: 'center' });
+  }
+
+  const filename = title.replace(/[^a-z0-9]/gi, '_').replace(/_+/g, '_') + '.pdf';
+  pdf.save(filename);
+
+  // ── Old approach (html2canvas screenshot) — commented for reference ──────────
+  // canvasEl.classList.add('pdf-export');
+  // try {
+  //   const shot    = await html2canvas(canvasEl, { scale: 2, useCORS: true, logging: false });
+  //   const imgData = shot.toDataURL('image/jpeg', 0.95);
+  //   const imgW    = pageW - margin * 2;
+  //   const imgH    = (shot.height / shot.width) * imgW;
+  //   pdf.addImage(imgData, 'JPEG', margin, cursorY, imgW, imgH);
+  //   pdf.save(filename);
+  // } finally {
+  //   canvasEl.classList.remove('pdf-export');
+  // }
+  // ─────────────────────────────────────────────────────────────────────────────
+}
+
 // ─── Button wiring ─────────────────────────────────────────────────────────────
 
+document.getElementById('export-plot-btn').addEventListener('click', exportPlot);
 document.getElementById('new-plot-btn').addEventListener('click', newPlot);
 document.getElementById('save-plot-btn').addEventListener('click', savePlot);
 document.getElementById('load-plot-btn').addEventListener('click', showLoadModal);

@@ -12,6 +12,7 @@ $session->require_role('member');
   <title>Member Dashboard | Stage Plotter</title>
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="/js/dashboard.js" defer></script>
 </head>
 

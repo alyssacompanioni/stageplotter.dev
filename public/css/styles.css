@@ -373,7 +373,8 @@ header ul {
   z-index: 10;
 }
 
-.placed-element:hover p {
+.placed-element:hover p,
+.pdf-export .placed-element p {
   display: block;
 }
 
