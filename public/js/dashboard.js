@@ -541,6 +541,40 @@ async function newPlot() {
 }
 
 /**
+ * Generates (or retrieves) a share link for the current plot and shows the
+ * share modal. Prompts to save first if the plot hasn't been saved yet.
+ */
+async function sharePlot() {
+  closeDropdown();
+
+  if (!currentPlotId) {
+    const wantToSave = confirm('The plot must be saved before sharing. Save now?');
+    if (!wantToSave) return;
+    const saved = await savePlot();
+    if (!saved) return;
+  }
+
+  try {
+    const res  = await fetch('/api/share_plot.php', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ plot_id: currentPlotId }),
+    });
+    const data = await res.json();
+
+    if (!data.success) {
+      alert('Could not generate share link.');
+      return;
+    }
+
+    document.getElementById('share-link-input').value = data.url;
+    document.getElementById('share-modal').removeAttribute('hidden');
+  } catch {
+    alert('Error: could not reach the server.');
+  }
+}
+
+/**
  * Closes the load plot modal.
  */
 function closeLoadModal() {
@@ -762,10 +796,22 @@ async function exportPlot() {
 // ─── Button wiring ─────────────────────────────────────────────────────────────
 
 document.getElementById('export-plot-btn').addEventListener('click', exportPlot);
+document.getElementById('share-plot-btn').addEventListener('click', sharePlot);
 document.getElementById('new-plot-btn').addEventListener('click', newPlot);
 document.getElementById('save-plot-btn').addEventListener('click', savePlot);
 document.getElementById('load-plot-btn').addEventListener('click', showLoadModal);
 document.getElementById('load-modal-cancel').addEventListener('click', closeLoadModal);
+document.getElementById('share-modal-close').addEventListener('click', () => {
+  document.getElementById('share-modal').setAttribute('hidden', '');
+});
+document.getElementById('copy-link-btn').addEventListener('click', () => {
+  const input = document.getElementById('share-link-input');
+  navigator.clipboard.writeText(input.value).then(() => {
+    const btn = document.getElementById('copy-link-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+  });
+});
 document.getElementById('clear-stage-btn').addEventListener('click', () => {
   closeDropdown();
   deselectAll();

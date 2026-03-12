@@ -696,6 +696,116 @@ footer {
   text-align: center;
 }
 
+/***********************
+ * Share Modal         *
+ ***********************/
+.share-link-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.share-link-input {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 0.875rem;
+  color: var(--text-gray);
+}
+
+/***********************
+ * Shared Plot View    *
+ ***********************/
+.shared-plot-main {
+  padding: 24px 0;
+}
+
+/* No inputs: single centered column */
+.shared-plot-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "header"
+    "canvas";
+  max-width: 950px;
+  margin: 0 auto;
+  gap: 8px;
+}
+
+/* With inputs: sidebar left, title+canvas right */
+.shared-plot-body.has-inputs {
+  grid-template-columns: 200px 1fr;
+  grid-template-areas:
+    ".      header"
+    "inputs canvas";
+  max-width: calc(950px + 200px + 16px);
+}
+
+.shared-plot-header {
+  grid-area: header;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.shared-plot-header h1 {
+  margin: 0 0 4px;
+}
+
+.shared-plot-subtitle {
+  color: var(--text-gray);
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+#shared-canvas {
+  grid-area: canvas;
+  width: auto;
+  margin: 0;
+}
+
+.shared-inputs {
+  grid-area: inputs;
+  align-self: start;
+}
+
+.shared-inputs h2 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+}
+
+.shared-channel-list {
+  list-style: decimal;
+  padding-left: 20px;
+  margin: 0 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.shared-channel-list li {
+  display: flex;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.shared-ch-num {
+  font-weight: 600;
+  min-width: 24px;
+}
+
+.shared-details h3 {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+}
+
+.shared-details p {
+  margin: 0;
+  white-space: pre-wrap;
+  color: var(--text-gray);
+  font-size: 0.875rem;
+}
+
 /**********************
  * Profile Page       *
  **********************/

@@ -109,6 +109,18 @@ $session->require_role('member');
   </div>
   <?php require_once '../includes/footer.php'; ?>
 
+  <div id="share-modal" class="modal-overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="share-modal-title">
+      <h2 id="share-modal-title">Share Plot</h2>
+      <p>Anyone with this link can view your stage plot:</p>
+      <div class="share-link-row">
+        <input type="text" id="share-link-input" class="share-link-input" readonly>
+        <button id="copy-link-btn" class="btn">Copy</button>
+      </div>
+      <button id="share-modal-close" class="btn btn-ghost">Close</button>
+    </div>
+  </div>
+
   <div id="load-plot-modal" class="modal-overlay" hidden>
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="load-modal-title">
       <h2 id="load-modal-title">Load Plot</h2>
