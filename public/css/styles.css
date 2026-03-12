@@ -578,6 +578,17 @@ header ul {
   flex-shrink: 0;
 }
 
+.channel-drag-handle {
+  cursor: grab;
+  color: #aaa;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.channel-row.dragging {
+  opacity: 0.4;
+}
+
 #add-channel-btn {
   display: block;
   margin: 8px auto 0;

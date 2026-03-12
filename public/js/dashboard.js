@@ -676,7 +676,9 @@ const detailsView  = document.getElementById('details-view');
 function createChannelRow(placeholder = '', channelNum = null) {
   const li = document.createElement('li');
   li.className = 'channel-row';
+  li.draggable = true;
   li.innerHTML = `
+    <span class="channel-drag-handle" aria-hidden="true">⠿</span>
     <input type="number" class="channel-num" min="1" max="999" placeholder="#"${channelNum !== null ? ` value="${channelNum}"` : ''}>
     <input type="text" class="channel-label" placeholder="${placeholder}">
     <button class="btn btn-ghost channel-delete-btn" aria-label="Delete channel">✕</button>
@@ -684,6 +686,43 @@ function createChannelRow(placeholder = '', channelNum = null) {
   li.querySelector('.channel-delete-btn').addEventListener('click', () => li.remove());
   return li;
 }
+
+// ── Channel list drag-to-reorder ────────────────────────────────────────────
+
+let draggedRow = null;
+
+channelList.addEventListener('dragstart', (e) => {
+  draggedRow = e.target.closest('.channel-row');
+  if (!draggedRow) return;
+  draggedRow.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+});
+
+channelList.addEventListener('dragend', () => {
+  if (draggedRow) draggedRow.classList.remove('dragging');
+  channelList.querySelectorAll('.channel-row.drag-over').forEach(r => r.classList.remove('drag-over'));
+  draggedRow = null;
+});
+
+channelList.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  if (!draggedRow) return;
+
+  const target = e.target.closest('.channel-row');
+  if (!target || target === draggedRow) return;
+
+  const rect     = target.getBoundingClientRect();
+  const insertAfter = e.clientY > rect.top + rect.height / 2;
+
+  channelList.querySelectorAll('.channel-row.drag-over').forEach(r => r.classList.remove('drag-over'));
+  target.classList.add('drag-over');
+
+  if (insertAfter) {
+    target.after(draggedRow);
+  } else {
+    target.before(draggedRow);
+  }
+});
 
 /** Shows the inputs panel and hides the regular palette. */
 function showInputsPanel() {
