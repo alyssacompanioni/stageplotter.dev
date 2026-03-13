@@ -1,22 +1,25 @@
 // ─── Palette ───────────────────────────────────────────────────────────────────
 
-const cardContainer = document.querySelector('.element-card-container');
+const cardContainer = document.querySelector(".element-card-container");
 
 // Event delegation — works for both the initial PHP-rendered cards and any
 // cards injected dynamically when the user switches instrument category.
-cardContainer.addEventListener('dragstart', (e) => {
-  const card = e.target.closest('.element-card');
+cardContainer.addEventListener("dragstart", (e) => {
+  const card = e.target.closest(".element-card");
   if (!card) return;
-  e.dataTransfer.setData('text/plain', JSON.stringify({
-    src:   card.querySelector('img').src,
-    label: card.querySelector('p').textContent
-  }));
+  e.dataTransfer.setData(
+    "text/plain",
+    JSON.stringify({
+      src: card.querySelector("img").src,
+      label: card.querySelector("p").textContent,
+    }),
+  );
 });
 
 // Intercept category button clicks so switching categories fetches icons via
 // AJAX instead of reloading the page (which would clear the canvas).
-document.querySelector('.element-type').addEventListener('click', (e) => {
-  const btn = e.target.closest('button[value]');
+document.querySelector(".element-type").addEventListener("click", (e) => {
+  const btn = e.target.closest("button[value]");
   if (!btn) return;
   e.preventDefault();
   switchPalette(btn.value);
@@ -28,34 +31,38 @@ document.querySelector('.element-type').addEventListener('click', (e) => {
  */
 async function switchPalette(category) {
   try {
-    const res  = await fetch('/api/get_palette.php?category=' + encodeURIComponent(category));
+    const res = await fetch("/api/get_palette.php?category=" + encodeURIComponent(category));
     const data = await res.json();
     if (!data.success) return;
 
-    cardContainer.innerHTML = data.icons.map(icon => `
+    cardContainer.innerHTML = data.icons
+      .map(
+        (icon) => `
       <div class="element-card" draggable="true">
         <img src="${icon.src}" alt="${icon.label} Icon." width="48" height="48">
         <p>${icon.label}</p>
       </div>
-    `).join('');
+    `,
+      )
+      .join("");
   } catch {
     // Silently fail — the existing cards remain visible
   }
 }
 
-const canvas = document.querySelector('.stage-plot-canvas');
+const canvas = document.querySelector(".stage-plot-canvas");
 
-canvas.addEventListener('dragstart', (e) => {
-  if (e.target.closest('.placed-element')) e.preventDefault();
+canvas.addEventListener("dragstart", (e) => {
+  if (e.target.closest(".placed-element")) e.preventDefault();
 });
 
-canvas.addEventListener('dragover', (e) => {
+canvas.addEventListener("dragover", (e) => {
   e.preventDefault(); // Allows dropping
 });
 
-canvas.addEventListener('drop', (e) => {
+canvas.addEventListener("drop", (e) => {
   e.preventDefault(); // Prevents default browser behavior (e.g., opening the image)
-  const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+  const data = JSON.parse(e.dataTransfer.getData("text/plain"));
 
   // Calculate drop position relative to canvas
   const rect = canvas.getBoundingClientRect();
@@ -72,14 +79,14 @@ canvas.addEventListener('drop', (e) => {
  * @param {number} y - The y-coordinate for the element's position on the canvas.
  */
 function placeElement(data, x, y) {
-  const el = document.createElement('div');
-  el.className = 'placed-element';
-  el.style.position = 'absolute';
-  el.style.left = x + 'px';
-  el.style.top = y + 'px';
-  el.dataset.rotation = data.rotation ?? '0';
-  el.dataset.flipped = data.flipped ?? 'false';
-  el.dataset.size = data.size ?? '48';
+  const el = document.createElement("div");
+  el.className = "placed-element";
+  el.style.position = "absolute";
+  el.style.left = x + "px";
+  el.style.top = y + "px";
+  el.dataset.rotation = data.rotation ?? "0";
+  el.dataset.flipped = data.flipped ?? "false";
+  el.dataset.size = data.size ?? "48";
   if (data.zIndex) el.style.zIndex = data.zIndex;
 
   const size = data.size ?? 48;
@@ -113,9 +120,9 @@ let selectedEl = null;
  * @param {HTMLElement} el - The placed element to select.
  */
 function selectElement(el) {
-  if (selectedEl && selectedEl !== el) selectedEl.classList.remove('selected');
+  if (selectedEl && selectedEl !== el) selectedEl.classList.remove("selected");
   selectedEl = el;
-  el.classList.add('selected');
+  el.classList.add("selected");
 }
 
 /**
@@ -123,20 +130,20 @@ function selectElement(el) {
  */
 function deselectAll() {
   if (selectedEl) {
-    selectedEl.classList.remove('selected');
+    selectedEl.classList.remove("selected");
     selectedEl = null;
   }
 }
 
 // Deselect when clicking the canvas background (not on a placed element)
-canvas.addEventListener('click', (e) => {
-  const actionBtn = e.target.closest('[data-action]');
+canvas.addEventListener("click", (e) => {
+  const actionBtn = e.target.closest("[data-action]");
   if (actionBtn) {
     handleAction(actionBtn.dataset.action);
     return;
   }
 
-  const el = e.target.closest('.placed-element');
+  const el = e.target.closest(".placed-element");
   if (el) {
     selectElement(el);
   } else {
@@ -151,9 +158,9 @@ canvas.addEventListener('click', (e) => {
  * @param {HTMLElement} el - The placed element whose image transform should be updated.
  */
 function applyTransform(el) {
-  const img = el.querySelector(':scope > img');
-  const rotation = parseInt(el.dataset.rotation || '0');
-  const flipped = el.dataset.flipped === 'true';
+  const img = el.querySelector(":scope > img");
+  const rotation = parseInt(el.dataset.rotation || "0");
+  const flipped = el.dataset.flipped === "true";
   img.style.transform = `rotate(${rotation}deg) scaleX(${flipped ? -1 : 1})`;
 }
 
@@ -165,64 +172,68 @@ function handleAction(action) {
   if (!selectedEl) return;
 
   switch (action) {
-    case 'delete':
+    case "delete":
       selectedEl.remove();
       selectedEl = null;
       break;
 
-    case 'duplicate': {
-      const img = selectedEl.querySelector(':scope > img');
-      const label = selectedEl.querySelector('p').textContent;
-      placeElement({
-        src: img.src,
-        label,
-        rotation: selectedEl.dataset.rotation,
-        flipped: selectedEl.dataset.flipped,
-        size: parseInt(selectedEl.dataset.size),
-        zIndex: selectedEl.style.zIndex,
-      }, parseInt(selectedEl.style.left) + 16, parseInt(selectedEl.style.top) + 16);
+    case "duplicate": {
+      const img = selectedEl.querySelector(":scope > img");
+      const label = selectedEl.querySelector("p").textContent;
+      placeElement(
+        {
+          src: img.src,
+          label,
+          rotation: selectedEl.dataset.rotation,
+          flipped: selectedEl.dataset.flipped,
+          size: parseInt(selectedEl.dataset.size),
+          zIndex: selectedEl.style.zIndex,
+        },
+        parseInt(selectedEl.style.left) + 16,
+        parseInt(selectedEl.style.top) + 16,
+      );
       break;
     }
 
-    case 'enlarge': {
+    case "enlarge": {
       const size = parseInt(selectedEl.dataset.size) + 8;
       selectedEl.dataset.size = size;
-      const img = selectedEl.querySelector(':scope > img');
+      const img = selectedEl.querySelector(":scope > img");
       img.width = size;
       img.height = size;
       break;
     }
 
-    case 'decrease': {
+    case "decrease": {
       const size = Math.max(16, parseInt(selectedEl.dataset.size) - 8);
       selectedEl.dataset.size = size;
-      const img = selectedEl.querySelector(':scope > img');
+      const img = selectedEl.querySelector(":scope > img");
       img.width = size;
       img.height = size;
       break;
     }
 
-    case 'rotate-right':
+    case "rotate-right":
       selectedEl.dataset.rotation = (parseInt(selectedEl.dataset.rotation) + 45) % 360;
       applyTransform(selectedEl);
       break;
 
-    case 'rotate-left':
+    case "rotate-left":
       selectedEl.dataset.rotation = (parseInt(selectedEl.dataset.rotation) - 45 + 360) % 360;
       applyTransform(selectedEl);
       break;
 
-    case 'flip-h':
-      selectedEl.dataset.flipped = selectedEl.dataset.flipped === 'true' ? 'false' : 'true';
+    case "flip-h":
+      selectedEl.dataset.flipped = selectedEl.dataset.flipped === "true" ? "false" : "true";
       applyTransform(selectedEl);
       break;
 
-    case 'layer-up':
-      selectedEl.style.zIndex = (parseInt(selectedEl.style.zIndex || '0') + 1).toString();
+    case "layer-up":
+      selectedEl.style.zIndex = (parseInt(selectedEl.style.zIndex || "0") + 1).toString();
       break;
 
-    case 'layer-down':
-      selectedEl.style.zIndex = Math.max(0, parseInt(selectedEl.style.zIndex || '0') - 1).toString();
+    case "layer-down":
+      selectedEl.style.zIndex = Math.max(0, parseInt(selectedEl.style.zIndex || "0") - 1).toString();
       break;
   }
 }
@@ -234,9 +245,9 @@ let startX, startY;
 let hasDragged = false;
 
 // Skip drag initiation when clicking toolbar buttons
-canvas.addEventListener('mousedown', (e) => {
-  if (e.target.closest('.element-toolbar')) return;
-  const el = e.target.closest('.placed-element');
+canvas.addEventListener("mousedown", (e) => {
+  if (e.target.closest(".element-toolbar")) return;
+  const el = e.target.closest(".placed-element");
   if (el) mouseDownHandler(e, el);
 });
 
@@ -251,8 +262,8 @@ function mouseDownHandler(e, el) {
   startY = e.clientY;
   hasDragged = false;
 
-  canvas.addEventListener('mousemove', mouseMoveHandler);
-  canvas.addEventListener('mouseup', mouseUpHandler);
+  canvas.addEventListener("mousemove", mouseMoveHandler);
+  canvas.addEventListener("mouseup", mouseUpHandler);
 }
 
 /**
@@ -268,16 +279,16 @@ function mouseMoveHandler(e) {
   startX = e.clientX;
   startY = e.clientY;
 
-  activeEl.style.left = (activeEl.offsetLeft - newX) + 'px';
-  activeEl.style.top = (activeEl.offsetTop - newY) + 'px';
+  activeEl.style.left = activeEl.offsetLeft - newX + "px";
+  activeEl.style.top = activeEl.offsetTop - newY + "px";
 }
 
 /**
  * Handles the end of a drag, selects the element on a plain click (no movement), and cleans up listeners.
  */
 function mouseUpHandler() {
-  canvas.removeEventListener('mousemove', mouseMoveHandler);
-  canvas.removeEventListener('mouseup', mouseUpHandler);
+  canvas.removeEventListener("mousemove", mouseMoveHandler);
+  canvas.removeEventListener("mouseup", mouseUpHandler);
 
   if (!hasDragged && activeEl) selectElement(activeEl);
 
@@ -300,11 +311,11 @@ let lastSavedState = null;
  */
 function getCurrentState() {
   return JSON.stringify({
-    title:    document.getElementById('plot-title').value.trim(),
-    gig_date: document.getElementById('plot-gig-date').value.trim(),
-    venue:    document.getElementById('plot-venue').value.trim(),
+    title: document.getElementById("plot-title").value.trim(),
+    gig_date: document.getElementById("plot-gig-date").value.trim(),
+    venue: document.getElementById("plot-venue").value.trim(),
     elements: serializeCanvas(),
-    inputs:   serializeInputs(),
+    inputs: serializeInputs(),
   });
 }
 
@@ -317,7 +328,7 @@ function hasUnsavedChanges() {
   if (lastSavedState === null) {
     // Nothing has been saved yet — treat any content as unsaved
     const state = JSON.parse(current);
-    return state.elements.length > 0 || state.title !== '' || state.gig_date !== '' || state.venue !== '';
+    return state.elements.length > 0 || state.title !== "" || state.gig_date !== "" || state.venue !== "";
   }
   return current !== lastSavedState;
 }
@@ -329,17 +340,17 @@ function hasUnsavedChanges() {
  */
 function serializeCanvas() {
   const elements = [];
-  canvas.querySelectorAll('.placed-element').forEach(el => {
-    const img = el.querySelector(':scope > img');
+  canvas.querySelectorAll(".placed-element").forEach((el) => {
+    const img = el.querySelector(":scope > img");
     elements.push({
-      src:      new URL(img.src).pathname,
-      label:    el.querySelector('p').textContent,
-      x:        parseFloat(el.style.left),
-      y:        parseFloat(el.style.top),
-      rotation: parseInt(el.dataset.rotation || '0'),
-      flipped:  el.dataset.flipped === 'true',
-      size:     parseInt(el.dataset.size || '48'),
-      z_index:  Math.max(1, parseInt(el.style.zIndex || '1')),
+      src: new URL(img.src).pathname,
+      label: el.querySelector("p").textContent,
+      x: parseFloat(el.style.left),
+      y: parseFloat(el.style.top),
+      rotation: parseInt(el.dataset.rotation || "0"),
+      flipped: el.dataset.flipped === "true",
+      size: parseInt(el.dataset.size || "48"),
+      z_index: Math.max(1, parseInt(el.style.zIndex || "1")),
     });
   });
   return elements;
@@ -350,14 +361,16 @@ function serializeCanvas() {
  * @returns {{ channels: Array<{num: string, label: string}>, details: string }}
  */
 function serializeInputs() {
-  const channels = Array.from(document.querySelectorAll('#channel-list .channel-row')).map(row => ({
-    num:   row.querySelector('.channel-num').value.trim(),
-    label: row.querySelector('.channel-label').value.trim(),
-  })).filter(ch => ch.num || ch.label);
+  const channels = Array.from(document.querySelectorAll("#channel-list .channel-row"))
+    .map((row) => ({
+      num: row.querySelector(".channel-num").value.trim(),
+      label: row.querySelector(".channel-label").value.trim(),
+    }))
+    .filter((ch) => ch.num || ch.label);
 
   return {
     channels,
-    details: document.getElementById('inputs-details').value.trim(),
+    details: document.getElementById("inputs-details").value.trim(),
   };
 }
 
@@ -366,44 +379,44 @@ function serializeInputs() {
  * Stores the returned plot_id so subsequent saves perform an update.
  */
 async function savePlot() {
-  const title   = document.getElementById('plot-title').value.trim();
-  const gigDate = document.getElementById('plot-gig-date').value.trim();
-  const venue   = document.getElementById('plot-venue').value.trim();
+  const title = document.getElementById("plot-title").value.trim();
+  const gigDate = document.getElementById("plot-gig-date").value.trim();
+  const venue = document.getElementById("plot-venue").value.trim();
 
   if (!title || !gigDate) {
-    alert('Title and Gig Date are required to save.');
+    alert("Title and Gig Date are required to save.");
     return;
   }
 
   closeDropdown();
 
   try {
-    const res  = await fetch('/api/save_plot.php', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({
-        plot_id:  currentPlotId,
+    const res = await fetch("/api/save_plot.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        plot_id: currentPlotId,
         title,
         gig_date: gigDate,
-        venue:    venue || null,
+        venue: venue || null,
         elements: serializeCanvas(),
-        inputs:   serializeInputs(),
+        inputs: serializeInputs(),
       }),
     });
 
     const data = await res.json();
 
     if (data.success) {
-      currentPlotId  = data.plot_id;
+      currentPlotId = data.plot_id;
       lastSavedState = getCurrentState();
-      alert('Plot saved!');
+      alert("Plot saved!");
       return true;
     } else {
-      alert('Save failed:\n' + (data.errors ? data.errors.join('\n') : data.error));
+      alert("Save failed:\n" + (data.errors ? data.errors.join("\n") : data.error));
       return false;
     }
   } catch {
-    alert('Error: could not reach the server.');
+    alert("Error: could not reach the server.");
     return false;
   }
 }
@@ -415,35 +428,35 @@ async function showLoadModal() {
   closeDropdown();
 
   try {
-    const res  = await fetch('/api/load_plots.php');
+    const res = await fetch("/api/load_plots.php");
     const data = await res.json();
 
     if (!data.success) {
-      alert('Could not load plots.');
+      alert("Could not load plots.");
       return;
     }
 
-    const list = document.getElementById('load-plot-list');
-    list.innerHTML = '';
+    const list = document.getElementById("load-plot-list");
+    list.innerHTML = "";
 
     if (data.plots.length === 0) {
       list.innerHTML = '<li class="load-plot-empty">No saved plots found.</li>';
     } else {
-      data.plots.forEach(plot => {
-        const li = document.createElement('li');
-        li.className = 'load-plot-item';
+      data.plots.forEach((plot) => {
+        const li = document.createElement("li");
+        li.className = "load-plot-item";
         li.innerHTML = `
           <span class="load-plot-title">${plot.title}</span>
-          <span class="load-plot-meta">${plot.gig_date}${plot.venue ? ' — ' + plot.venue : ''}</span>
+          <span class="load-plot-meta">${plot.gig_date}${plot.venue ? " — " + plot.venue : ""}</span>
         `;
-        li.addEventListener('click', () => loadPlot(plot.id));
+        li.addEventListener("click", () => loadPlot(plot.id));
         list.appendChild(li);
       });
     }
 
-    document.getElementById('load-plot-modal').removeAttribute('hidden');
+    document.getElementById("load-plot-modal").removeAttribute("hidden");
   } catch {
-    alert('Error: could not reach the server.');
+    alert("Error: could not reach the server.");
   }
 }
 
@@ -455,53 +468,57 @@ async function loadPlot(plotId) {
   closeLoadModal();
 
   try {
-    const res  = await fetch('/api/load_plot.php?id=' + plotId);
+    const res = await fetch("/api/load_plot.php?id=" + plotId);
     const data = await res.json();
 
     if (!data.success) {
-      alert('Could not load plot.');
+      alert("Could not load plot.");
       return;
     }
 
     // Restore meta fields
-    document.getElementById('plot-title').value    = data.title;
-    document.getElementById('plot-gig-date').value = data.gig_date;
-    document.getElementById('plot-venue').value    = data.venue ?? '';
+    document.getElementById("plot-title").value = data.title;
+    document.getElementById("plot-gig-date").value = data.gig_date;
+    document.getElementById("plot-venue").value = data.venue ?? "";
     currentPlotId = data.plot_id;
 
     // Clear the canvas and redraw elements
     deselectAll();
-    canvas.querySelectorAll('.placed-element').forEach(el => el.remove());
+    canvas.querySelectorAll(".placed-element").forEach((el) => el.remove());
 
-    data.elements.forEach(el => {
-      placeElement({
-        src:      el.src,
-        label:    el.label,
-        rotation: String(el.rotation),
-        flipped:  el.flipped ? 'true' : 'false',
-        size:     el.size,
-        zIndex:   String(el.z_index),
-      }, el.x, el.y);
+    data.elements.forEach((el) => {
+      placeElement(
+        {
+          src: el.src,
+          label: el.label,
+          rotation: String(el.rotation),
+          flipped: el.flipped ? "true" : "false",
+          size: el.size,
+          zIndex: String(el.z_index),
+        },
+        el.x,
+        el.y,
+      );
     });
 
     // Restore inputs panel
-    const inputs = data.inputs ?? { channels: [], details: '' };
-    document.getElementById('channel-list').innerHTML  = '';
-    document.getElementById('inputs-details').value    = inputs.details || '';
+    const inputs = data.inputs ?? { channels: [], details: "" };
+    document.getElementById("channel-list").innerHTML = "";
+    document.getElementById("inputs-details").value = inputs.details || "";
     if (inputs.channels.length > 0) {
-      inputs.channels.forEach(ch => {
-        document.getElementById('channel-list').appendChild(createChannelRow('', ch.num, ch.label));
+      inputs.channels.forEach((ch) => {
+        document.getElementById("channel-list").appendChild(createChannelRow("", ch.num, ch.label));
       });
     } else {
-      const placeholders = ['Electric guitar', 'Keyboard', 'Snare...', '', ''];
+      const placeholders = ["Electric guitar", "Keyboard", "Snare...", "", ""];
       for (let i = 0; i < 5; i++) {
-        document.getElementById('channel-list').appendChild(createChannelRow(placeholders[i], i + 1));
+        document.getElementById("channel-list").appendChild(createChannelRow(placeholders[i], i + 1));
       }
     }
 
     lastSavedState = getCurrentState();
   } catch {
-    alert('Error: could not reach the server.');
+    alert("Error: could not reach the server.");
   }
 }
 
@@ -510,13 +527,13 @@ async function loadPlot(plotId) {
  */
 function resetPlot() {
   deselectAll();
-  canvas.querySelectorAll('.placed-element').forEach(el => el.remove());
-  document.getElementById('plot-title').value    = '';
-  document.getElementById('plot-gig-date').value = '';
-  document.getElementById('plot-venue').value    = '';
-  document.getElementById('inputs-details').value = '';
-  document.getElementById('channel-list').innerHTML = '';
-  currentPlotId  = null;
+  canvas.querySelectorAll(".placed-element").forEach((el) => el.remove());
+  document.getElementById("plot-title").value = "";
+  document.getElementById("plot-gig-date").value = "";
+  document.getElementById("plot-venue").value = "";
+  document.getElementById("inputs-details").value = "";
+  document.getElementById("channel-list").innerHTML = "";
+  currentPlotId = null;
   lastSavedState = null;
 }
 
@@ -528,12 +545,12 @@ async function newPlot() {
   closeDropdown();
 
   if (hasUnsavedChanges()) {
-    const wantToSave = confirm('You have unsaved changes. Save before starting a new plot?');
+    const wantToSave = confirm("You have unsaved changes. Save before starting a new plot?");
     if (wantToSave) {
       const saved = await savePlot();
       if (!saved) return; // Save failed or missing required fields — stay on current plot
     } else {
-      if (!confirm('Discard unsaved changes and start a new plot?')) return;
+      if (!confirm("Discard unsaved changes and start a new plot?")) return;
     }
   }
 
@@ -548,29 +565,29 @@ async function sharePlot() {
   closeDropdown();
 
   if (!currentPlotId) {
-    const wantToSave = confirm('The plot must be saved before sharing. Save now?');
+    const wantToSave = confirm("The plot must be saved before sharing. Save now?");
     if (!wantToSave) return;
     const saved = await savePlot();
     if (!saved) return;
   }
 
   try {
-    const res  = await fetch('/api/share_plot.php', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ plot_id: currentPlotId }),
+    const res = await fetch("/api/share_plot.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ plot_id: currentPlotId }),
     });
     const data = await res.json();
 
     if (!data.success) {
-      alert('Could not generate share link.');
+      alert("Could not generate share link.");
       return;
     }
 
-    document.getElementById('share-link-input').value = data.url;
-    document.getElementById('share-modal').removeAttribute('hidden');
+    document.getElementById("share-link-input").value = data.url;
+    document.getElementById("share-modal").removeAttribute("hidden");
   } catch {
-    alert('Error: could not reach the server.');
+    alert("Error: could not reach the server.");
   }
 }
 
@@ -578,14 +595,14 @@ async function sharePlot() {
  * Closes the load plot modal.
  */
 function closeLoadModal() {
-  document.getElementById('load-plot-modal').setAttribute('hidden', '');
+  document.getElementById("load-plot-modal").setAttribute("hidden", "");
 }
 
 /**
  * Closes the plot actions dropdown by unchecking its toggle checkbox.
  */
 function closeDropdown() {
-  document.getElementById('plot-toolbar-toggle').checked = false;
+  document.getElementById("plot-toolbar-toggle").checked = false;
 }
 
 /**
@@ -602,24 +619,24 @@ function rasterizeElement(src, sizePx, rotationDeg, flipped) {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => {
-      const cvs = document.createElement('canvas');
-      cvs.width  = sizePx;
+      const cvs = document.createElement("canvas");
+      cvs.width = sizePx;
       cvs.height = sizePx;
-      const ctx  = cvs.getContext('2d');
+      const ctx = cvs.getContext("2d");
 
       // Scale to fit while preserving aspect ratio, centered — mirrors the
       // browser's default preserveAspectRatio="xMidYMid meet" on <img> elements.
-      const natW  = img.naturalWidth  || sizePx;
-      const natH  = img.naturalHeight || sizePx;
+      const natW = img.naturalWidth || sizePx;
+      const natH = img.naturalHeight || sizePx;
       const ratio = Math.min(sizePx / natW, sizePx / natH);
       const drawW = natW * ratio;
       const drawH = natH * ratio;
 
       ctx.translate(sizePx / 2, sizePx / 2);
       if (rotationDeg) ctx.rotate((rotationDeg * Math.PI) / 180);
-      if (flipped)     ctx.scale(-1, 1);
+      if (flipped) ctx.scale(-1, 1);
       ctx.drawImage(img, -drawW / 2, -drawH / 2, drawW, drawH);
-      resolve(cvs.toDataURL('image/png'));
+      resolve(cvs.toDataURL("image/png"));
     };
     img.onerror = reject;
     img.src = src;
@@ -636,20 +653,20 @@ async function exportPlot() {
   closeDropdown();
   deselectAll();
 
-  const title    = document.getElementById('plot-title').value.trim() || 'Stage Plot';
-  const gigDate  = document.getElementById('plot-gig-date').value.trim();
-  const venue    = document.getElementById('plot-venue').value.trim();
-  const canvasEl = document.querySelector('.stage-plot-canvas');
-  const canvasW  = canvasEl.offsetWidth;
-  const canvasH  = canvasEl.offsetHeight;
+  const title = document.getElementById("plot-title").value.trim() || "Stage Plot";
+  const gigDate = document.getElementById("plot-gig-date").value.trim();
+  const venue = document.getElementById("plot-venue").value.trim();
+  const canvasEl = document.querySelector(".stage-plot-canvas");
+  const canvasW = canvasEl.offsetWidth;
+  const canvasH = canvasEl.offsetHeight;
   const elements = serializeCanvas();
 
   const { jsPDF } = window.jspdf;
-  const pdf    = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
-  const pageW  = pdf.internal.pageSize.getWidth();   // 297 mm
-  const pageH  = pdf.internal.pageSize.getHeight();  // 210 mm
+  const pdf = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+  const pageW = pdf.internal.pageSize.getWidth(); // 297 mm
+  const pageH = pdf.internal.pageSize.getHeight(); // 210 mm
   const margin = 10;
-  let   cursorY = margin;
+  let cursorY = margin;
 
   // ── Title
   pdf.setFontSize(18);
@@ -658,7 +675,7 @@ async function exportPlot() {
   cursorY += 10;
 
   // ── Subtitle (date + venue)
-  const subtitle = [gigDate, venue].filter(Boolean).join(' \u2014 ');
+  const subtitle = [gigDate, venue].filter(Boolean).join(" \u2014 ");
   if (subtitle) {
     pdf.setFontSize(11);
     pdf.setTextColor(85, 85, 85);
@@ -668,14 +685,14 @@ async function exportPlot() {
   cursorY += 2;
 
   // ── Stage background — scale to fill remaining page area proportionally
-  const plotW  = pageW - margin * 2;
-  const plotH  = pageH - cursorY - margin;
-  const scale  = Math.min(plotW / canvasW, plotH / canvasH);
-  const plotX  = margin;
-  const plotY  = cursorY;
+  const plotW = pageW - margin * 2;
+  const plotH = pageH - cursorY - margin;
+  const scale = Math.min(plotW / canvasW, plotH / canvasH);
+  const plotX = margin;
+  const plotY = cursorY;
 
   pdf.setFillColor(156, 182, 197); // #9cb6c5 (--blue1)
-  pdf.rect(plotX, plotY, canvasW * scale, canvasH * scale, 'F');
+  pdf.rect(plotX, plotY, canvasW * scale, canvasH * scale, "F");
 
   // ── Place each element
   for (const el of elements) {
@@ -691,22 +708,24 @@ async function exportPlot() {
     const y = plotY + el.y * scale;
     const w = el.size * scale;
 
-    pdf.addImage(dataUrl, 'PNG', x, y, w, w);
+    pdf.addImage(dataUrl, "PNG", x, y, w, w);
 
     // Label centered below the element
     pdf.setFontSize(7);
     pdf.setTextColor(255, 255, 255);
-    pdf.text(el.label, x + w / 2, y + w + 3, { align: 'center' });
+    pdf.text(el.label, x + w / 2, y + w + 3, { align: "center" });
   }
 
   // ── Page 2: Inputs (channels + details) ─────────────────────────────────────
 
-  const channels = Array.from(document.querySelectorAll('#channel-list .channel-row')).map(row => ({
-    num:   row.querySelector('.channel-num').value.trim(),
-    label: row.querySelector('.channel-label').value.trim(),
-  })).filter(ch => ch.num || ch.label);
+  const channels = Array.from(document.querySelectorAll("#channel-list .channel-row"))
+    .map((row) => ({
+      num: row.querySelector(".channel-num").value.trim(),
+      label: row.querySelector(".channel-label").value.trim(),
+    }))
+    .filter((ch) => ch.num || ch.label);
 
-  const details = document.getElementById('inputs-details').value.trim();
+  const details = document.getElementById("inputs-details").value.trim();
 
   if (channels.length > 0 || details) {
     pdf.addPage();
@@ -715,20 +734,20 @@ async function exportPlot() {
     // Page title
     pdf.setFontSize(16);
     pdf.setTextColor(30, 30, 30);
-    pdf.text('Inputs', margin, y + 6);
+    pdf.text("Inputs", margin, y + 6);
     y += 14;
 
     // ── Channel list
     if (channels.length > 0) {
-      const colNum   = margin;
+      const colNum = margin;
       const colLabel = margin + 18;
-      const rowH     = 7;
+      const rowH = 7;
 
       // Header
       pdf.setFontSize(8);
       pdf.setTextColor(100, 100, 100);
-      pdf.text('CH', colNum, y);
-      pdf.text('Description', colLabel, y);
+      pdf.text("CH", colNum, y);
+      pdf.text("Description", colLabel, y);
       y += 4;
 
       // Divider
@@ -746,10 +765,10 @@ async function exportPlot() {
         // Alternating row background
         if (i % 2 === 0) {
           pdf.setFillColor(240, 244, 248);
-          pdf.rect(margin, y - 4, pageW - margin * 2, rowH, 'F');
+          pdf.rect(margin, y - 4, pageW - margin * 2, rowH, "F");
         }
         pdf.setTextColor(30, 30, 30);
-        pdf.text(ch.num,   colNum,   y);
+        pdf.text(ch.num, colNum, y);
         pdf.text(ch.label, colLabel, y);
         y += rowH;
       });
@@ -761,86 +780,77 @@ async function exportPlot() {
     if (details) {
       pdf.setFontSize(12);
       pdf.setTextColor(30, 30, 30);
-      pdf.text('Details', margin, y);
+      pdf.text("Details", margin, y);
       y += 6;
 
       pdf.setFontSize(10);
       pdf.setTextColor(50, 50, 50);
       const lines = pdf.splitTextToSize(details, pageW - margin * 2);
-      lines.forEach(line => {
-        if (y + 6 > pageH - margin) { pdf.addPage(); y = margin; }
+      lines.forEach((line) => {
+        if (y + 6 > pageH - margin) {
+          pdf.addPage();
+          y = margin;
+        }
         pdf.text(line, margin, y);
         y += 6;
       });
     }
   }
 
-  const filename = title.replace(/[^a-z0-9]/gi, '_').replace(/_+/g, '_') + '.pdf';
+  const filename = title.replace(/[^a-z0-9]/gi, "_").replace(/_+/g, "_") + ".pdf";
   pdf.save(filename);
-
-  // ── Old approach (html2canvas screenshot) — commented for reference ──────────
-  // canvasEl.classList.add('pdf-export');
-  // try {
-  //   const shot    = await html2canvas(canvasEl, { scale: 2, useCORS: true, logging: false });
-  //   const imgData = shot.toDataURL('image/jpeg', 0.95);
-  //   const imgW    = pageW - margin * 2;
-  //   const imgH    = (shot.height / shot.width) * imgW;
-  //   pdf.addImage(imgData, 'JPEG', margin, cursorY, imgW, imgH);
-  //   pdf.save(filename);
-  // } finally {
-  //   canvasEl.classList.remove('pdf-export');
-  // }
-  // ─────────────────────────────────────────────────────────────────────────────
 }
 
 // ─── Button wiring ─────────────────────────────────────────────────────────────
 
-document.getElementById('export-plot-btn').addEventListener('click', exportPlot);
-document.getElementById('share-plot-btn').addEventListener('click', sharePlot);
-document.getElementById('new-plot-btn').addEventListener('click', newPlot);
-document.getElementById('save-plot-btn').addEventListener('click', savePlot);
-document.getElementById('load-plot-btn').addEventListener('click', showLoadModal);
-document.getElementById('load-modal-cancel').addEventListener('click', closeLoadModal);
-document.getElementById('share-modal-close').addEventListener('click', () => {
-  document.getElementById('share-modal').setAttribute('hidden', '');
+document.getElementById("export-plot-btn").addEventListener("click", exportPlot);
+document.getElementById("share-plot-btn").addEventListener("click", sharePlot);
+document.getElementById("new-plot-btn").addEventListener("click", newPlot);
+document.getElementById("save-plot-btn").addEventListener("click", savePlot);
+document.getElementById("load-plot-btn").addEventListener("click", showLoadModal);
+document.getElementById("load-modal-cancel").addEventListener("click", closeLoadModal);
+document.getElementById("share-modal-close").addEventListener("click", () => {
+  document.getElementById("share-modal").setAttribute("hidden", "");
 });
-document.getElementById('copy-link-btn').addEventListener('click', () => {
-  const input = document.getElementById('share-link-input');
+document.getElementById("copy-link-btn").addEventListener("click", () => {
+  const input = document.getElementById("share-link-input");
   navigator.clipboard.writeText(input.value).then(() => {
-    const btn = document.getElementById('copy-link-btn');
-    btn.textContent = 'Copied!';
-    setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+    const btn = document.getElementById("copy-link-btn");
+    btn.textContent = "Copied!";
+    setTimeout(() => {
+      btn.textContent = "Copy";
+    }, 2000);
   });
 });
-document.getElementById('clear-stage-btn').addEventListener('click', () => {
+document.getElementById("clear-stage-btn").addEventListener("click", () => {
   closeDropdown();
   deselectAll();
-  canvas.querySelectorAll('.placed-element').forEach(el => el.remove());
+  canvas.querySelectorAll(".placed-element").forEach((el) => el.remove());
 });
 
 // ─── Inputs Panel ──────────────────────────────────────────────────────────────
 
-const palette      = document.querySelector('.palette');
-const inputsPanel  = document.getElementById('inputs-panel');
-const channelList  = document.getElementById('channel-list');
-const channelsView = document.getElementById('channels-view');
-const detailsView  = document.getElementById('details-view');
+const palette = document.querySelector(".palette");
+const inputsPanel = document.getElementById("inputs-panel");
+const channelList = document.getElementById("channel-list");
+const channelsView = document.getElementById("channels-view");
+const detailsView = document.getElementById("details-view");
 
 /**
  * Creates and returns a new channel list item with a number input, text input,
  * and a delete button.
  */
-function createChannelRow(placeholder = '', channelNum = null, labelValue = '') {
-  const li = document.createElement('li');
-  li.className = 'channel-row';
+function createChannelRow(placeholder = "", channelNum = null, labelValue = "") {
+  const li = document.createElement("li");
+  li.className = "channel-row";
   li.draggable = true;
   li.innerHTML = `
     <span class="channel-drag-handle" aria-hidden="true">⠿</span>
-    <input type="number" class="channel-num" min="1" max="999" placeholder="#"${channelNum !== null ? ` value="${channelNum}"` : ''}>
-    <input type="text" class="channel-label" placeholder="${placeholder}"${labelValue ? ` value="${labelValue}"` : ''}>
+    <input type="number" class="channel-num" min="1" max="999" placeholder="#"${channelNum !== null ? ` value="${channelNum}"` : ""}>
+    <input type="text" class="channel-label" placeholder="${placeholder}"${labelValue ? ` value="${labelValue}"` : ""}>
     <button class="btn btn-ghost channel-delete-btn" aria-label="Delete channel">✕</button>
   `;
-  li.querySelector('.channel-delete-btn').addEventListener('click', () => li.remove());
+  li.querySelector(".channel-delete-btn").addEventListener("click", () => li.remove());
   return li;
 }
 
@@ -848,31 +858,31 @@ function createChannelRow(placeholder = '', channelNum = null, labelValue = '') 
 
 let draggedRow = null;
 
-channelList.addEventListener('dragstart', (e) => {
-  draggedRow = e.target.closest('.channel-row');
+channelList.addEventListener("dragstart", (e) => {
+  draggedRow = e.target.closest(".channel-row");
   if (!draggedRow) return;
-  draggedRow.classList.add('dragging');
-  e.dataTransfer.effectAllowed = 'move';
+  draggedRow.classList.add("dragging");
+  e.dataTransfer.effectAllowed = "move";
 });
 
-channelList.addEventListener('dragend', () => {
-  if (draggedRow) draggedRow.classList.remove('dragging');
-  channelList.querySelectorAll('.channel-row.drag-over').forEach(r => r.classList.remove('drag-over'));
+channelList.addEventListener("dragend", () => {
+  if (draggedRow) draggedRow.classList.remove("dragging");
+  channelList.querySelectorAll(".channel-row.drag-over").forEach((r) => r.classList.remove("drag-over"));
   draggedRow = null;
 });
 
-channelList.addEventListener('dragover', (e) => {
+channelList.addEventListener("dragover", (e) => {
   e.preventDefault();
   if (!draggedRow) return;
 
-  const target = e.target.closest('.channel-row');
+  const target = e.target.closest(".channel-row");
   if (!target || target === draggedRow) return;
 
-  const rect     = target.getBoundingClientRect();
+  const rect = target.getBoundingClientRect();
   const insertAfter = e.clientY > rect.top + rect.height / 2;
 
-  channelList.querySelectorAll('.channel-row.drag-over').forEach(r => r.classList.remove('drag-over'));
-  target.classList.add('drag-over');
+  channelList.querySelectorAll(".channel-row.drag-over").forEach((r) => r.classList.remove("drag-over"));
+  target.classList.add("drag-over");
 
   if (insertAfter) {
     target.after(draggedRow);
@@ -883,49 +893,49 @@ channelList.addEventListener('dragover', (e) => {
 
 /** Shows the inputs panel and hides the regular palette. */
 function showInputsPanel() {
-  palette.setAttribute('hidden', '');
-  inputsPanel.removeAttribute('hidden');
+  palette.setAttribute("hidden", "");
+  inputsPanel.removeAttribute("hidden");
 
   // Default to channels tab
-  channelsView.removeAttribute('hidden');
-  detailsView.setAttribute('hidden', '');
-  document.getElementById('channels-tab-btn').classList.add('active-tab');
-  document.getElementById('details-tab-btn').classList.remove('active-tab');
+  channelsView.removeAttribute("hidden");
+  detailsView.setAttribute("hidden", "");
+  document.getElementById("channels-tab-btn").classList.add("active-tab");
+  document.getElementById("details-tab-btn").classList.remove("active-tab");
 
   // Seed with 5 rows if empty
   if (channelList.children.length === 0) {
-    const placeholders = ['Electric guitar', 'Keyboard', 'Snare...', '', ''];
+    const placeholders = ["Electric guitar", "Keyboard", "Snare...", "", ""];
     for (let i = 0; i < 5; i++) channelList.appendChild(createChannelRow(placeholders[i], i + 1));
   }
 }
 
 /** Hides the inputs panel and shows the regular palette. */
 function showPalette() {
-  inputsPanel.setAttribute('hidden', '');
-  palette.removeAttribute('hidden');
+  inputsPanel.setAttribute("hidden", "");
+  palette.removeAttribute("hidden");
 }
 
-document.getElementById('instrument-palette-toggle').addEventListener('click', showPalette);
-document.getElementById('equipment-palette-toggle').addEventListener('click', showPalette);
-document.getElementById('input-palette-toggle').addEventListener('click', showInputsPanel);
+document.getElementById("instrument-palette-toggle").addEventListener("click", showPalette);
+document.getElementById("equipment-palette-toggle").addEventListener("click", showPalette);
+document.getElementById("input-palette-toggle").addEventListener("click", showInputsPanel);
 
-document.getElementById('add-channel-btn').addEventListener('click', () => {
+document.getElementById("add-channel-btn").addEventListener("click", () => {
   channelList.appendChild(createChannelRow());
 });
 
-document.getElementById('channels-tab-btn').addEventListener('click', () => {
-  channelsView.removeAttribute('hidden');
-  detailsView.setAttribute('hidden', '');
-  document.getElementById('channels-tab-btn').classList.add('active-tab');
-  document.getElementById('details-tab-btn').classList.remove('active-tab');
+document.getElementById("channels-tab-btn").addEventListener("click", () => {
+  channelsView.removeAttribute("hidden");
+  detailsView.setAttribute("hidden", "");
+  document.getElementById("channels-tab-btn").classList.add("active-tab");
+  document.getElementById("details-tab-btn").classList.remove("active-tab");
 });
 
-document.getElementById('details-tab-btn').addEventListener('click', () => {
-  detailsView.removeAttribute('hidden');
-  channelsView.setAttribute('hidden', '');
-  document.getElementById('details-tab-btn').classList.add('active-tab');
-  document.getElementById('channels-tab-btn').classList.remove('active-tab');
+document.getElementById("details-tab-btn").addEventListener("click", () => {
+  detailsView.removeAttribute("hidden");
+  channelsView.setAttribute("hidden", "");
+  document.getElementById("details-tab-btn").classList.add("active-tab");
+  document.getElementById("channels-tab-btn").classList.remove("active-tab");
 });
 
 // Load the default palette category on page load.
-switchPalette('guitars');
+switchPalette("guitars");
