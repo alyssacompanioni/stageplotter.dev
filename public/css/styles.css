@@ -74,114 +74,6 @@ html {
   box-sizing: border-box;
 }
 
-/**********************
- * Form Styles        *
- **********************/
-
-/* Hide <br> spacers inside forms — block-level inputs handle their own spacing */
-form br {
-  display: none;
-}
-
-form label {
-  display: block;
-  font-weight: 600;
-  margin-top: 16px;
-  margin-bottom: 4px;
-}
-
-form label:first-of-type {
-  margin-top: 0;
-}
-
-form input[type="text"],
-form input[type="email"],
-form input[type="password"],
-form input[type="tel"] {
-  background: #fff;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  color: #333;
-  display: block;
-  font: inherit;
-  padding: 8px 12px;
-  transition:
-    border-color 0.15s,
-    box-shadow 0.15s;
-  width: 100%;
-}
-
-form input[type="text"]:focus,
-form input[type="email"]:focus,
-form input[type="password"]:focus,
-form input[type="tel"]:focus {
-  border-color: var(--primary-teal);
-  box-shadow: 0 0 0 3px rgba(0, 151, 178, 0.15);
-  outline: none;
-}
-
-form input[type="submit"] {
-  background: var(--primary-teal);
-  border: none;
-  border-radius: 6px;
-  color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  font: inherit;
-  font-weight: 600;
-  margin-top: 20px;
-  padding: 10px 24px;
-  transition: background 0.15s;
-}
-
-form input[type="submit"]:hover {
-  background: var(--teal-hover);
-}
-
-.required {
-  color: var(--red1);
-}
-
-.optional {
-  color: var(--text-gray);
-  font-size: 0.85rem;
-  font-weight: 400;
-}
-
-/* Error list — used on register.php and profile.php */
-ul.error {
-  background: #fef2f2;
-  border: 1px solid #fca5a5;
-  border-radius: 4px;
-  color: var(--red1);
-  list-style: none;
-  margin-bottom: 16px;
-  padding: 10px 14px;
-}
-
-ul.error li {
-  padding: 2px 0;
-}
-
-/* Inline field error — injected by forms.js */
-span.field-error {
-  color: var(--red1);
-  display: block;
-  font-size: 0.85rem;
-  margin-bottom: 4px;
-  margin-top: 2px;
-}
-
-/* Error paragraph — used on login.php */
-p.error {
-  background: #fef2f2;
-  border: 1px solid #fca5a5;
-  border-radius: 4px;
-  color: var(--red1);
-  margin-bottom: 16px;
-  padding: 10px 14px;
-}
-
 /****************
  * General styles
  *****************/
@@ -208,6 +100,12 @@ img {
   width: 100%;
 }
 
+a,
+a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
 /********************************
  * Site-wide Header, Nav Styles *
  ********************************/
@@ -221,6 +119,7 @@ header {
 }
 
 header ul {
+  align-items: center;
   display: flex;
   gap: 16px;
   list-style: none;
@@ -349,9 +248,116 @@ header ul {
 }
 
 .nav-greeting {
-  border-bottom: 1px solid #eee;
   color: #555;
   font-weight: 600;
+}
+
+/**********************
+ * Form Styles        *
+ **********************/
+
+/* Hide <br> spacers inside forms — block-level inputs handle their own spacing */
+form br {
+  display: none;
+}
+
+form label {
+  display: block;
+  font-weight: 600;
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+form label:first-of-type {
+  margin-top: 0;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="tel"] {
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: #333;
+  display: block;
+  font: inherit;
+  padding: 8px 12px;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+  width: 100%;
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="password"]:focus,
+form input[type="tel"]:focus {
+  border-color: var(--primary-teal);
+  box-shadow: 0 0 0 3px rgba(0, 151, 178, 0.15);
+  outline: none;
+}
+
+form input[type="submit"] {
+  background: var(--primary-teal);
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font: inherit;
+  font-weight: 600;
+  margin-top: 20px;
+  padding: 10px 24px;
+  transition: background 0.15s;
+}
+
+form input[type="submit"]:hover {
+  background: var(--teal-hover);
+}
+
+.required {
+  color: var(--red1);
+}
+
+.optional {
+  color: var(--text-gray);
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+/* Error list — used on register.php and profile.php */
+ul.error {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-radius: 4px;
+  color: var(--red1);
+  list-style: none;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+}
+
+ul.error li {
+  padding: 2px 0;
+}
+
+/* Inline field error — injected by forms.js */
+span.field-error {
+  color: var(--red1);
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+  margin-top: 2px;
+}
+
+/* Error paragraph — used on login.php */
+p.error {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-radius: 4px;
+  color: var(--red1);
+  margin-bottom: 16px;
+  padding: 10px 14px;
 }
 
 /*********************
