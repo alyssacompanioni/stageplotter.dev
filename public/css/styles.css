@@ -735,7 +735,7 @@ table thead th .sort-icon {
 .dashboard-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 25px;
   justify-content: center;
 }
 
@@ -983,4 +983,59 @@ footer {
   color: #065f46;
   margin-bottom: 12px;
   padding: 8px 12px;
+}
+
+/*********************
+ * Manage Library    *
+ *********************/
+.library-section {
+  margin-top: 32px;
+}
+
+.library-section h2 {
+  border-bottom: 2px solid var(--medium-blue);
+  margin-bottom: 16px;
+  padding-bottom: 6px;
+}
+
+.library-section h3 {
+  margin: 20px 0 8px;
+}
+
+.library-empty {
+  color: var(--dark-gray);
+  font-style: italic;
+}
+
+.library-table {
+  border-collapse: collapse;
+  margin-bottom: 12px;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.library-table td,
+.library-table th {
+  vertical-align: middle;
+}
+
+.library-table th:nth-child(1),
+.library-table td:nth-child(1) { width: 64px; }
+
+.library-table th:nth-child(4),
+.library-table td:nth-child(4) { width: 90px; }
+
+.library-thumb {
+  background: var(--light-blue);
+  border-radius: 4px;
+  display: block;
+  height: 40px;
+  object-fit: contain;
+  width: 40px;
+}
+
+.btn-delete {
+  background-color: var(--red1);
+  color: var(--text-light);
+  padding: 4px 10px;
 }
