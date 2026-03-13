@@ -361,6 +361,36 @@ p.error {
 }
 
 /*********************
+ * Table Styles *
+ *********************/
+
+table thead {
+  background-color: var(--medium-blue);
+}
+
+table tbody tr:nth-child(even) {
+  background-color: var(--light-blue);
+}
+
+table thead th {
+  cursor: pointer;
+  padding: 4px 12px;
+  gap: 4px;
+}
+
+table tbody td {
+  gap: 4px;
+  padding: 8px 12px;
+}
+
+table thead th .sort-icon {
+  width: 12px;
+  height: 12px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+/*********************
   *      Index       *
   *******************/
 .index-main {
@@ -371,32 +401,6 @@ p.error {
 
 .index-main section {
   margin-bottom: 32px;
-}
-
-.plots-table thead {
-  background-color: var(--medium-blue);
-}
-
-.plots-table tbody tr:nth-child(even) {
-  background-color: var(--light-blue);
-}
-
-.plots-table thead th {
-  cursor: pointer;
-  padding: 4px 12px;
-  gap: 4px;
-}
-
-.plots-table tbody td {
-  gap: 4px;
-  padding: 8px 12px;
-}
-
-.plots-table thead th .sort-icon {
-  width: 12px;
-  height: 12px;
-  margin-left: 4px;
-  vertical-align: middle;
 }
 
 #plot-search {

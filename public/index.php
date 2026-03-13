@@ -26,7 +26,7 @@
         <h2>Browse and Search Existing Stage Plots</h2>
         <input type="search" id="plot-search" placeholder="Search" autocomplete="off">
 
-        <table class="plots-table">
+        <table>
           <thead>
             <tr>
               <th data-col="title">Title</th>
@@ -66,7 +66,7 @@
             document.getElementById('plot-search').addEventListener('input', render);
 
             // ── Sort headers ─────────────────────────────────────────
-            document.querySelectorAll('.plots-table thead th').forEach(th => {
+            document.querySelectorAll('thead th').forEach(th => {
               th.addEventListener('click', () => {
                 const col = th.dataset.col;
                 if (sortCol === col) {
@@ -81,7 +81,7 @@
             });
 
             function updateSortIndicators() {
-              document.querySelectorAll('.plots-table thead th').forEach(th => {
+              document.querySelectorAll('thead th').forEach(th => {
                 th.removeAttribute('data-sort');
                 const existing = th.querySelector('.sort-icon');
                 if (existing) existing.remove();

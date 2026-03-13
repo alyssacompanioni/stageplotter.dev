@@ -48,46 +48,49 @@ $flash   = $session->message();
 
 <body>
   <?php require_once '../includes/header.php'; ?>
-  <main>
-    <h1>Manage Members</h1>
+  <div class="wrapper">
+    <main>
+      <h1>Manage Members</h1>
 
-    <?php if ($flash !== '') { ?>
-      <p class="flash-message"><?= htmlspecialchars($flash) ?></p>
-    <?php } ?>
+      <?php if ($flash !== '') { ?>
+        <p class="flash-message"><?= htmlspecialchars($flash) ?></p>
+      <?php } ?>
 
-    <?php if (empty($members)) { ?>
-      <p>No members found.</p>
-    <?php } else { ?>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($members as $member) { ?>
+      <?php if (empty($members)) { ?>
+        <p>No members found.</p>
+      <?php } else { ?>
+        <table>
+          <thead>
             <tr>
-              <td><?= htmlspecialchars($member->first_name_usr . ' ' . $member->last_name_usr) ?></td>
-              <td><?= htmlspecialchars($member->username_usr) ?></td>
-              <td><?= htmlspecialchars($member->email_usr) ?></td>
-              <td><?= $member->is_active_usr ? 'Active' : 'Inactive' ?></td>
-              <td>
-                <form method="post">
-                  <input type="hidden" name="user_id" value="<?= $member->id ?>">
-                  <button type="submit">
-                    <?= $member->is_active_usr ? 'Deactivate' : 'Activate' ?>
-                  </button>
-                </form>
-              </td>
+              <th>Name</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Action</th>
             </tr>
-          <?php } ?>
-        </tbody>
-      </table>
-    <?php } ?>
+          </thead>
+          <tbody>
+            <?php foreach ($members as $member) { ?>
+              <tr>
+                <td><?= htmlspecialchars($member->first_name_usr . ' ' . $member->last_name_usr) ?></td>
+                <td><?= htmlspecialchars($member->username_usr) ?></td>
+                <td><?= htmlspecialchars($member->email_usr) ?></td>
+                <td><?= $member->is_active_usr ? 'Active' : 'Inactive' ?></td>
+                <td>
+                  <form method="post">
+                    <input type="hidden" name="user_id" value="<?= $member->id ?>">
+                    <button type="submit">
+                      <?= $member->is_active_usr ? 'Deactivate' : 'Activate' ?>
+                    </button>
+                  </form>
+                </td>
+              </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      <?php } ?>
 
-  </main>
+    </main>
+  </div>
+  <?php require_once '../includes/footer.php'; ?>
 </body>
