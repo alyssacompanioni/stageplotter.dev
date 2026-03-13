@@ -28,7 +28,7 @@
   --blue: #89adff;
   --blue2: #689eff;
   --purple: #9c8dff;
-  
+
   --dark-blue: #1b2333;
   --medium-blue: #5a72aa;
   --light-blue: #ecfaff;
@@ -36,7 +36,6 @@
   --dark-gray2: #8f929e;
   --light-gray: #c6c0bf;
   --light-gray2: #c4c1c8;
-  
 
   /* Blues, Greens, Oranges */
   --blue1: #9cb6c5;
@@ -106,7 +105,9 @@ form input[type="tel"] {
   display: block;
   font: inherit;
   padding: 8px 12px;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
   width: 100%;
 }
 
@@ -207,9 +208,9 @@ img {
   width: 100%;
 }
 
-/*******************************
- * Sitewide Header, Nav Styles *
- *******************************/
+/********************************
+ * Site-wide Header, Nav Styles *
+ ********************************/
 header {
   align-items: center;
   background: var(--dark-blue);
@@ -303,7 +304,19 @@ header ul {
 }
 
 /*********************
-  * Dashboard Styles *
+  *      Index       *
+  *******************/
+.plots-table thead {
+  background-color: var(--medium-blue);
+  padding: 2px 4px;
+}
+
+.plots-table tbody tr:nth-child(even) {
+  background-color: var(--light-blue);
+}
+
+/*********************
+  *    Dashboard     *
   *******************/
 #dashboard-wrapper {
   display: flex;
@@ -358,7 +371,6 @@ header ul {
 
 .placed-element.selected {
   transform: scale(1.3);
-  
 }
 
 /* Label tooltip — hidden by default, shown on hover, hidden when selected */
@@ -429,7 +441,7 @@ header ul {
   height: 600px;
   margin: 24px auto;
   padding: 12px;
-  position: relative; 
+  position: relative;
   width: 90%;
 }
 
@@ -613,7 +625,7 @@ header ul {
  *********************/
 footer {
   background-color: #545454;
-  background-image: url('/assets/brand/footer-blue.svg');
+  background-image: url("/assets/brand/footer-blue.svg");
   background-repeat: repeat-x;
   background-size: auto 100%;
   display: flex;

@@ -37,6 +37,8 @@
           <li><a target="_blank" href="https://icons8.com/icon/13141/timpani">Timpani</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></li>
           <li><a target="_blank" href="https://www.svgrepo.com/svg/370237/layer-up" title="layer-up icon">Layer Up</a> icon by <a target="_blank" href="https://www.svgrepo.com/">SVGrepo</a></li>
           <li><a target="_blank" href="https://www.svgrepo.com/svg/370233/layer-down" title="layer-down icon">Layer Down</a> icon by <a target="_blank" href="https://www.svgrepo.com/">SVGrepo</a></li>
+          <li><a target="_blank" href="https://www.svgrepo.com/svg/142150/up-arrow" title="up-arrow icon">Up Arrow</a> icon by <a target="_blank" href="https://www.svgrepo.com/">SVGrepo</a></li>
+          <li><a target="_blank" href="https://www.svgrepo.com/svg/183562/down-arrow" title="down-arrow icon">Down Arrow</a> icon by <a target="_blank" href="https://www.svgrepo.com/">SVGrepo</a></li>
 
         </ul>
       </section>
