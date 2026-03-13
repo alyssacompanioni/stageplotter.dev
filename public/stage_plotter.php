@@ -13,7 +13,7 @@ $session->require_role('member');
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="/js/dashboard.js" defer></script>
+  <script src="/js/stage_plotter.js" defer></script>
 </head>
 
 <body>
@@ -93,7 +93,7 @@ $session->require_role('member');
             <?php endforeach; ?>
           </div>
           <div class="element-card-container">
-            <!-- Populated on page load by switchPalette() in dashboard.js -->
+            <!-- Populated on page load by switchPalette() in stage_plotter.js -->
           </div>
         </div>
 
@@ -131,7 +131,7 @@ $session->require_role('member');
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="load-modal-title">
       <h2 id="load-modal-title">Load Plot</h2>
       <ul id="load-plot-list" class="load-plot-list">
-        <!-- Populated by showLoadModal() in dashboard.js -->
+        <!-- Populated by showLoadModal() in stage_plotter.js -->
       </ul>
       <button id="load-modal-cancel" class="btn btn-ghost">Cancel</button>
     </div>
