@@ -130,7 +130,7 @@
 
               tbody.innerHTML = slice.map(p => {
                 const title = p.token ?
-                  `<a href="/plot.php?token=${encodeURIComponent(p.token)}">${escHtml(p.title)}</a>` :
+                  `<a href="/view_plot.php?token=${encodeURIComponent(p.token)}">${escHtml(p.title)}</a>` :
                   escHtml(p.title);
                 return `<tr>
                 <td>${title}</td>

@@ -15,8 +15,12 @@ $session->require_role('admin');
 
 <body>
   <?php require_once '../includes/header.php'; ?>
-  <main>
-    <h1>Admin Dashboard</h1>
-    <p>This will be the dashboard for admins, who will have complete stage-plot functionality in addition to admin privileges - activating and deactivating members, and maintaining a library of vector images.</p>
-  </main>
+  <div class="wrapper">
+    <main>
+      <h1>Admin Dashboard</h1>
+      <a href="build-plot.php"><div>Build a Stage Plot</div></a>
+      <a href="manage-members.php"><div>Manage Members</div></a>
+      <a href="manage-library.php"><div>Manage Stage Plot Images</div></a>
+    </main>
+  </div>
 </body>

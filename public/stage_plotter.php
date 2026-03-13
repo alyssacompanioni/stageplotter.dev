@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../private/initialize.php';
+require_once __DIR__ . '/../private/initialize.php';
 $session->require_role('member');
 ?>
 
@@ -18,7 +18,7 @@ $session->require_role('member');
 
 <body>
   <?php require_once '../includes/header.php'; ?>
-  <div class="wrapper" id="dashboard-wrapper">
+  <div class="wrapper" id="stage-plotter-wrapper">
     <main>
       <h1>Stage Plotter Dashboard</h1>
       <div class="canvas-container">

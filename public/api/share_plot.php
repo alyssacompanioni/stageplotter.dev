@@ -50,6 +50,6 @@ if (!$token) {
 }
 
 $scheme = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
-$url    = $scheme . '://' . $_SERVER['HTTP_HOST'] . '/plot.php?token=' . $token;
+$url    = $scheme . '://' . $_SERVER['HTTP_HOST'] . '/view_plot.php?token=' . $token;
 
 echo json_encode(['success' => true, 'url' => $url]);

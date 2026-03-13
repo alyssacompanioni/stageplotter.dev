@@ -103,7 +103,6 @@ img {
 a,
 a:visited {
   color: inherit;
-  text-decoration: none;
 }
 
 /********************************
@@ -221,7 +220,7 @@ header ul {
 #plot-public-toggle::after {
   background: #fff;
   border-radius: 50%;
-  content: '';
+  content: "";
   height: 14px;
   left: 3px;
   position: absolute;
@@ -248,7 +247,8 @@ header ul {
 }
 
 .nav-greeting {
-  color: #555;
+  color: var(--medium-blue);
+  font-size: 1.1rem;
   font-weight: 600;
 }
 
@@ -293,7 +293,7 @@ form input[type="text"]:focus,
 form input[type="email"]:focus,
 form input[type="password"]:focus,
 form input[type="tel"]:focus {
-  border-color: var(--primary-teal);
+  border-color: var(-- --medium-blue);
   box-shadow: 0 0 0 3px rgba(0, 151, 178, 0.15);
   outline: none;
 }
@@ -406,26 +406,26 @@ p.error {
   max-width: 400px;
   border: 1px solid var(--border-color);
   border-radius: 6px;
-} 
+}
 
 /*********************
-  *    Dashboard     *
+  *  Stage Plotter  *
   *******************/
-#dashboard-wrapper {
+#stage-plotter-wrapper {
   display: flex;
 }
 
-#dashboard-wrapper header {
+#stage-plotter-wrapper header {
   display: flex;
 }
 
-#dashboard-wrapper h1 {
+#stage-plotter-wrapper h1 {
   position: absolute;
   left: -9999px;
   top: -9999px;
 }
 
-#dashboard-wrapper main {
+#stage-plotter-wrapper main {
   display: grid;
   grid-template-columns: 1fr 3fr;
   grid-template-rows: auto 1fr;
@@ -625,6 +625,7 @@ p.error {
   text-align: center;
   pointer-events: none;
 }
+
 /***********************
  * Inputs Panel Styles *
  ***********************/
