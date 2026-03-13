@@ -24,6 +24,7 @@ $stmt = $db->prepare("
   JOIN  user_usr             u  ON u.id_usr              = s.id_usr_staplot
   LEFT JOIN shared_plot_shrplot sh ON sh.id_staplot_shrplot = s.id_staplot
   WHERE s.is_active_staplot = 1
+    AND s.is_public_staplot = 1
   ORDER BY s.title_staplot ASC
 ");
 $stmt->execute();

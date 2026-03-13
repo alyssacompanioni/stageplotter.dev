@@ -28,6 +28,7 @@ class StagePlot extends DatabaseObject
     'width_staplot',
     'depth_staplot',
     'is_active_staplot',
+    'is_public_staplot',
   ];
 
   // Properties match SQL column names exactly so instantiate() maps them automatically.
@@ -39,6 +40,7 @@ class StagePlot extends DatabaseObject
   public float   $width_staplot        = 50.00;
   public float   $depth_staplot        = 40.00;
   public int     $is_active_staplot    = 1;
+  public int     $is_public_staplot    = 0;
 
   // Validation limits
   const MIN_DIM      = 10.0;
@@ -62,6 +64,7 @@ class StagePlot extends DatabaseObject
     $this->width_staplot       = isset($args['width_staplot'])       ? (float) $args['width_staplot']       : 50.00;
     $this->depth_staplot       = isset($args['depth_staplot'])       ? (float) $args['depth_staplot']       : 40.00;
     $this->is_active_staplot   = isset($args['is_active_staplot'])   ? (int)   $args['is_active_staplot']   : 1;
+    $this->is_public_staplot   = isset($args['is_public_staplot'])   ? (int)   $args['is_public_staplot']   : 0;
   }
 
   // ============================================================

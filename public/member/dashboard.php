@@ -42,6 +42,12 @@ $session->require_role('member');
               <li><button id="print-plot-btn" class="btn">Print Plot</button></li>
               <li><button id="change-dimensions-btn" class="btn">Change Dimensions</button></li>
               <li><button id="clear-stage-btn" class="btn btn-ghost">Clear Stage</button></li>
+              <li class="toolbar-visibility-item">
+                <label for="plot-public-toggle" class="toolbar-visibility-label">
+                  <span class="toggle-label">Publish:</span>
+                  <input type="checkbox" id="plot-public-toggle" role="switch">
+                </label>
+              </li>
             </ul>
           </div>
         </header>

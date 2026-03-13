@@ -74,13 +74,14 @@ foreach ($input_rows as $row) {
 }
 
 echo json_encode([
-  'success'  => true,
-  'plot_id'  => $plot->id,
-  'title'    => $plot->title_staplot,
-  'gig_date' => db_date_to_display($plot->gig_date_staplot),
-  'venue'    => $plot->venue_staplot,
-  'elements' => $elements,
-  'inputs'   => ['channels' => $channels, 'details' => $details],
+  'success'   => true,
+  'plot_id'   => $plot->id,
+  'title'     => $plot->title_staplot,
+  'gig_date'  => db_date_to_display($plot->gig_date_staplot),
+  'venue'     => $plot->venue_staplot,
+  'is_public' => (bool) $plot->is_public_staplot,
+  'elements'  => $elements,
+  'inputs'    => ['channels' => $channels, 'details' => $details],
 ]);
 
 // ── Helper ─────────────────────────────────────────────────────────────────

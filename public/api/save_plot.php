@@ -68,6 +68,7 @@ if ($plot_id) {
 $plot->title_staplot    = $body['title']    ?? '';
 $plot->gig_date_staplot = $body['gig_date'] ?? '';
 $plot->venue_staplot    = ($body['venue'] !== '' && $body['venue'] !== null) ? $body['venue'] : null;
+$plot->is_public_staplot = isset($body['is_public']) ? (int) (bool) $body['is_public'] : $plot->is_public_staplot;
 
 if (!$plot->save()) {
   echo json_encode(['success' => false, 'errors' => $plot->get_errors()]);
@@ -122,6 +123,17 @@ foreach ($channels as $ch) {
   $label = substr(trim((string) ($ch['label'] ?? '')), 0, 100);
   if ($num < 1 || $num > 999) continue;
   $insert_ch->execute([$list_id, $num, $label]);
+}
+
+// ── Auto-create share token when plot is made public ──────────────────────
+if ($plot->is_public_staplot) {
+  $stmt = $db->prepare("SELECT share_token_shrplot FROM shared_plot_shrplot WHERE id_staplot_shrplot = ? LIMIT 1");
+  $stmt->execute([$plot->id]);
+  if (!$stmt->fetchColumn()) {
+    $token = bin2hex(random_bytes(32));
+    $db->prepare("INSERT INTO shared_plot_shrplot (id_staplot_shrplot, share_token_shrplot) VALUES (?, ?)")
+       ->execute([$plot->id, $token]);
+  }
 }
 
 echo json_encode(['success' => true, 'plot_id' => $plot->id]);

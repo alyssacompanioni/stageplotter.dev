@@ -127,6 +127,7 @@ CREATE TABLE IF NOT EXISTS `stage_plot_staplot` (
   `updated_at_staplot` timestamp NOT NULL DEFAULT current_timestamp()
                                           ON UPDATE current_timestamp(),
   `is_active_staplot` tinyint(1) NOT NULL DEFAULT 1,
+  `is_public_staplot` tinyint(1) NOT NULL DEFAULT 0,
   `id_usr_staplot` int(11) NOT NULL,
   PRIMARY KEY (`id_staplot`),
   KEY `id_usr_staplot` (`id_usr_staplot`)

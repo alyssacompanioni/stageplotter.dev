@@ -314,6 +314,7 @@ function getCurrentState() {
     title: document.getElementById("plot-title").value.trim(),
     gig_date: document.getElementById("plot-gig-date").value.trim(),
     venue: document.getElementById("plot-venue").value.trim(),
+    is_public: document.getElementById("plot-public-toggle").checked,
     elements: serializeCanvas(),
     inputs: serializeInputs(),
   });
@@ -399,6 +400,7 @@ async function savePlot() {
         title,
         gig_date: gigDate,
         venue: venue || null,
+        is_public: document.getElementById("plot-public-toggle").checked,
         elements: serializeCanvas(),
         inputs: serializeInputs(),
       }),
@@ -480,6 +482,7 @@ async function loadPlot(plotId) {
     document.getElementById("plot-title").value = data.title;
     document.getElementById("plot-gig-date").value = data.gig_date;
     document.getElementById("plot-venue").value = data.venue ?? "";
+    document.getElementById("plot-public-toggle").checked = !!data.is_public;
     currentPlotId = data.plot_id;
 
     // Clear the canvas and redraw elements
@@ -531,6 +534,7 @@ function resetPlot() {
   document.getElementById("plot-title").value = "";
   document.getElementById("plot-gig-date").value = "";
   document.getElementById("plot-venue").value = "";
+  document.getElementById("plot-public-toggle").checked = false;
   document.getElementById("inputs-details").value = "";
   document.getElementById("channel-list").innerHTML = "";
   currentPlotId = null;
