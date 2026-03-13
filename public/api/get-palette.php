@@ -1,7 +1,7 @@
 <?php
 
 /**
- * get_palette.php
+ * get-palette.php
  * Returns the icon src paths and labels for a given instrument category.
  *
  * Method:  GET

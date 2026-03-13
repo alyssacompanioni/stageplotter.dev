@@ -15,12 +15,20 @@ $session->require_role('admin');
 
 <body>
   <?php require_once '../includes/header.php'; ?>
-  <div class="wrapper">
+  <div class="dashboard-wrapper">
     <main>
       <h1>Admin Dashboard</h1>
-      <a href="build-plot.php"><div>Build a Stage Plot</div></a>
-      <a href="manage-members.php"><div>Manage Members</div></a>
-      <a href="manage-library.php"><div>Manage Stage Plot Images</div></a>
+      <div class="dashboard-links">
+        <a href="../stage-plotter.php">
+          <div class="dashboard-btn">Build a Stage Plot</div>
+        </a>
+        <a href="manage-members.php">
+          <div class="dashboard-btn">Manage Members</div>
+        </a>
+        <a href="../manage-library.php">
+          <div class="dashboard-btn">Manage Stage Plot Images</div>
+        </a>
+      </div>
     </main>
   </div>
 </body>

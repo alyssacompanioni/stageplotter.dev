@@ -1,7 +1,7 @@
 <?php
 
 /**
- * manage_library.php
+ * manage-library.php
  * Lets admins and super_admins upload and browse the shared SVG
  * plot-element image library.
  *
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['svg_file'])) {
     }
   }
 
-  header('Location: manage_library.php');
+  header('Location: manage-library.php');
   exit;
 }
 

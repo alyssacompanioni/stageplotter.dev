@@ -1,7 +1,7 @@
 <?php
 
 /**
- * get_public_plots.php
+ * get-public-plots.php
  * Returns all active stage plots for public browsing. No login required.
  *
  * Method:  GET

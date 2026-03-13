@@ -1,7 +1,7 @@
 <?php
 
 /**
- * load_plots.php
+ * load-plots.php
  * Returns a summary list of all active stage plots owned by the logged-in user.
  *
  * Method:  GET

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * load_plot.php
+ * load-plot.php
  * Returns the full data for a single stage plot, including all canvas elements.
  *
  * Method:  GET

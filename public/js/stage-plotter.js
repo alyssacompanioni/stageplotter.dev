@@ -31,7 +31,7 @@ document.querySelector(".element-type").addEventListener("click", (e) => {
  */
 async function switchPalette(category) {
   try {
-    const res = await fetch("/api/get_palette.php?category=" + encodeURIComponent(category));
+    const res = await fetch("/api/get-palette.php?category=" + encodeURIComponent(category));
     const data = await res.json();
     if (!data.success) return;
 
@@ -392,7 +392,7 @@ async function savePlot() {
   closeDropdown();
 
   try {
-    const res = await fetch("/api/save_plot.php", {
+    const res = await fetch("/api/save-plot.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -430,7 +430,7 @@ async function showLoadModal() {
   closeDropdown();
 
   try {
-    const res = await fetch("/api/load_plots.php");
+    const res = await fetch("/api/load-plots.php");
     const data = await res.json();
 
     if (!data.success) {
@@ -470,7 +470,7 @@ async function loadPlot(plotId) {
   closeLoadModal();
 
   try {
-    const res = await fetch("/api/load_plot.php?id=" + plotId);
+    const res = await fetch("/api/load-plot.php?id=" + plotId);
     const data = await res.json();
 
     if (!data.success) {
@@ -576,7 +576,7 @@ async function sharePlot() {
   }
 
   try {
-    const res = await fetch("/api/share_plot.php", {
+    const res = await fetch("/api/share-plot.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ plot_id: currentPlotId }),

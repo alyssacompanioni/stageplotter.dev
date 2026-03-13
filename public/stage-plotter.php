@@ -9,15 +9,15 @@ $session->require_role('member');
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Member Dashboard | Stage Plotter</title>
+  <title>Build a Stage Plot | Stage Plotter</title>
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="/js/stage_plotter.js" defer></script>
+  <script src="/js/stage-plotter.js" defer></script>
 </head>
 
 <body>
-  <?php require_once '../includes/header.php'; ?>
+  <?php require_once 'includes/header.php'; ?>
   <div class="wrapper" id="stage-plotter-wrapper">
     <main>
       <h1>Stage Plotter Dashboard</h1>
@@ -93,7 +93,7 @@ $session->require_role('member');
             <?php endforeach; ?>
           </div>
           <div class="element-card-container">
-            <!-- Populated on page load by switchPalette() in stage_plotter.js -->
+            <!-- Populated on page load by switchPalette() in stage-plotter.js -->
           </div>
         </div>
 
@@ -113,7 +113,7 @@ $session->require_role('member');
       </section>
     </main>
   </div>
-  <?php require_once '../includes/footer.php'; ?>
+  <?php require_once 'includes/footer.php'; ?>
 
   <div id="share-modal" class="modal-overlay" hidden>
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="share-modal-title">
@@ -131,7 +131,7 @@ $session->require_role('member');
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="load-modal-title">
       <h2 id="load-modal-title">Load Plot</h2>
       <ul id="load-plot-list" class="load-plot-list">
-        <!-- Populated by showLoadModal() in stage_plotter.js -->
+        <!-- Populated by showLoadModal() in stage-plotter.js -->
       </ul>
       <button id="load-modal-cancel" class="btn btn-ghost">Cancel</button>
     </div>

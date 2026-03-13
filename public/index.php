@@ -50,7 +50,7 @@
             let sortDir = 'asc';
 
             // ── Fetch ────────────────────────────────────────────────
-            fetch('/api/get_public_plots.php')
+            fetch('/api/get-public-plots.php')
               .then(r => r.json())
               .then(data => {
                 allPlots = data.plots || [];
@@ -130,7 +130,7 @@
 
               tbody.innerHTML = slice.map(p => {
                 const title = p.token ?
-                  `<a href="/view_plot.php?token=${encodeURIComponent(p.token)}">${escHtml(p.title)}</a>` :
+                  `<a href="/view-plot.php?token=${encodeURIComponent(p.token)}">${escHtml(p.title)}</a>` :
                   escHtml(p.title);
                 return `<tr>
                 <td>${title}</td>

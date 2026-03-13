@@ -63,7 +63,7 @@ function redirect_by_role(string $role): void
   $destinations = [
     'super_admin' => '/super_admin/dashboard.php',
     'admin'  => '/admin/dashboard.php',
-    'member' => '/stage_plotter.php',
+    'member' => '/stage-plotter.php',
   ];
 
   header('Location: ' . ($destinations[$role] ?? '/index.php'));

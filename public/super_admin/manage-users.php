@@ -1,7 +1,7 @@
 <?php
 
 /**
- * manage_users.php
+ * manage-users.php
  * Lists all admin and member accounts and lets super_admins activate or
  * deactivate them.
  *
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
     $session->message('User not found.');
   }
 
-  header('Location: manage_users.php');
+  header('Location: manage-users.php');
   exit;
 }
 

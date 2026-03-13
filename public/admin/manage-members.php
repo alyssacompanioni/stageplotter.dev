@@ -1,7 +1,7 @@
 <?php
 
 /**
- * manage_members.php
+ * manage-members.php
  * Lists all member accounts and lets admins activate or deactivate them.
  *
  * Requires: admin role or higher.
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
     $session->message('Member not found.');
   }
 
-  header('Location: manage_members.php');
+  header('Location: manage-members.php');
   exit;
 }
 

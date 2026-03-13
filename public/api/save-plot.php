@@ -1,7 +1,7 @@
 <?php
 
 /**
- * save_plot.php
+ * save-plot.php
  * Creates or updates a stage plot and replaces all of its canvas elements.
  *
  * Method:  POST

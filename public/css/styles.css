@@ -715,6 +715,41 @@ p.error {
 }
 
 /*********************
+ * Dashboard Styles *
+ *********************/
+.dashboard-wrapper {
+  padding: 24px 0;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.dashboard-wrapper h1 {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.dashboard-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.dashboard-btn {
+  background: var(--blue-gray);
+  border-color: var(--teal-hover);
+  border-radius: 8px;   
+  display: block;
+  padding: 40px;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+
+/*********************
  ** Footer Styles **
  *********************/
 footer {
