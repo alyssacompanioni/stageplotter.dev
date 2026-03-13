@@ -648,13 +648,10 @@ function rasterizeElement(src, sizePx, rotationDeg, flipped) {
 }
 
 /**
- * Exports the current stage plot as a downloadable PDF.
- * Builds the PDF programmatically with jsPDF — no screenshot, no rendering
- * artifacts. Each element is rasterized individually so rotation and flip
- * are applied precisely.
+ * Builds and returns a jsPDF document for the current stage plot.
+ * @returns {Promise<{pdf: jsPDF, title: string}>}
  */
-async function exportPlot() {
-  closeDropdown();
+async function buildPdf() {
   deselectAll();
 
   const title = document.getElementById("plot-title").value.trim() || "Stage Plot";
@@ -801,13 +798,36 @@ async function exportPlot() {
     }
   }
 
+  return { pdf, title };
+}
+
+/**
+ * Exports the current stage plot as a downloadable PDF.
+ */
+async function exportPlot() {
+  closeDropdown();
+  const { pdf, title } = await buildPdf();
   const filename = title.replace(/[^a-z0-9]/gi, "_").replace(/_+/g, "_") + ".pdf";
   pdf.save(filename);
+}
+
+/**
+ * Prints the current stage plot by generating the same PDF as export and
+ * opening it in a new tab with the print dialog triggered automatically.
+ */
+async function printPlot() {
+  closeDropdown();
+  const { pdf } = await buildPdf();
+  pdf.autoPrint();
+  const url = URL.createObjectURL(pdf.output("blob"));
+  const win = window.open(url);
+  win.addEventListener("unload", () => URL.revokeObjectURL(url), { once: true });
 }
 
 // ─── Button wiring ─────────────────────────────────────────────────────────────
 
 document.getElementById("export-plot-btn").addEventListener("click", exportPlot);
+document.getElementById("print-plot-btn").addEventListener("click", printPlot);
 document.getElementById("share-plot-btn").addEventListener("click", sharePlot);
 document.getElementById("new-plot-btn").addEventListener("click", newPlot);
 document.getElementById("save-plot-btn").addEventListener("click", savePlot);

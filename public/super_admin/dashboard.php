@@ -15,8 +15,19 @@ $session->require_role('super_admin');
 
 <body>
   <?php require_once '../includes/header.php'; ?>
-  <main>
-    <h1>Super Admin Dashboard</h1>
-    <p>This will be the dashboard for superadmins, who will have complete stage-plot functionality, admin privileges, and the ability to activate/deactivate admins.</p>
-  </main>
+  <div class="dashboard-wrapper">
+    <main>
+      <h1>Admin Dashboard</h1>
+      <div class="dashboard-links">
+        <a href="../stage-plotter.php">
+          <div class="dashboard-btn">Build a Stage Plot</div>
+        </a>
+        <a href="manage-users.php">
+          <div class="dashboard-btn">Manage Users</div>
+        </a>
+        <a href="../manage-library.php">
+          <div class="dashboard-btn">Manage Stage Plot Images</div>
+        </a>
+      </div>
+    </main>
 </body>
