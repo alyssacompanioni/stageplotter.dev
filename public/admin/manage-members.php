@@ -48,7 +48,7 @@ $flash   = $session->message();
 
 <body>
   <?php require_once '../includes/header.php'; ?>
-  <div class="wrapper">
+  <div class="dashboard-wrapper">
     <main>
       <h1>Manage Members</h1>
 
