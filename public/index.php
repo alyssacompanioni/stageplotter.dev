@@ -13,7 +13,7 @@
 <body>
   <?php require_once __DIR__ . '/includes/header.php'; ?>
   <div class="wrapper">
-    <main>
+    <main class="index-main">
       <h1>Welcome to StagePlotter!</h1>
 
       <section class="about">
@@ -35,7 +35,7 @@
               <th data-col="created_by">Created By</th>
             </tr>
           </thead>
-          <tbody class="plots-tbody">
+          <tbody id="plots-tbody">
             <tr>
               <td colspan="4">Loading...</td>
             </tr>
@@ -46,7 +46,7 @@
           (function() {
             const PAGE_SIZE = 20;
             let allPlots = [];
-            let sortCol = null;
+            let sortCol = 'title';
             let sortDir = 'asc';
 
             // ── Fetch ────────────────────────────────────────────────
@@ -54,6 +54,7 @@
               .then(r => r.json())
               .then(data => {
                 allPlots = data.plots || [];
+                updateSortIndicators();
                 render();
               })
               .catch(() => {
@@ -65,8 +66,7 @@
             document.getElementById('plot-search').addEventListener('input', render);
 
             // ── Sort headers ─────────────────────────────────────────
-            document.querySelectorAll('#plots-table thead th').forEach(th => {
-              th.style.cursor = 'pointer';
+            document.querySelectorAll('.plots-table thead th').forEach(th => {
               th.addEventListener('click', () => {
                 const col = th.dataset.col;
                 if (sortCol === col) {
@@ -81,10 +81,17 @@
             });
 
             function updateSortIndicators() {
-              document.querySelectorAll('#plots-table thead th').forEach(th => {
+              document.querySelectorAll('.plots-table thead th').forEach(th => {
                 th.removeAttribute('data-sort');
+                const existing = th.querySelector('.sort-icon');
+                if (existing) existing.remove();
                 if (th.dataset.col === sortCol) {
                   th.setAttribute('data-sort', sortDir);
+                  const img = document.createElement('img');
+                  img.src = sortDir === 'asc' ? '/assets/icons/down-arrow.svg' : '/assets/icons/up-arrow.svg';
+                  img.alt = sortDir === 'asc' ? 'ascending' : 'descending';
+                  img.className = 'sort-icon';
+                  th.appendChild(img);
                 }
               });
             }

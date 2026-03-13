@@ -306,14 +306,44 @@ header ul {
 /*********************
   *      Index       *
   *******************/
+.index-main {
+  padding: 24px 0;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.index-main section {
+  margin-bottom: 32px;
+}
+
 .plots-table thead {
   background-color: var(--medium-blue);
-  padding: 2px 4px;
 }
 
 .plots-table tbody tr:nth-child(even) {
   background-color: var(--light-blue);
 }
+
+.plots-table thead th {
+  cursor: pointer;
+  padding: 4px 12px;
+}
+
+.plots-table thead th .sort-icon {
+  width: 12px;
+  height: 12px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+#plot-search {
+  margin: 12px 0;
+  padding: 8px 12px;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+} 
 
 /*********************
   *    Dashboard     *
