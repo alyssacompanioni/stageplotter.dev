@@ -1070,6 +1070,7 @@ footer {
 
 .upload-category-row label {
   font-weight: bold;
+  margin-top: 0;
 }
 
 .library-section {
