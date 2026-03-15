@@ -69,7 +69,7 @@ $session->require_role('member');
               'drums'      => 'Drums',
               'keys'       => 'Keys',
               'strings'    => 'Strings',
-              'horns'      => 'Horns',
+              'brass'      => 'Brass',
               'winds'      => 'Woodwinds',
               'percussion' => 'Percussion',
               'misc'       => 'Misc',

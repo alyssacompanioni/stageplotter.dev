@@ -15,7 +15,7 @@ $session->require_role('member');
 
 header('Content-Type: application/json');
 
-$valid_categories = ['guitars', 'percussion', 'keys', 'strings', 'winds', 'amps', 'misc'];
+$valid_categories = ['guitars', 'drums', 'keys', 'strings', 'brass', 'winds', 'percussion', 'misc'];
 $category         = $_GET['category'] ?? '';
 
 if (!in_array($category, $valid_categories, true)) {

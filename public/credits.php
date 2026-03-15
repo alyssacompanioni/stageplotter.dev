@@ -30,15 +30,29 @@
         <h2>Icon Attributions</h2>
         <ul>
           <li>"Electric Guitar" icon by Melvin Salas from <a href="https://thenounproject.com/browse/icons/term/electric-guitar/" target="_blank" title="electric guitar Icons">Noun Project</a> (CC BY 3.0)</li>
-          <li>"User" icon by Baboon designs from <a href="https://thenounproject.com/browse/icons/term/user/" target="_blank" title="User Icons">Noun Project</a> (CC BY 3.0)</li>      
-          <li><a target="_blank" href="https://icons8.com/icon/2969/settings">Settings</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></li>
-          <li><a href="https://www.flaticon.com/free-icons/cowbell" title="cowbell icons">Cowbell icon created by Kiranshastry - Flaticon</a></li>
-          <li><a target="_blank" href="https://icons8.com/icon/9397/timpani">Timpani</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></li>
-          <li><a target="_blank" href="https://icons8.com/icon/13141/timpani">Timpani</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></li>
+          <li>"User" icon by Baboon designs from <a href="https://thenounproject.com/browse/icons/term/user/" target="_blank" title="User Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li><a target="_blank" href="https://icons8.com/icon/2969/settings">Settings</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></li>   
           <li><a target="_blank" href="https://www.svgrepo.com/svg/370237/layer-up" title="layer-up icon">Layer Up</a> icon by <a target="_blank" href="https://www.svgrepo.com/">SVGrepo</a></li>
           <li><a target="_blank" href="https://www.svgrepo.com/svg/370233/layer-down" title="layer-down icon">Layer Down</a> icon by <a target="_blank" href="https://www.svgrepo.com/">SVGrepo</a></li>
           <li><a target="_blank" href="https://www.svgrepo.com/svg/142150/up-arrow" title="up-arrow icon">Up Arrow</a> icon by <a target="_blank" href="https://www.svgrepo.com/">SVGrepo</a></li>
           <li><a target="_blank" href="https://www.svgrepo.com/svg/183562/down-arrow" title="down-arrow icon">Down Arrow</a> icon by <a target="_blank" href="https://www.svgrepo.com/">SVGrepo</a></li>
+          <li>"Tuba" icon by Marvdrock from <a href="https://thenounproject.com/browse/icons/term/tuba/" target="_blank" title="tuba Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Double Neck Guitar" icon by Marvdrock from <a href="https://thenounproject.com/browse/icons/term/double-neck-guitar/" target="_blank" title="double neck guitar Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Maracas" icon by Marvdrock from <a href="https://thenounproject.com/browse/icons/term/maracas/" target="_blank" title="Maracas Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Triangle" icon by Marvdrock from <a href="https://thenounproject.com/browse/icons/term/triangle/" target="_blank" title="triangle Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>Gong by Smashicons from <a href="https://thenounproject.com/browse/icons/term/gong/" target="_blank" title="Gong Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Keytar" icon by Marvdrock from <a href="https://thenounproject.com/browse/icons/term/keytar/" target="_blank" title="Keytar Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Baritone Saxophone" icon by Elves Sousa from <a href="https://thenounproject.com/browse/icons/term/baritone-saxophone/" target="_blank" title="baritone saxophone Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Clarone" icon by Elves Sousa from <a href="https://thenounproject.com/browse/icons/term/clarone/" target="_blank" title="clarone Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Piano" icon by Elves Sousa from <a href="https://thenounproject.com/browse/icons/term/piano/" target="_blank" title="Piano Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Cello" icon by Elves Sousa from <a href="https://thenounproject.com/browse/icons/term/cello/" target="_blank" title="Cello Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Violin" icon by Elves Sousa from <a href="https://thenounproject.com/browse/icons/term/violin/" target="_blank" title="Violin Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Flute" icon by Elves Sousa from <a href="https://thenounproject.com/browse/icons/term/flute/" target="_blank" title="Flute Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Bass" icon by satrio from <a href="https://thenounproject.com/browse/icons/term/bass/" target="_blank" title="bass Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Cymbals" icon by parkjisun from <a href="https://thenounproject.com/browse/icons/term/cymbals/" target="_blank" title="Cymbals Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Cowbell" icon by the oldman creative from <a href="https://thenounproject.com/browse/icons/term/cowbell/" target="_blank" title="Cowbell Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Lyre" icon by Vectors Market from <a href="https://thenounproject.com/browse/icons/term/lyre/" target="_blank" title="Lyre Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Accordion" icon by luca fruzza from <a href="https://thenounproject.com/browse/icons/term/accordion/" target="_blank" title="accordion Icons">Noun Project</a> (CC BY 3.0)</li>
 
         </ul>
       </section>
