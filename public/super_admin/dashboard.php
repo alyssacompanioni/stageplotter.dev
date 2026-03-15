@@ -17,7 +17,7 @@ $session->require_role('super_admin');
   <?php require_once '../includes/header.php'; ?>
   <div class="dashboard-wrapper">
     <main>
-      <h1>Admin Dashboard</h1>
+      <h1>Super-Admin Dashboard</h1>
       <div class="dashboard-links">
         <a href="../stage-plotter.php">
           <div class="dashboard-btn">Build a Stage Plot</div>
