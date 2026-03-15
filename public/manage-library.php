@@ -18,16 +18,16 @@ define('PLOT_ELEMENT_DIR', __DIR__ . '/assets/plot_elements/');
 // ── Category definitions ──────────────────────────────────────────────────────
 $instrument_categories = [
   'guitars'    => 'Guitars',
-  'percussion' => 'Percussion',
+  'drums'      => 'Drums',
   'keys'       => 'Keys',
   'strings'    => 'Strings',
-  'winds'      => 'Winds',
+  'brass'      => 'Brass',
+  'winds'      => 'Woodwinds',
+  'percussion' => 'Percussion',
+  'misc'       => 'Misc',
 ];
 
-$equipment_categories = [
-  'amps' => 'Amps',
-  'misc' => 'Misc',
-];
+$equipment_categories = [];
 
 // ── Handle SVG upload POST ────────────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['svg_file'])) {
@@ -113,7 +113,6 @@ function gather_images(array $categories): array {
 }
 
 $instrument_images = gather_images($instrument_categories);
-$equipment_images  = gather_images($equipment_categories);
 $flash             = $session->message();
 ?>
 
@@ -195,7 +194,6 @@ $flash             = $session->message();
       <?php } ?>
 
       <?php render_section('Instruments', $instrument_categories, $instrument_images); ?>
-      <?php render_section('Equipment',   $equipment_categories,  $equipment_images);  ?>
 
     </main>
   </div>
