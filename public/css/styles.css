@@ -587,7 +587,7 @@ table thead th .sort-icon {
 }
 
 .element-card-container {
-  background-color: var(--green1);
+  background-color: var(--medium-blue);
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   gap: 8px;

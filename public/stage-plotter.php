@@ -66,11 +66,12 @@ $session->require_role('member');
             <?php
             $categories = [
               'guitars'    => 'Guitars',
-              'percussion' => 'Percussion',
+              'drums'      => 'Drums',
               'keys'       => 'Keys',
               'strings'    => 'Strings',
-              'winds'      => 'Winds',
-              'amps'       => 'Amps',
+              'horns'      => 'Horns',
+              'winds'      => 'Woodwinds',
+              'percussion' => 'Percussion',
               'misc'       => 'Misc',
             ];
             foreach ($categories as $slug => $label):
