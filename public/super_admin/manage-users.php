@@ -89,10 +89,10 @@ $flash = $session->message();
           <tbody>
             <?php foreach ($users as $user) { ?>
               <tr>
-                <td><?= htmlspecialchars($user->first_name_usr . ' ' . $user->last_name_usr) ?></td>
-                <td><?= htmlspecialchars($user->username_usr) ?></td>
-                <td><?= htmlspecialchars($user->email_usr) ?></td>
-                <td>
+                <td data-label="Name"><?= htmlspecialchars($user->first_name_usr . ' ' . $user->last_name_usr) ?></td>
+                <td data-label="Username"><?= htmlspecialchars($user->username_usr) ?></td>
+                <td data-label="Email"><?= htmlspecialchars($user->email_usr) ?></td>
+                <td data-label="Role">
                   <form method="post">
                     <input type="hidden" name="user_id" value="<?= $user->id ?>">
                     <input type="hidden" name="action" value="change_role">
@@ -102,8 +102,8 @@ $flash = $session->message();
                     </select>
                   </form>
                 </td>
-                <td><?= $user->is_active_usr ? 'Active' : 'Inactive' ?></td>
-                <td>
+                <td data-label="Status"><?= $user->is_active_usr ? 'Active' : 'Inactive' ?></td>
+                <td data-label="Action">
                   <form method="post">
                     <input type="hidden" name="user_id" value="<?= $user->id ?>">
                     <input type="hidden" name="action" value="toggle_active">

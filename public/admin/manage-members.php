@@ -72,11 +72,11 @@ $flash   = $session->message();
           <tbody>
             <?php foreach ($members as $member) { ?>
               <tr>
-                <td><?= htmlspecialchars($member->first_name_usr . ' ' . $member->last_name_usr) ?></td>
-                <td><?= htmlspecialchars($member->username_usr) ?></td>
-                <td><?= htmlspecialchars($member->email_usr) ?></td>
-                <td><?= $member->is_active_usr ? 'Active' : 'Inactive' ?></td>
-                <td>
+                <td data-label="Name"><?= htmlspecialchars($member->first_name_usr . ' ' . $member->last_name_usr) ?></td>
+                <td data-label="Username"><?= htmlspecialchars($member->username_usr) ?></td>
+                <td data-label="Email"><?= htmlspecialchars($member->email_usr) ?></td>
+                <td data-label="Status"><?= $member->is_active_usr ? 'Active' : 'Inactive' ?></td>
+                <td data-label="Action">
                   <form method="post">
                     <input type="hidden" name="user_id" value="<?= $member->id ?>">
                     <button type="submit">

@@ -390,6 +390,43 @@ table thead th .sort-icon {
   vertical-align: middle;
 }
 
+@media (max-width: 640px) {
+  table thead {
+    display: none;
+  }
+
+  table tbody tr {
+    display: block;
+    border: 1px solid var(--medium-blue);
+    border-radius: 6px;
+    margin-bottom: 12px;
+    padding: 8px 0;
+  }
+
+  table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--light-blue);
+  }
+
+  table tbody td:last-child {
+    border-bottom: none;
+  }
+
+  table tbody td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+
+  table tbody tr:nth-child(even) {
+    background-color: transparent;
+  }
+}
+
 /*********************
   *      Index       *
   *******************/
