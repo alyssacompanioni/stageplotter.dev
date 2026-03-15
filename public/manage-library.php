@@ -13,7 +13,7 @@ require_once __DIR__ . '/../private/initialize.php';
 $session->require_role('admin');
 
 define('ASSETS_INSTRUMENTS_DIR', __DIR__ . '/assets/instruments/');
-define('PLOT_ELEMENT_DIR', __DIR__ . '/assets/plot_elements/');
+define('ASSETS_EQUIPMENT_DIR',   __DIR__ . '/assets/equipment/');
 
 // ── Category definitions ──────────────────────────────────────────────────────
 $instrument_categories = [
@@ -27,10 +27,29 @@ $instrument_categories = [
   'misc'       => 'Misc',
 ];
 
-$equipment_categories = [];
+$equipment_categories = [
+  'audio'     => 'Audio',
+  'furniture' => 'Furniture',
+  'lighting'  => 'Lighting',
+  'misc'      => 'Misc',
+];
 
 // ── Handle SVG upload POST ────────────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['svg_file'])) {
+  $type        = $_POST['type']        ?? '';
+  $subcategory = $_POST['subcategory'] ?? '';
+
+  // Validate type and subcategory
+  if ($type === 'instruments' && array_key_exists($subcategory, $instrument_categories)) {
+    $dest_dir  = ASSETS_INSTRUMENTS_DIR . $subcategory . '/';
+  } elseif ($type === 'equipment' && array_key_exists($subcategory, $equipment_categories)) {
+    $dest_dir  = ASSETS_EQUIPMENT_DIR . $subcategory . '/';
+  } else {
+    $session->message('Invalid category selection.');
+    header('Location: manage-library.php');
+    exit;
+  }
+
   if ($_FILES['svg_file']['error'] !== UPLOAD_ERR_OK) {
     $session->message('Upload error. Please try again.');
   } else {
@@ -42,12 +61,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['svg_file'])) {
     } else {
       $base     = preg_replace('/[^a-z0-9_\-]/', '_', strtolower(pathinfo($_FILES['svg_file']['name'], PATHINFO_FILENAME)));
       $filename = $base . '.svg';
-      $dest     = PLOT_ELEMENT_DIR . $filename;
+      $dest     = $dest_dir . $filename;
 
       // Appends a Unix timestamp if the filename already exists to avoid overwriting
       if (file_exists($dest)) {
         $filename = $base . '_' . time() . '.svg';
-        $dest     = PLOT_ELEMENT_DIR . $filename;
+        $dest     = $dest_dir . $filename;
       }
 
       if (move_uploaded_file($tmp, $dest)) {
@@ -64,11 +83,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['svg_file'])) {
 
 // ── Handle delete POST ────────────────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_file'])) {
+  $type      = $_POST['delete_type'] ?? 'instruments';
+  $base_dir  = $type === 'equipment' ? ASSETS_EQUIPMENT_DIR : ASSETS_INSTRUMENTS_DIR;
   $requested = $_POST['delete_file'];
 
-  // Resolve to a real path and confirm it lives inside ASSETS_INSTRUMENTS_DIR
-  $real_base = realpath(ASSETS_INSTRUMENTS_DIR);
-  $real_file = realpath(ASSETS_INSTRUMENTS_DIR . $requested);
+  // Resolve to a real path and confirm it lives inside the expected base dir
+  $real_base = realpath($base_dir);
+  $real_file = realpath($base_dir . $requested);
 
   if (
     $real_file !== false &&
@@ -92,19 +113,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_file'])) {
 /**
  * Returns [ 'subcategory_slug' => [ ['slug'=>…, 'filename'=>…, 'src'=>…, 'label'=>…], … ], … ]
  */
-function gather_images(array $categories): array {
+function gather_images(array $categories, string $base_dir, string $url_prefix): array {
   $result = [];
   foreach (array_keys($categories) as $slug) {
-    $dir   = ASSETS_INSTRUMENTS_DIR . $slug . '/';
+    $dir   = $base_dir . $slug . '/';
     $files = is_dir($dir) ? (glob($dir . '*.{svg,png}', GLOB_BRACE) ?: []) : [];
     sort($files);
-    $result[$slug] = array_map(function (string $file) use ($slug): array {
+    $result[$slug] = array_map(function (string $file) use ($slug, $url_prefix): array {
       $filename = basename($file);
       return [
         'slug'     => $slug,
         'filename' => $filename,
         'rel_path' => $slug . '/' . $filename,
-        'src'      => '/assets/instruments/' . $slug . '/' . rawurlencode($filename),
+        'src'      => $url_prefix . $slug . '/' . rawurlencode($filename),
         'label'    => ucwords(str_replace(['-', '_'], ' ', pathinfo($filename, PATHINFO_FILENAME))),
       ];
     }, $files);
@@ -112,7 +133,8 @@ function gather_images(array $categories): array {
   return $result;
 }
 
-$instrument_images = gather_images($instrument_categories);
+$instrument_images = gather_images($instrument_categories, ASSETS_INSTRUMENTS_DIR, '/assets/instruments/');
+$equipment_images  = gather_images($equipment_categories,  ASSETS_EQUIPMENT_DIR,   '/assets/equipment/');
 $flash             = $session->message();
 ?>
 
@@ -136,15 +158,81 @@ $flash             = $session->message();
         <p class="flash-message"><?= htmlspecialchars($flash) ?></p>
       <?php } ?>
 
-      <form method="post" enctype="multipart/form-data">
-        <label for="svg_file">Upload SVG:</label>
-        <input type="file" id="svg_file" name="svg_file" accept=".svg" required>
-        <button type="submit" class="btn">Upload</button>
+      <form method="post" enctype="multipart/form-data" id="upload-form">
+        <div class="drop-zone" id="drop-zone" role="button" tabindex="0" aria-label="Drop SVG file here or click to browse">
+          <p class="drop-zone-prompt">Drag &amp; drop an SVG here, or <span class="drop-zone-link">browse</span></p>
+          <p class="drop-zone-filename" id="drop-zone-filename" hidden></p>
+          <input type="file" id="svg_file" name="svg_file" accept=".svg" required>
+        </div>
+
+        <div class="upload-category-row">
+          <label for="upload-type">Type:</label>
+          <select id="upload-type" name="type" required>
+            <option value="instruments">Instruments</option>
+            <option value="equipment">Equipment</option>
+          </select>
+
+          <label for="upload-subcategory">Subcategory:</label>
+          <select id="upload-subcategory" name="subcategory" required>
+            <?php foreach ($instrument_categories as $slug => $label): ?>
+              <option value="<?= htmlspecialchars($slug) ?>"><?= htmlspecialchars($label) ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+
+        <button type="submit" class="btn" id="upload-btn" disabled>Upload</button>
       </form>
+
+      <script>
+        (function () {
+          const zone       = document.getElementById('drop-zone');
+          const input      = document.getElementById('svg_file');
+          const fileLabel  = document.getElementById('drop-zone-filename');
+          const prompt     = zone.querySelector('.drop-zone-prompt');
+          const uploadBtn  = document.getElementById('upload-btn');
+          const typeSelect = document.getElementById('upload-type');
+          const subSelect  = document.getElementById('upload-subcategory');
+
+          const subcategoryOptions = {
+            instruments: <?= json_encode($instrument_categories) ?>,
+            equipment:   <?= json_encode($equipment_categories) ?>,
+          };
+
+          typeSelect.addEventListener('change', () => {
+            const opts = subcategoryOptions[typeSelect.value] || {};
+            subSelect.innerHTML = Object.entries(opts)
+              .map(([val, label]) => `<option value="${val}">${label}</option>`)
+              .join('');
+          });
+
+          function setFile(file) {
+            if (!file) return;
+            const dt = new DataTransfer();
+            dt.items.add(file);
+            input.files = dt.files;
+            prompt.hidden = true;
+            fileLabel.textContent = file.name;
+            fileLabel.hidden = false;
+            uploadBtn.disabled = false;
+          }
+
+          zone.addEventListener('click', () => input.click());
+          zone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') input.click(); });
+          input.addEventListener('change', () => setFile(input.files[0]));
+
+          zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drop-zone--active'); });
+          zone.addEventListener('dragleave', () => zone.classList.remove('drop-zone--active'));
+          zone.addEventListener('drop', e => {
+            e.preventDefault();
+            zone.classList.remove('drop-zone--active');
+            setFile(e.dataTransfer.files[0]);
+          });
+        })();
+      </script>
 
       <?php
       // ── Reusable helper: render one category section ──────────────────────
-      function render_section(string $section_title, array $categories, array $images_by_slug): void { ?>
+      function render_section(string $section_title, string $delete_type, array $categories, array $images_by_slug): void { ?>
         <section class="library-section">
           <h2><?= htmlspecialchars($section_title) ?></h2>
 
@@ -180,6 +268,8 @@ $flash             = $session->message();
                               onsubmit="return confirm('Delete <?= htmlspecialchars(addslashes($img['filename'])) ?>?');">
                           <input type="hidden" name="delete_file"
                                  value="<?= htmlspecialchars($img['rel_path']) ?>">
+                          <input type="hidden" name="delete_type"
+                                 value="<?= htmlspecialchars($delete_type) ?>">
                           <button type="submit" class="btn btn-delete">Delete</button>
                         </form>
                       </td>
@@ -193,7 +283,8 @@ $flash             = $session->message();
         </section>
       <?php } ?>
 
-      <?php render_section('Instruments', $instrument_categories, $instrument_images); ?>
+      <?php render_section('Instruments', 'instruments', $instrument_categories, $instrument_images); ?>
+      <?php render_section('Equipment',   'equipment',   $equipment_categories,  $equipment_images);  ?>
 
     </main>
   </div>

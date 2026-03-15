@@ -1025,6 +1025,53 @@ footer {
 /*********************
  * Manage Library    *
  *********************/
+.drop-zone {
+  align-items: center;
+  border: 2px dashed var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 12px;
+  min-height: 120px;
+  padding: 24px;
+  text-align: center;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.drop-zone:hover,
+.drop-zone--active {
+  background-color: var(--blue1);
+  border-color: var(--medium-blue);
+}
+
+.drop-zone input[type="file"] {
+  display: none;
+}
+
+.drop-zone-link {
+  color: var(--medium-blue);
+  text-decoration: underline;
+}
+
+.drop-zone-filename {
+  font-weight: bold;
+  margin: 0;
+}
+
+.upload-category-row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-bottom: 12px;
+}
+
+.upload-category-row label {
+  font-weight: bold;
+}
+
 .library-section {
   margin-top: 32px;
 }
