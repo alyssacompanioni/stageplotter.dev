@@ -32,6 +32,7 @@
   --dark-blue: #1b2333;
   --medium-blue: #89abff;
   --medium-blue2: #5a72aa;
+  --palette: #6f88b9;
   --light-blue: #ecfaff;
   --dark-gray: #8d8e97;
   --dark-gray2: #8f929e;
@@ -627,7 +628,8 @@ table thead th .sort-icon {
 }
 
 .stage-plot-canvas {
-  background-color: var(--blue1);
+  /* background-color: var(--blue1); */
+  background-color: #cdd5e7;
   border: 1px solid var(--blue5);
   height: 600px;
   margin: 24px auto;
@@ -706,7 +708,7 @@ table thead th .sort-icon {
 }
 
 .element-card-container {
-  background-color: var(--medium-blue);
+  background-color: var(--palette);
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   gap: 8px;
