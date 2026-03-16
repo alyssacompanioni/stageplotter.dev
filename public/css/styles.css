@@ -635,6 +635,15 @@ table thead th .sort-icon {
   width: 90%;
 }
 
+.plot-meta-fields input {
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: #333;
+  font: inherit;
+  padding: 6px 10px;
+}
+
 /**********************
  * Palette Styles *
  **********************/
@@ -650,6 +659,15 @@ table thead th .sort-icon {
 .palette-container header {
   border-bottom: 1px solid var(--border-color);
   margin: 0;
+  gap: 2px;
+}
+
+.palette-container button {
+  font: inherit;
+}
+
+.palette-container button:hover {
+  background-color: var(--hover-bg);
 }
 
 .palette[hidden] {
