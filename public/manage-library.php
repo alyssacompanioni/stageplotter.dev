@@ -158,6 +158,8 @@ $flash             = $session->message();
         <p class="flash-message"><?= htmlspecialchars($flash) ?></p>
       <?php } ?>
 
+      <h2>Upload New Image</h2>
+
       <form method="post" enctype="multipart/form-data" id="upload-form">
         <div class="drop-zone" id="drop-zone" role="button" tabindex="0" aria-label="Drop SVG file here or click to browse">
           <p class="drop-zone-prompt">Drag &amp; drop an SVG here, or <span class="drop-zone-link">browse</span></p>
@@ -247,7 +249,7 @@ $flash             = $session->message();
               <table class="library-table">
                 <thead>
                   <tr>
-                    <th>Preview</th>
+                    <th></th>
                     <th>Filename</th>
                     <th>Label</th>
                     <th>Actions</th>
