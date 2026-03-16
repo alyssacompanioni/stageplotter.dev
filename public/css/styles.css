@@ -403,6 +403,14 @@ table thead th .sort-icon {
     padding: 8px 0;
   }
 
+  .library-table td {
+    justify-content: start;
+  }
+
+  .library-table td:nth-child(3) {
+    font-weight: bold;
+  }
+
   table tbody td {
     display: flex;
     justify-content: space-between;
