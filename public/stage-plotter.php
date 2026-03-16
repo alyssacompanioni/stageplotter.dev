@@ -62,7 +62,7 @@ $session->require_role('member');
           <button id="input-palette-toggle" class="btn" aria-label="Toggle input palette">Inputs</button>
         </header>
         <div class="palette">
-          <div class="element-type">
+          <div class="element-type" id="instrument-subcategories">
             <?php
             $categories = [
               'guitars'    => 'Guitars',
@@ -84,8 +84,37 @@ $session->require_role('member');
             ?>
               <button type="button"
                       value="<?= htmlspecialchars($slug) ?>"
+                      data-palette-type="instruments"
                       class="btn element-type-btn"
                       aria-label="Show <?= htmlspecialchars($label) ?> icons">
+                <?php if ($icon_src): ?>
+                  <img src="<?= htmlspecialchars($icon_src) ?>" alt="" width="32" height="32" aria-hidden="true">
+                <?php endif; ?>
+                <span><?= htmlspecialchars($label) ?></span>
+              </button>
+            <?php endforeach; ?>
+          </div>
+          <div class="element-type" id="equipment-subcategories" hidden>
+            <?php
+            $equipment_categories = [
+              'audio'     => 'Audio',
+              'furniture' => 'Furniture',
+              'lighting'  => 'Lighting',
+              'misc'      => 'Misc',
+            ];
+            foreach ($equipment_categories as $slug => $label):
+              $dir      = $_SERVER['DOCUMENT_ROOT'] . '/assets/equipment/' . $slug . '/';
+              $files    = glob($dir . '*.{svg,png}', GLOB_BRACE) ?: [];
+              sort($files);
+              $icon_src = !empty($files)
+                ? '/assets/equipment/' . $slug . '/' . basename($files[0])
+                : null;
+            ?>
+              <button type="button"
+                      value="<?= htmlspecialchars($slug) ?>"
+                      data-palette-type="equipment"
+                      class="btn element-type-btn"
+                      aria-label="Show <?= htmlspecialchars($label) ?> equipment icons">
                 <?php if ($icon_src): ?>
                   <img src="<?= htmlspecialchars($icon_src) ?>" alt="" width="32" height="32" aria-hidden="true">
                 <?php endif; ?>

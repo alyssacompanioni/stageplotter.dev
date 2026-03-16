@@ -18,20 +18,29 @@ cardContainer.addEventListener("dragstart", (e) => {
 
 // Intercept category button clicks so switching categories fetches icons via
 // AJAX instead of reloading the page (which would clear the canvas).
-document.querySelector(".element-type").addEventListener("click", (e) => {
+document.getElementById("instrument-subcategories").addEventListener("click", (e) => {
   const btn = e.target.closest("button[value]");
   if (!btn) return;
   e.preventDefault();
-  switchPalette(btn.value);
+  switchPalette(btn.value, "instruments");
+});
+
+document.getElementById("equipment-subcategories").addEventListener("click", (e) => {
+  const btn = e.target.closest("button[value]");
+  if (!btn) return;
+  e.preventDefault();
+  switchPalette(btn.value, "equipment");
 });
 
 /**
  * Fetches icons for the given category and repopulates the card container.
- * @param {string} category - e.g. 'guitars', 'percussion'
+ * @param {string} category - e.g. 'guitars', 'audio'
+ * @param {string} type - 'instruments' or 'equipment'
  */
-async function switchPalette(category) {
+async function switchPalette(category, type = "instruments") {
   try {
-    const res = await fetch("/api/get-palette.php?category=" + encodeURIComponent(category));
+    const url = `/api/get-palette.php?type=${encodeURIComponent(type)}&category=${encodeURIComponent(category)}`;
+    const res = await fetch(url);
     const data = await res.json();
     if (!data.success) return;
 
@@ -915,6 +924,9 @@ channelList.addEventListener("dragover", (e) => {
   }
 });
 
+const instrumentSubcategories = document.getElementById("instrument-subcategories");
+const equipmentSubcategories  = document.getElementById("equipment-subcategories");
+
 /** Shows the inputs panel and hides the regular palette. */
 function showInputsPanel() {
   palette.setAttribute("hidden", "");
@@ -933,14 +945,25 @@ function showInputsPanel() {
   }
 }
 
-/** Hides the inputs panel and shows the regular palette. */
-function showPalette() {
+/** Shows the instrument palette and hides everything else. */
+function showInstrumentPalette() {
   inputsPanel.setAttribute("hidden", "");
   palette.removeAttribute("hidden");
+  instrumentSubcategories.removeAttribute("hidden");
+  equipmentSubcategories.setAttribute("hidden", "");
 }
 
-document.getElementById("instrument-palette-toggle").addEventListener("click", showPalette);
-document.getElementById("equipment-palette-toggle").addEventListener("click", showPalette);
+/** Shows the equipment palette and hides everything else. */
+function showEquipmentPalette() {
+  inputsPanel.setAttribute("hidden", "");
+  palette.removeAttribute("hidden");
+  equipmentSubcategories.removeAttribute("hidden");
+  instrumentSubcategories.setAttribute("hidden", "");
+  switchPalette("audio", "equipment");
+}
+
+document.getElementById("instrument-palette-toggle").addEventListener("click", showInstrumentPalette);
+document.getElementById("equipment-palette-toggle").addEventListener("click", showEquipmentPalette);
 document.getElementById("input-palette-toggle").addEventListener("click", showInputsPanel);
 
 document.getElementById("add-channel-btn").addEventListener("click", () => {
@@ -962,4 +985,4 @@ document.getElementById("details-tab-btn").addEventListener("click", () => {
 });
 
 // Load the default palette category on page load.
-switchPalette("guitars");
+switchPalette("guitars", "instruments");
