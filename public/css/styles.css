@@ -29,16 +29,21 @@
   --blue2: #689eff;
   --purple: #9c8dff;
 
-  --dark-blue: #1b2333;
   --medium-blue: #89abff;
-  --medium-blue2: #5a72aa;
-  --palette: #6f88b9;
-  --light-blue: #ecfaff;
-  --stage-plot-canvas: #cdd5e7;
   --dark-gray: #8d8e97;
   --dark-gray2: #8f929e;
   --light-gray: #c6c0bf;
   --light-gray2: #c4c1c8;
+  
+  --dark-blue: #1b2333;
+  --medium-blue2: #5a72aa;
+  --palette: #6f88b9;
+  --light-blue: #ecfaff;
+  --stage-plot-canvas: #cdd5e7;
+  --gray-brown: #d3d5d7;
+  --light-brown: #abadb3;
+  --medium-brown: #626468;
+  --earthy-brown: #404245;
 
   /* Blues, Greens, Oranges */
   --blue1: #9cb6c5;
@@ -81,6 +86,7 @@ html {
  * General styles
  *****************/
 body {
+  background-color: #f0f1f1;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -233,7 +239,7 @@ header ul {
 }
 
 #plot-public-toggle:checked {
-  background: var(--medium-blue);
+  background: var(--palette);
 }
 
 #plot-public-toggle:checked::after {
@@ -778,8 +784,13 @@ table thead th .sort-icon {
 }
 
 .inputs-tab-btn.active-tab {
-  background: var(--primary-teal);
+  background: var(--medium-brown);
   color: #fff;
+}
+
+.inputs-tab-btn:hover {
+  background-color: var(--light-brown);
+  color: #333;
 }
 
 .channel-list {
@@ -1128,7 +1139,7 @@ footer {
 
 .drop-zone:hover,
 .drop-zone--active {
-  background-color: var(--blue1);
+  background-color: var(--light-blue);
   border-color: var(--medium-blue);
 }
 
@@ -1137,7 +1148,7 @@ footer {
 }
 
 .drop-zone-link {
-  color: var(--medium-blue);
+  color: var(--medium-blue2);
   text-decoration: underline;
 }
 
@@ -1164,7 +1175,7 @@ footer {
 }
 
 .library-section h2 {
-  border-bottom: 2px solid var(--medium-blue);
+  border-bottom: 2px solid var(--medium-blue2);
   margin-bottom: 16px;
   padding-bottom: 6px;
 }
