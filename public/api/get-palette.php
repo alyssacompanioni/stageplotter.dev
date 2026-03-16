@@ -37,7 +37,7 @@ if ($type === 'equipment') {
   $asset_base = '/assets/instruments/';
 }
 
-$dir   = $_SERVER['DOCUMENT_ROOT'] . $asset_base . $category . '/';
+$dir   = __DIR__ . '/..' . $asset_base . $category . '/';
 $files = glob($dir . '*.{svg,png}', GLOB_BRACE) ?: [];
 sort($files);
 

@@ -81,7 +81,7 @@ $session->require_role('member');
               'misc'       => 'Misc',
             ];
             foreach ($categories as $slug => $label):
-              $dir        = $_SERVER['DOCUMENT_ROOT'] . '/assets/instruments/' . $slug . '/';
+              $dir        = __DIR__ . '/assets/instruments/' . $slug . '/';
               $files      = glob($dir . '*.{svg,png}', GLOB_BRACE) ?: [];
               sort($files);
               $icon_src   = !empty($files)
@@ -109,7 +109,7 @@ $session->require_role('member');
               'misc'      => 'Misc',
             ];
             foreach ($equipment_categories as $slug => $label):
-              $dir      = $_SERVER['DOCUMENT_ROOT'] . '/assets/equipment/' . $slug . '/';
+              $dir      = __DIR__ . '/assets/equipment/' . $slug . '/';
               $files    = glob($dir . '*.{svg,png}', GLOB_BRACE) ?: [];
               sort($files);
               $icon_src = !empty($files)

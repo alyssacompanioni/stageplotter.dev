@@ -29,8 +29,8 @@ if (ENVIRONMENT === 'development') {
   // Production server
   define('DB_SERVER', 'localhost');
   define('DB_USER',   'uikf2chfhtzuu');
-  define('DB_PASS',   'aia693z7vr29');
-  define('DB_NAME',   'dblwajnfpvyban');
+  define('DB_PASS',   'b~xbu721j5C3');
+  define('DB_NAME',   'dbfj37kcjssjlb');
 }
 
 // ---- Connection ----
