@@ -24,9 +24,15 @@ $session->require_role('member');
       <div class="canvas-container">
         <header id="plot-toolbar">
           <div class="plot-meta-fields">
-            <input type="text" id="plot-title" class="plot-field" placeholder="Plot title *" maxlength="50">
-            <input type="text" id="plot-gig-date" class="plot-field" placeholder="Gig Date: mm/dd/yyyy *" maxlength="10">
-            <input type="text" id="plot-venue" class="plot-field" placeholder="Venue (optional)" maxlength="100">
+            <label for="plot-title"><span class="sr-only">Title (required)</span>
+              <input type="text" id="plot-title" class="plot-field" placeholder="Plot title *" maxlength="50">
+            </label>
+            <label for="plot-gig-date"><span class="sr-only">Gig Date (required, mm/dd/yyyy)</span>
+              <input type="text" id="plot-gig-date" class="plot-field" placeholder="Gig Date: mm/dd/yyyy *" maxlength="10">
+            </label>
+            <label for="plot-venue"><span class="sr-only">Venue (optional)</span>
+              <input type="text" id="plot-venue" class="plot-field" placeholder="Venue (optional)" maxlength="100">
+            </label>
           </div>
           <div class="plot-settings">
             <input type="checkbox" id="plot-toolbar-toggle" class="dropdown-menu-checkbox">
@@ -40,7 +46,6 @@ $session->require_role('member');
               <li><button id="share-plot-btn" class="btn">Share Plot</button></li>
               <li><button id="export-plot-btn" class="btn">Export Plot</button></li>
               <li><button id="print-plot-btn" class="btn">Print Plot</button></li>
-              <li><button id="change-dimensions-btn" class="btn">Change Dimensions</button></li>
               <li><button id="clear-stage-btn" class="btn btn-ghost">Clear Stage</button></li>
               <li class="toolbar-visibility-item">
                 <label for="plot-public-toggle" class="toolbar-visibility-label">
@@ -55,6 +60,7 @@ $session->require_role('member');
           <!-- This is where the stage plot will be rendered -->
         </section>
       </div>
+
       <section class="palette-container">
         <header>
           <button id="instrument-palette-toggle" class="btn" aria-label="Toggle instrument palette">Instruments</button>
@@ -83,10 +89,10 @@ $session->require_role('member');
                 : null;
             ?>
               <button type="button"
-                      value="<?= htmlspecialchars($slug) ?>"
-                      data-palette-type="instruments"
-                      class="btn element-type-btn"
-                      aria-label="Show <?= htmlspecialchars($label) ?> icons">
+                value="<?= htmlspecialchars($slug) ?>"
+                data-palette-type="instruments"
+                class="btn element-type-btn"
+                aria-label="Show <?= htmlspecialchars($label) ?> icons">
                 <?php if ($icon_src): ?>
                   <img src="<?= htmlspecialchars($icon_src) ?>" alt="" width="32" height="32" aria-hidden="true">
                 <?php endif; ?>
@@ -111,10 +117,10 @@ $session->require_role('member');
                 : null;
             ?>
               <button type="button"
-                      value="<?= htmlspecialchars($slug) ?>"
-                      data-palette-type="equipment"
-                      class="btn element-type-btn"
-                      aria-label="Show <?= htmlspecialchars($label) ?> equipment icons">
+                value="<?= htmlspecialchars($slug) ?>"
+                data-palette-type="equipment"
+                class="btn element-type-btn"
+                aria-label="Show <?= htmlspecialchars($label) ?> equipment icons">
                 <?php if ($icon_src): ?>
                   <img src="<?= htmlspecialchars($icon_src) ?>" alt="" width="32" height="32" aria-hidden="true">
                 <?php endif; ?>
@@ -137,7 +143,7 @@ $session->require_role('member');
             <button id="add-channel-btn" class="btn">+ Add Channel</button>
           </div>
           <div id="details-view" hidden>
-            <textarea id="inputs-details" placeholder="Notes about gear details, musician info, etc."></textarea>
+            <textarea id="inputs-details" aria-label="Input details." placeholder="Notes about gear details, musician info, etc."></textarea>
           </div>
         </div>
       </section>
@@ -150,7 +156,7 @@ $session->require_role('member');
       <h2 id="share-modal-title">Share Plot</h2>
       <p>Anyone with this link can view your stage plot:</p>
       <div class="share-link-row">
-        <input type="text" id="share-link-input" class="share-link-input" readonly>
+        <input type="text" aria-label="share link" id="share-link-input" class="share-link-input" readonly>
         <button id="copy-link-btn" class="btn">Copy</button>
       </div>
       <button id="share-modal-close" class="btn btn-ghost">Close</button>

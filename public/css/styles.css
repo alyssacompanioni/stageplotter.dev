@@ -1,6 +1,16 @@
 /*** styles.css ***/
 /* Global styles */
 
+.sr-only {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 :root {
   /* Portfolio Colors */
   --primary-dark: #0f111f;
@@ -34,6 +44,7 @@
   --light-gray: #c6c0bf;
   --light-gray2: #c4c1c8;
   
+  --icon-blue: #d7e0eb;
   --bright-blue: #89abff;
   --dark-blue: #1b2333;
   --medium-blue2: #5a72aa;
