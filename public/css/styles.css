@@ -4,7 +4,7 @@
 :root {
   /* Portfolio Colors */
   --primary-dark: #0f111f;
-  --primary-teal: #0097b2;
+  --bright-accent-blue: #0097b2;
   --light-cyan: #62e1e9;
   --blue-gray: #cfe2f3;
   --teal-hover: #0077b6;
@@ -29,16 +29,19 @@
   --blue2: #689eff;
   --purple: #9c8dff;
 
-  --medium-blue: #89abff;
   --dark-gray: #8d8e97;
   --dark-gray2: #8f929e;
   --light-gray: #c6c0bf;
   --light-gray2: #c4c1c8;
   
+  --bright-blue: #89abff;
   --dark-blue: #1b2333;
   --medium-blue2: #5a72aa;
-  --palette: #6f88b9;
-  --light-blue: #ecfaff;
+  --accent-blue: #6f88b9;
+  --bright-accent-blue: #6298bc;
+  --palette: #9eadd2;
+  --light-blue: #cfe2f3;
+  --light-blue2: #ecfaff;
   --stage-plot-canvas: #cdd5e7;
   --gray-brown: #d3d5d7;
   --light-brown: #abadb3;
@@ -256,7 +259,7 @@ header ul {
 }
 
 .nav-greeting {
-  color: var(--medium-blue);
+  color: var(--bright-blue);
   font-size: 1.1rem;
   font-weight: 600;
 }
@@ -302,13 +305,13 @@ form input[type="text"]:focus,
 form input[type="email"]:focus,
 form input[type="password"]:focus,
 form input[type="tel"]:focus {
-  border-color: var(-- --medium-blue);
+  border-color: var(-- --bright-blue);
   box-shadow: 0 0 0 3px rgba(0, 151, 178, 0.15);
   outline: none;
 }
 
 form input[type="submit"] {
-  background: var(--primary-teal);
+  background: var(--bright-accent-blue);
   border: none;
   border-radius: 6px;
   color: #fff;
@@ -374,7 +377,7 @@ p.error {
  *********************/
 
 table thead {
-  background-color: var(--medium-blue);
+  background-color: var(--accent-blue);
 }
 
 table tbody tr:nth-child(even) {
@@ -406,7 +409,7 @@ table thead th .sort-icon {
 
   table tbody tr {
     display: block;
-    border: 1px solid var(--medium-blue);
+    border: 1px solid var(--bright-blue);
     border-radius: 6px;
     margin-bottom: 12px;
     overflow: hidden;
@@ -452,7 +455,7 @@ table thead th .sort-icon {
 
   .dashboard-wrapper table tbody tr {
     display: block;
-    border: 1px solid var(--medium-blue);
+    border: 1px solid var(--bright-blue);
     border-radius: 6px;
     margin-bottom: 12px;
     overflow: hidden;
@@ -606,7 +609,7 @@ table thead th .sort-icon {
   left: 50%;
   transform: translateX(-50%);
   background: var(--dark-blue);
-  border: 1px solid var(--medium-blue);
+  border: 1px solid var(--bright-blue);
   border-radius: 6px;
   padding: 3px;
   gap: 2px;
@@ -689,7 +692,7 @@ table thead th .sort-icon {
 }
 
 .element-type {
-  background-color: var(--blue-gray);
+  background-color: var(--stage-plot-canvas);
   border-right: 1px solid var(--border-color);
   padding: 12px;
 }
@@ -1140,7 +1143,7 @@ footer {
 .drop-zone:hover,
 .drop-zone--active {
   background-color: var(--light-blue);
-  border-color: var(--medium-blue);
+  border-color: var(--bright-blue);
 }
 
 .drop-zone input[type="file"] {

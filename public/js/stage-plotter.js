@@ -826,11 +826,19 @@ async function exportPlot() {
  */
 async function printPlot() {
   closeDropdown();
-  const { pdf } = await buildPdf();
-  pdf.autoPrint();
-  const url = URL.createObjectURL(pdf.output("blob"));
-  const win = window.open(url);
-  win.addEventListener("unload", () => URL.revokeObjectURL(url), { once: true });
+  // Open the window immediately while still in the user-gesture context so
+  // popup blockers don't intervene after the async PDF build finishes.
+  const win = window.open("", "_blank");
+  if (!win) return;
+  try {
+    const { pdf } = await buildPdf();
+    pdf.autoPrint();
+    const url = URL.createObjectURL(pdf.output("blob"));
+    win.location.href = url;
+    win.addEventListener("unload", () => URL.revokeObjectURL(url), { once: true });
+  } catch {
+    win.close();
+  }
 }
 
 // ─── Button wiring ─────────────────────────────────────────────────────────────
