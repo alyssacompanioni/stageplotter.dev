@@ -1104,6 +1104,10 @@ footer {
   vertical-align: middle;
 }
 
+.library-table th {
+  text-align: left;
+}
+
 .library-table th:nth-child(1),
 .library-table td:nth-child(1) { width: 64px; }
 
