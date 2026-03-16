@@ -270,7 +270,7 @@ header ul {
 }
 
 .nav-greeting {
-  color: var(--bright-blue);
+  color: var(--icon-blue);
   font-size: 1.1rem;
   font-weight: 600;
 }
@@ -769,6 +769,12 @@ table thead th .sort-icon {
   max-width: 100%;
   text-align: center;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.element-card:hover p {
+  opacity: 1;
 }
 
 /***********************
