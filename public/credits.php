@@ -55,6 +55,7 @@
           <li>"Accordion" icon by luca fruzza from <a href="https://thenounproject.com/browse/icons/term/accordion/" target="_blank" title="accordion Icons">Noun Project</a> (CC BY 3.0)</li>
           <li>"DJ" icon by Piyapong Khemawattana from <a href="https://thenounproject.com/browse/icons/term/dj/" target="_blank" title="dj Icons">Noun Project</a> (CC BY 3.0)</li>
           <li>"Microphone on Stand" icon by Olena Panasovska from <a href="https://thenounproject.com/browse/icons/term/microphone-on-stand/" target="_blank" title="microphone on stand Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Keyboard" icon by Hey Rabbit from <a href="https://thenounproject.com/browse/icons/term/keyboard/" target="_blank" title="Keyboard Icons">Noun Project</a> (CC BY 3.0)</li>
         </ul>
       </section>
 
