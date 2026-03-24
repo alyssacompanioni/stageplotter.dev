@@ -930,7 +930,9 @@ footer {
 /*************************************
  * Admin/SuperAdmin Dashboard Styles *
  *************************************/
- 
+ .dashboard-btn:hover {
+   background: var(--light-cyan);
+ }
 
 /**********************
  * Load Plot Modal    *
