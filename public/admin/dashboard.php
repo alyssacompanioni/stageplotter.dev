@@ -28,6 +28,9 @@ $session->require_role('admin');
         <a href="../manage-library.php">
           <div class="dashboard-btn">Manage Stage Plot Images</div>
         </a>
+        <a href="../profile.php">
+          <div class="dashboard-btn">My Profile</div>
+        </a>
       </div>
     </main>
   </div>

@@ -871,7 +871,7 @@ table thead th .sort-icon {
 }
 
 /*********************
- * Dashboard Styles *
+ * StagePlotter Styles *
  *********************/
 .dashboard-wrapper {
   padding: 24px 0;
@@ -926,6 +926,11 @@ footer {
 .credits {
   text-align: right;
 }
+
+/*************************************
+ * Admin/SuperAdmin Dashboard Styles *
+ *************************************/
+ 
 
 /**********************
  * Load Plot Modal    *
