@@ -112,8 +112,14 @@
 
               if (sortCol) {
                 results = [...results].sort((a, b) => {
-                  const av = (a[sortCol] || '').toLowerCase();
-                  const bv = (b[sortCol] || '').toLowerCase();
+                  let av, bv;
+                  if (sortCol === 'gig_date') {
+                    av = new Date(a[sortCol] || 0).getTime();
+                    bv = new Date(b[sortCol] || 0).getTime();
+                    return sortDir === 'asc' ? av - bv : bv - av;
+                  }
+                  av = (a[sortCol] || '').toLowerCase();
+                  bv = (b[sortCol] || '').toLowerCase();
                   if (av < bv) return sortDir === 'asc' ? -1 : 1;
                   if (av > bv) return sortDir === 'asc' ? 1 : -1;
                   return 0;
