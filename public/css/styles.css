@@ -23,14 +23,6 @@
   --section-bg: #ffffff;
   --hover-bg: #f8fafc;
   --border-color: #e5e7eb;
-  --dark-lighter: #1a1d2e;
-
-  /* StagePlotter Color Ideas */
-  --black-emerald: #122220;
-  --coastal-pine: #3e5954;
-  --ocean-deep: #2a4d69;
-  --seafoam-green: #77b1a9;
-  --linen-clay: #c6c2bb;
 
   /** Stage Lighting Colors **/
   --yellow: #e6d258;
@@ -65,18 +57,9 @@
   --blue3: #73a2bc;
   --blue4: #287194;
   --blue5: #195d84;
-  --green1: #6b967b;
-  --green2: #29605a;
-  --green3: #0f494a;
-  --green4: #083231;
-  --orange1: #f0aa52;
-  --orange2: #efa335;
-  --orange3: #e68939;
-  --orange4: #dc6b3f;
+  
   --red1: #d74132;
-  --red2: #d62d30;
-  --red3: #ad2029;
-  --red4: #952032;
+  
 }
 
 /******************
