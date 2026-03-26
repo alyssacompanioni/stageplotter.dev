@@ -383,6 +383,11 @@ table thead th {
   gap: 4px;
 }
 
+table th,
+table td {
+  vertical-align: top;
+}
+
 table tbody td {
   gap: 4px;
   padding: 8px 12px;
@@ -439,6 +444,11 @@ table thead th .sort-icon {
   table tbody tr:nth-child(even) {
     background-color: transparent;
   }
+}
+
+.dashboard-wrapper table th:first-child,
+.dashboard-wrapper table td:first-child {
+  white-space: nowrap;
 }
 
 @media (max-width: 850px) {
