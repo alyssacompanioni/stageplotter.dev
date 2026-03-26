@@ -100,7 +100,7 @@ img {
   flex-direction: column;
   flex: 1;
   margin: 0 auto;
-  max-width: 1600px;
+  max-width: 1500px;
   padding: 0 24px;
   width: 100%;
 }
@@ -114,12 +114,21 @@ a:visited {
  * Site-wide Header, Nav Styles *
  ********************************/
 header {
-  align-items: center;
   background: var(--dark-blue);
   color: #fff;
+}
+
+.header-wrapper {
+  align-items: center;
+  max-width: 1600px;
   display: flex;
   justify-content: space-between;
   padding: 12px 24px;
+  
+}
+
+.header-wrapper {
+  margin: 0 auto;
 }
 
 header ul {
@@ -405,7 +414,7 @@ table thead th .sort-icon {
   white-space: nowrap;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 920px) {
   .dashboard-wrapper table thead {
     display: none;
   }
