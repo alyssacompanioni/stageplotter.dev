@@ -63,3 +63,4 @@
     </ul>
   </nav>
 </header>
+<script src="/js/header.js" defer></script>
