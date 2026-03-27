@@ -60,6 +60,7 @@ $flash = $session->message();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manage Users | Stage Plotter</title>
   <link rel="stylesheet" href="/css/styles.css">
+  <script src="/js/manage-users.js" defer></script>
 </head>
 
 <body>
@@ -72,17 +73,19 @@ $flash = $session->message();
         <p class="flash-message"><?= htmlspecialchars($flash) ?></p>
       <?php } ?>
 
+      <input type="search" id="user-search" class="table-search" placeholder="Search" autocomplete="off">
+
       <?php if (empty($users)) { ?>
         <p>No users found.</p>
       <?php } else { ?>
         <table>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Username</th>
-              <th>Email</th>
+              <th data-col="name">Name</th>
+              <th data-col="username">Username</th>
+              <th data-col="email">Email</th>
               <th>Role</th>
-              <th>Status</th>
+              <th data-col="status">Status</th>
               <th>Action</th>
             </tr>
           </thead>

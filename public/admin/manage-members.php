@@ -44,6 +44,7 @@ $flash   = $session->message();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manage Members | Stage Plotter</title>
   <link rel="stylesheet" href="/css/styles.css">
+  <script src="/js/manage-members.js" defer></script>
 </head>
 
 <body>
@@ -56,16 +57,18 @@ $flash   = $session->message();
         <p class="flash-message"><?= htmlspecialchars($flash) ?></p>
       <?php } ?>
 
+      <input type="search" id="member-search" class="table-search" placeholder="Search" autocomplete="off">
+
       <?php if (empty($members)) { ?>
         <p>No members found.</p>
       <?php } else { ?>
         <table>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Username</th>
-              <th>Email</th>
-              <th>Status</th>
+              <th data-col="name">Name</th>
+              <th data-col="username">Username</th>
+              <th data-col="email">Email</th>
+              <th data-col="status">Status</th>
               <th>Action</th>
             </tr>
           </thead>

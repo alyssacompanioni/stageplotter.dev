@@ -124,7 +124,6 @@ header {
   display: flex;
   justify-content: space-between;
   padding: 12px 24px;
-  
 }
 
 .header-wrapper {
@@ -520,8 +519,14 @@ table thead th .sort-icon {
   margin-bottom: 32px;
 }
 
-#plot-search {
-  margin: 12px 0;
+.index-main table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+#plot-search,
+.table-search {
+  margin: 0 0 12px;
   padding: 8px 12px;
   width: 100%;
   max-width: 400px;
