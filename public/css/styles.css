@@ -387,8 +387,9 @@ table tbody tr:nth-child(even) {
 
 table thead th {
   cursor: pointer;
-  padding: 4px 12px;
+  padding: 4px 20px;
   gap: 4px;
+  white-space: nowrap;
 }
 
 table th,
