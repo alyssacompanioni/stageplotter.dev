@@ -39,7 +39,7 @@ $session->require_role('member');
             <label for="plot-toolbar-toggle" class="dropdown-menu-toggle" aria-label="Open plot actions menu">
               <img src="/assets/icons/gear.svg" alt="Plot actions" width="24" height="24">
             </label>
-            <ul class="dropdown-menu" id="plot-toolbar">
+            <ul class="dropdown-menu">
               <li><button id="new-plot-btn" class="btn">New Plot</button></li>
               <li><button id="load-plot-btn" class="btn">Load Plot</button></li>
               <li><button id="save-plot-btn" class="btn">Save Plot</button></li>
