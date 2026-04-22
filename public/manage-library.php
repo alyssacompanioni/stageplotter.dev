@@ -113,7 +113,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_file'])) {
 /**
  * Returns [ 'subcategory_slug' => [ ['slug'=>…, 'filename'=>…, 'src'=>…, 'label'=>…], … ], … ]
  */
-function gather_images(array $categories, string $base_dir, string $url_prefix): array {
+function gather_images(array $categories, string $base_dir, string $url_prefix): array
+{
   $result = [];
   foreach (array_keys($categories) as $slug) {
     $dir   = $base_dir . $slug . '/';
@@ -153,49 +154,52 @@ $flash             = $session->message();
   <?php require_once 'includes/header.php'; ?>
   <div class="wrapper">
     <main>
-      <h1>Plot Element Image Library</h1>
+      <h1>Plot Element Image Manager</h1>
 
       <?php if ($flash !== '') { ?>
         <p class="flash-message"><?= htmlspecialchars($flash) ?></p>
       <?php } ?>
 
       <h2>Upload New Image</h2>
+      <div class="upload-image-section">
 
-      <form method="post" enctype="multipart/form-data" id="upload-form">
-        <div class="drop-zone" id="drop-zone" role="button" tabindex="0" aria-label="Drop SVG file here or click to browse">
-          <p class="drop-zone-prompt">Drag &amp; drop an SVG here, or <span class="drop-zone-link">browse</span></p>
-          <p class="drop-zone-filename" id="drop-zone-filename" hidden></p>
-          <input type="file" id="svg_file" name="svg_file" accept=".svg" required>
-        </div>
+        <form method="post" enctype="multipart/form-data" id="upload-form">
+          <div class="drop-zone" id="drop-zone" role="button" tabindex="0" aria-label="Drop SVG file here or click to browse">
+            <p class="drop-zone-prompt">Drag &amp; drop an SVG here, or <span class="drop-zone-link">browse</span></p>
+            <p class="drop-zone-filename" id="drop-zone-filename" hidden></p>
+            <input type="file" id="svg_file" name="svg_file" accept=".svg" required>
+          </div>
 
-        <div class="upload-category-row">
-          <label for="upload-type">Type:</label>
-          <select id="upload-type" name="type" required>
-            <option value="instruments">Instruments</option>
-            <option value="equipment">Equipment</option>
-          </select>
+          <div class="upload-category-row">
+            <label for="upload-type">Type:</label>
+            <select id="upload-type" name="type" required>
+              <option value="instruments">Instruments</option>
+              <option value="equipment">Equipment</option>
+            </select>
 
-          <label for="upload-subcategory">Subcategory:</label>
-          <select id="upload-subcategory" name="subcategory" required>
-            <?php foreach ($instrument_categories as $slug => $label): ?>
-              <option value="<?= htmlspecialchars($slug) ?>"><?= htmlspecialchars($label) ?></option>
-            <?php endforeach; ?>
-          </select>
-        </div>
+            <label for="upload-subcategory">Subcategory:</label>
+            <select id="upload-subcategory" name="subcategory" required>
+              <?php foreach ($instrument_categories as $slug => $label): ?>
+                <option value="<?= htmlspecialchars($slug) ?>"><?= htmlspecialchars($label) ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
 
-        <button type="submit" class="btn" id="upload-btn" disabled>Upload</button>
-      </form>
+          <button type="submit" class="btn" id="upload-btn" disabled>Upload</button>
+        </form>
+      </div>
 
       <script>
         window.SUBCATEGORY_OPTIONS = {
           instruments: <?= json_encode($instrument_categories) ?>,
-          equipment:   <?= json_encode($equipment_categories) ?>,
+          equipment: <?= json_encode($equipment_categories) ?>,
         };
       </script>
 
       <?php
       // ── Reusable helper: render one category section ──────────────────────
-      function render_section(string $section_title, string $delete_type, array $categories, array $images_by_slug): void { ?>
+      function render_section(string $section_title, string $delete_type, array $categories, array $images_by_slug): void
+      { ?>
         <section class="library-section">
           <h2><?= htmlspecialchars($section_title) ?></h2>
 
@@ -221,18 +225,18 @@ $flash             = $session->message();
                     <tr>
                       <td>
                         <img src="<?= htmlspecialchars($img['src']) ?>"
-                             alt="<?= htmlspecialchars($img['label']) ?>"
-                             class="library-thumb">
+                          alt="<?= htmlspecialchars($img['label']) ?>"
+                          class="library-thumb">
                       </td>
                       <td><?= htmlspecialchars($img['filename']) ?></td>
                       <td><?= htmlspecialchars($img['label']) ?></td>
                       <td>
                         <form method="post"
-                              onsubmit="return confirm('Delete <?= htmlspecialchars(addslashes($img['filename'])) ?>?');">
+                          onsubmit="return confirm('Delete <?= htmlspecialchars(addslashes($img['filename'])) ?>?');">
                           <input type="hidden" name="delete_file"
-                                 value="<?= htmlspecialchars($img['rel_path']) ?>">
+                            value="<?= htmlspecialchars($img['rel_path']) ?>">
                           <input type="hidden" name="delete_type"
-                                 value="<?= htmlspecialchars($delete_type) ?>">
+                            value="<?= htmlspecialchars($delete_type) ?>">
                           <button type="submit" class="btn btn-delete">Delete</button>
                         </form>
                       </td>
