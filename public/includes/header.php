@@ -12,7 +12,7 @@
 ?>
 
 <header>
-  <div class="header-wrapper">
+  <div class="header-wrapper<?= isset($show_hero) && $show_hero ? ' hero-header' : '' ?>">
     <a href="/index.php" class="logo"><img src="/assets/brand/logo-blue.svg" alt="Stage Plotter logo."></a>
 
     <nav aria-label="Main navigation">
@@ -56,7 +56,7 @@
             </ul>
           </li>
 
-        <?php } else { ?>
+        <?php } elseif (!isset($show_hero) || !$show_hero) { ?>
           <li><a href="/login.php">Log In</a></li>
           <li><a href="/register.php">Sign Up</a></li>
         <?php } ?>

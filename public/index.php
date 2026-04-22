@@ -1,4 +1,7 @@
-<?php require_once __DIR__ . '/../private/initialize.php'; ?>
+<?php
+require_once __DIR__ . '/../private/initialize.php';
+$show_hero = !$session->is_logged_in();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,9 +16,25 @@
 
 <body>
   <?php require_once __DIR__ . '/includes/header.php'; ?>
+
+  <?php if ($show_hero) { ?>
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>Build your stage plot in minutes.</h1>
+      <p>Drag and drop instruments onto your stage, label every input, then share a link or print a PDF — all for free.</p>
+      <div class="hero-ctas">
+        <a href="/login.php" class="hero-cta">Log In</a>
+        <a href="/register.php" class="hero-cta hero-cta--secondary">Sign Up</a>
+      </div>
+    </div>
+  </section>
+  <?php } ?>
+
   <div class="wrapper">
     <main class="index-main">
+      <?php if ($session->is_logged_in()) { ?>
       <h1>Welcome to StagePlotter!</h1>
+      <?php } ?>
 
       <section class="about">
         <h2>About StagePlotter</h2>

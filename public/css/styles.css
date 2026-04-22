@@ -525,6 +525,65 @@ table thead th .sort-icon {
 /*********************
   *      Index       *
   *******************/
+.hero {
+  background: var(--dark-blue);
+  color: var(--text-light);
+  text-align: center;
+  padding: 0 72px 24px;
+}
+
+.hero-inner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 2.25rem;
+  margin: 0 0 16px;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  color: var(--blue-gray);
+  margin: 0 0 32px;
+}
+
+.hero-header {
+  justify-content: center;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-cta {
+  background: var(--bright-accent-blue);
+  color: var(--text-light);
+  border-radius: 8px;
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s;
+}
+
+.hero-cta:hover {
+  background: var(--teal-hover);
+}
+
+.hero-cta--secondary {
+  background: transparent;
+  border: 2px solid var(--bright-accent-blue);
+}
+
+.hero-cta--secondary:hover {
+  background: var(--bright-accent-blue);
+}
+
 .index-main {
   padding: 24px 0;
   margin: 0 auto;
