@@ -142,6 +142,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main class="profile-main">
       <h1>My Profile</h1>
 
+      <div class="profile-sections">
+
       <!-- ── Profile Info ──────────────────────────────────────────────── -->
       <section class="profile-section">
         <h2>Account Information</h2>
@@ -223,6 +225,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
       </section>
 
+      </div><!-- /.profile-sections -->
     </main>
   </div>
   <?php require_once 'includes/footer.php'; ?>
