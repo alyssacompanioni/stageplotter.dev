@@ -841,6 +841,13 @@ async function printPlot() {
   }
 }
 
+document.addEventListener("mousedown", (e) => {
+  const plotSettings = document.querySelector(".plot-settings");
+  if (plotSettings && !plotSettings.contains(e.target)) {
+    closeDropdown();
+  }
+}, true);
+
 // ─── Button wiring ─────────────────────────────────────────────────────────────
 
 document.getElementById("export-plot-btn").addEventListener("click", exportPlot);
