@@ -4,16 +4,18 @@
   const fileLabel  = document.getElementById('drop-zone-filename');
   const prompt     = zone.querySelector('.drop-zone-prompt');
   const uploadBtn  = document.getElementById('upload-btn');
-  const typeSelect = document.getElementById('upload-type');
+  const typeRadios = document.querySelectorAll('input[name="type"]');
   const subSelect  = document.getElementById('upload-subcategory');
 
   const subcategoryOptions = window.SUBCATEGORY_OPTIONS || {};
 
-  typeSelect.addEventListener('change', () => {
-    const opts = subcategoryOptions[typeSelect.value] || {};
-    subSelect.innerHTML = Object.entries(opts)
-      .map(([val, label]) => `<option value="${val}">${label}</option>`)
-      .join('');
+  typeRadios.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      const opts = subcategoryOptions[e.target.value] || {};
+      subSelect.innerHTML = Object.entries(opts)
+        .map(([val, label]) => `<option value="${val}">${label}</option>`)
+        .join('');
+    });
   });
 
   function setFile(file) {

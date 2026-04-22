@@ -160,8 +160,8 @@ $flash             = $session->message();
         <p class="flash-message"><?= htmlspecialchars($flash) ?></p>
       <?php } ?>
 
-      <h2>Upload New Image</h2>
       <div class="upload-image-section">
+        <h2>Upload New Image</h2>
 
         <form method="post" enctype="multipart/form-data" id="upload-form">
           <div class="drop-zone" id="drop-zone" role="button" tabindex="0" aria-label="Drop SVG file here or click to browse">
@@ -171,18 +171,24 @@ $flash             = $session->message();
           </div>
 
           <div class="upload-category-row">
-            <label for="upload-type">Type:</label>
-            <select id="upload-type" name="type" required>
-              <option value="instruments">Instruments</option>
-              <option value="equipment">Equipment</option>
-            </select>
+            <div class="upload-type-group">
+              <span class="upload-type-label">Type:</span>
+              <label class="upload-type-option">
+                <input type="radio" name="type" value="instruments" checked> Instruments
+              </label>
+              <label class="upload-type-option">
+                <input type="radio" name="type" value="equipment"> Equipment
+              </label>
+            </div>
 
-            <label for="upload-subcategory">Subcategory:</label>
-            <select id="upload-subcategory" name="subcategory" required>
-              <?php foreach ($instrument_categories as $slug => $label): ?>
-                <option value="<?= htmlspecialchars($slug) ?>"><?= htmlspecialchars($label) ?></option>
-              <?php endforeach; ?>
-            </select>
+            <div class="upload-subcategory-group">
+              <label for="upload-subcategory">Category:</label>
+              <select id="upload-subcategory" name="subcategory" required>
+                <?php foreach ($instrument_categories as $slug => $label): ?>
+                  <option value="<?= htmlspecialchars($slug) ?>"><?= htmlspecialchars($label) ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
           </div>
 
           <button type="submit" class="btn" id="upload-btn" disabled>Upload</button>

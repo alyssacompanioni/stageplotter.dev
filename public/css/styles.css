@@ -1290,7 +1290,7 @@ footer {
   background: var(--section-bg);
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  padding: 24px;
+  padding: 0 24px 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1298,15 +1298,39 @@ footer {
 }
 
 .upload-category-row {
-  align-items: center;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px 16px;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
   margin-bottom: 12px;
 }
 
-.upload-category-row label {
+.upload-type-group {
+  align-items: center;
+  display: flex;
+  gap: 16px;
+}
+
+.upload-type-label {
+  font-weight: bold;
+}
+
+.upload-type-option {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  font-weight: normal;
+  gap: 6px;
+  margin-top: 0;
+}
+
+.upload-subcategory-group {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.upload-subcategory-group label {
   font-weight: bold;
   margin-top: 0;
 }
