@@ -35,7 +35,7 @@
   --dark-gray2: #8f929e;
   --light-gray: #c6c0bf;
   --light-gray2: #c4c1c8;
-  
+
   --icon-blue: #d7e0eb;
   --bright-blue: #89abff;
   --dark-blue: #1b2333;
@@ -57,7 +57,7 @@
   --blue3: #73a2bc;
   --blue4: #287194;
   --blue5: #195d84;
-  
+
   --red1: #d74132;
 }
 
@@ -989,7 +989,10 @@ table thead th .sort-icon {
   color: #333;
   font-size: 1.2rem;
   font-weight: 600;
-  transition: background 0.15s, box-shadow 0.15s, transform 0.15s;
+  transition:
+    background 0.15s,
+    box-shadow 0.15s,
+    transform 0.15s;
 }
 
 /*********************
@@ -1017,11 +1020,11 @@ footer {
 /*************************************
  * Admin/SuperAdmin Dashboard Styles *
  *************************************/
- .dashboard-btn:hover {
-   background: var(--light-cyan);
-   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-   transform: scale(1.03);
- }
+.dashboard-btn:hover {
+  background: var(--light-cyan);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  transform: scale(1.03);
+}
 
 /**********************
  * Load Plot Modal    *
