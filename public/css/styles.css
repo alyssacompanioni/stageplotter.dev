@@ -113,21 +113,36 @@ a:visited {
 /********************************
  * Site-wide Header, Nav Styles *
  ********************************/
-header {
+/* header {
   background: var(--dark-blue);
   color: #fff;
-}
+} */
 
-.header-wrapper {
+header {
   align-items: center;
-  max-width: 1600px;
+  background: var(--dark-blue);
+  color: #fff;
   display: flex;
   justify-content: space-between;
   padding: 12px 24px;
 }
 
 .header-wrapper {
+  align-items: center;
+  max-width: 1600px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 24px;
   margin: 0 auto;
+}
+
+#plot-toolbar,
+.palette-container header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 24px;
 }
 
 header ul {
