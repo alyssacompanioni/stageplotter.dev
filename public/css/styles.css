@@ -105,6 +105,11 @@ img {
   width: 100%;
 }
 
+h1,
+h2 {
+  text-align: center;
+}
+
 a,
 a:visited {
   color: inherit;
@@ -976,6 +981,7 @@ table thead th .sort-icon {
   background: var(--blue-gray);
   border-color: var(--teal-hover);
   border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   display: block;
   padding: 40px;
   text-align: center;
@@ -983,7 +989,7 @@ table thead th .sort-icon {
   color: #333;
   font-size: 1.2rem;
   font-weight: 600;
-  transition: background 0.15s;
+  transition: background 0.15s, box-shadow 0.15s, transform 0.15s;
 }
 
 /*********************
@@ -1013,6 +1019,8 @@ footer {
  *************************************/
  .dashboard-btn:hover {
    background: var(--light-cyan);
+   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+   transform: scale(1.03);
  }
 
 /**********************
