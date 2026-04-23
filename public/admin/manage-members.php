@@ -54,7 +54,10 @@ $flash   = $session->message();
       <h1>Manage Members</h1>
 
       <?php if ($flash !== '') { ?>
-        <p class="flash-message"><?= htmlspecialchars($flash) ?></p>
+        <div class="flash-message">
+          <span><?= htmlspecialchars($flash) ?></span>
+          <button type="button" class="msg-close-btn" aria-label="Dismiss">&times;</button>
+        </div>
       <?php } ?>
 
       <input type="search" id="member-search" class="table-search" placeholder="Search" autocomplete="off">

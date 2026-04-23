@@ -54,4 +54,9 @@
     img.className = 'sort-icon';
     activeTh.appendChild(img);
   }
+
+
+  document.querySelectorAll('.flash-message .msg-close-btn').forEach(btn => {
+    btn.addEventListener('click', () => { btn.closest('.flash-message').hidden = true; });
+  });
 })();

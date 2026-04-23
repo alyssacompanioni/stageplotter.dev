@@ -157,12 +157,15 @@ $flash             = $session->message();
       <h1>Plot Element Image Manager</h1>
 
       <?php if ($flash !== '') { ?>
-        <p class="flash-message"><?= htmlspecialchars($flash) ?></p>
+        <div class="flash-message">
+          <span><?= htmlspecialchars($flash) ?></span>
+          <button type="button" class="msg-close-btn" aria-label="Dismiss">&times;</button>
+        </div>
       <?php } ?>
 
       <div class="drop-zone-error" id="drop-zone-error" hidden>
-        You can only upload one image to the library at a time.
-        <button type="button" id="drop-zone-error-close" aria-label="Dismiss">&times;</button>
+        <span>You can only upload one image to the library at a time.</span>
+        <button type="button" class="msg-close-btn" aria-label="Dismiss">&times;</button>
       </div>
 
       <div class="upload-image-section">
