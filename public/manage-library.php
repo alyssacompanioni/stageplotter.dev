@@ -206,6 +206,11 @@ $flash             = $session->message();
         </form>
       </div>
 
+      <div class="library-search">
+        <h2>Search Plot Elements</h2>
+        <input type="text" id="library-search-input" placeholder="Search images...">
+      </div>
+
       <script>
         window.SUBCATEGORY_OPTIONS = {
           instruments: <?= json_encode($instrument_categories) ?>,

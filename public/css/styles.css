@@ -605,13 +605,24 @@ table thead th .sort-icon {
 }
 
 #plot-search,
-.table-search {
-  margin: 0 0 12px;
-  padding: 8px 12px;
-  width: 100%;
-  max-width: 400px;
+.table-search, 
+.library-search input {
   border: 1px solid var(--border-color);
   border-radius: 6px;
+  display: block;
+  margin: 0 auto 12px;
+  max-width: 500px;
+  padding: 8px 12px;
+  width: 100%;
+}
+
+.library-search {
+  background: var(--section-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  margin: 16px auto;
+  padding: 0 24px 12px;
+  text-align: center;
 }
 
 /*********************
@@ -1327,7 +1338,7 @@ footer {
   opacity: 1;
 }
 
-.flash-message {
+.flash-message:not([hidden]) {
   align-items: center;
   background: rgba(98, 152, 188, 0.3);
   border-radius: 4px;
@@ -1419,7 +1430,7 @@ footer {
   padding: 8px 16px;
 }
 
-#upload-btn:hover {
+#upload-btn:not(:disabled):hover {
   background-color: var(--teal-hover);
 }
 
