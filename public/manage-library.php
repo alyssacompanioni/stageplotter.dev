@@ -160,6 +160,11 @@ $flash             = $session->message();
         <p class="flash-message"><?= htmlspecialchars($flash) ?></p>
       <?php } ?>
 
+      <div class="drop-zone-error" id="drop-zone-error" hidden>
+        You can only upload one image to the library at a time.
+        <button type="button" id="drop-zone-error-close" aria-label="Dismiss">&times;</button>
+      </div>
+
       <div class="upload-image-section">
         <h2>Upload New Image</h2>
 

@@ -4,11 +4,13 @@
   const stagedEl  = document.getElementById('drop-zone-staged');
   const fileLabel = document.getElementById('drop-zone-filename');
   const clearBtn  = document.getElementById('clear-file-btn');
+  const errorEl   = document.getElementById('drop-zone-error');
   const prompt    = zone.querySelector('.drop-zone-prompt');
   const uploadBtn = document.getElementById('upload-btn');
   const typeRadios = document.querySelectorAll('input[name="type"]');
   const subSelect  = document.getElementById('upload-subcategory');
 
+  const errorCloseBtn = document.getElementById('drop-zone-error-close');
   const subcategoryOptions = window.SUBCATEGORY_OPTIONS || {};
 
   typeRadios.forEach(radio => {
@@ -31,13 +33,24 @@
     uploadBtn.disabled = false;
   }
 
+  function showDropError() {
+    errorEl.hidden = false;
+  }
+
+  function hideDropError() {
+    errorEl.hidden = true;
+  }
+
   function clearFile() {
     input.value = '';
     fileLabel.textContent = '';
     stagedEl.hidden = true;
+    hideDropError();
     prompt.hidden = false;
     uploadBtn.disabled = true;
   }
+
+  errorCloseBtn.addEventListener('click', hideDropError);
 
   clearBtn.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -53,6 +66,10 @@
   zone.addEventListener('drop', e => {
     e.preventDefault();
     zone.classList.remove('drop-zone--active');
+    if (!stagedEl.hidden) {
+      showDropError();
+      return;
+    }
     setFile(e.dataTransfer.files[0]);
   });
 })();

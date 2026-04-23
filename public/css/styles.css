@@ -1291,6 +1291,28 @@ footer {
   font-weight: bold;
 }
 
+.drop-zone-error:not([hidden]) {
+  align-items: center;
+  background: rgba(215, 65, 50, 0.15);
+  border-radius: 4px;
+  color: var(--red1);
+  display: flex;
+  font-weight: 600;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 10px 14px;
+}
+
+#drop-zone-error-close {
+  background: none;
+  border: none;
+  color: var(--red1);
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 0 0 0 12px;
+}
+
 #clear-file-btn {
   background: none;
   border: none;
