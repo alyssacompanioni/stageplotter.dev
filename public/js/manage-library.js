@@ -68,4 +68,50 @@
   document.querySelectorAll('.flash-message .msg-close-btn').forEach(btn => {
     btn.addEventListener('click', () => { btn.closest('.flash-message').hidden = true; });
   });
+
+  document.querySelectorAll('.library-table').forEach(table => {
+    const tbody = table.querySelector('tbody');
+    let allRows = Array.from(tbody.querySelectorAll('tr'));
+    let sortColIdx = -1;
+    let sortDir = 'asc';
+
+    table.querySelectorAll('thead th[data-col]').forEach(th => {
+      th.addEventListener('click', () => {
+        const idx = th.cellIndex;
+        if (sortColIdx === idx) {
+          sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+        } else {
+          sortColIdx = idx;
+          sortDir = 'asc';
+        }
+        updateSortIndicators(th);
+        sortRows();
+      });
+    });
+
+    function sortRows() {
+      allRows.sort((a, b) => {
+        const av = a.cells[sortColIdx].textContent.trim().toLowerCase();
+        const bv = b.cells[sortColIdx].textContent.trim().toLowerCase();
+        if (av < bv) return sortDir === 'asc' ? -1 : 1;
+        if (av > bv) return sortDir === 'asc' ? 1 : -1;
+        return 0;
+      });
+      allRows.forEach(row => tbody.appendChild(row));
+    }
+
+    function updateSortIndicators(activeTh) {
+      table.querySelectorAll('thead th[data-col]').forEach(th => {
+        th.removeAttribute('data-sort');
+        const icon = th.querySelector('.sort-icon');
+        if (icon) icon.remove();
+      });
+      activeTh.setAttribute('data-sort', sortDir);
+      const img = document.createElement('img');
+      img.src = sortDir === 'asc' ? '/assets/icons/down-arrow.svg' : '/assets/icons/up-arrow.svg';
+      img.alt = sortDir === 'asc' ? 'ascending' : 'descending';
+      img.className = 'sort-icon';
+      activeTh.appendChild(img);
+    }
+  });
 })();

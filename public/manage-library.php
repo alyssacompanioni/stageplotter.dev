@@ -237,8 +237,8 @@ $flash             = $session->message();
                 <thead>
                   <tr>
                     <th></th>
-                    <th>Filename</th>
-                    <th>Label</th>
+                    <th data-col="1">Filename</th>
+                    <th data-col="2">Label</th>
                     <th>Actions</th>
                   </tr>
                 </thead>

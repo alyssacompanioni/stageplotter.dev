@@ -422,6 +422,11 @@ table tbody td {
   padding: 8px 12px;
 }
 
+table thead th[data-col] {
+  cursor: pointer;
+  user-select: none;
+}
+
 table thead th .sort-icon {
   width: 12px;
   height: 12px;
