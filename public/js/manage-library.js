@@ -1,9 +1,11 @@
 (function () {
-  const zone       = document.getElementById('drop-zone');
-  const input      = document.getElementById('svg_file');
-  const fileLabel  = document.getElementById('drop-zone-filename');
-  const prompt     = zone.querySelector('.drop-zone-prompt');
-  const uploadBtn  = document.getElementById('upload-btn');
+  const zone      = document.getElementById('drop-zone');
+  const input     = document.getElementById('svg_file');
+  const stagedEl  = document.getElementById('drop-zone-staged');
+  const fileLabel = document.getElementById('drop-zone-filename');
+  const clearBtn  = document.getElementById('clear-file-btn');
+  const prompt    = zone.querySelector('.drop-zone-prompt');
+  const uploadBtn = document.getElementById('upload-btn');
   const typeRadios = document.querySelectorAll('input[name="type"]');
   const subSelect  = document.getElementById('upload-subcategory');
 
@@ -25,9 +27,22 @@
     input.files = dt.files;
     prompt.hidden = true;
     fileLabel.textContent = file.name;
-    fileLabel.hidden = false;
+    stagedEl.hidden = false;
     uploadBtn.disabled = false;
   }
+
+  function clearFile() {
+    input.value = '';
+    fileLabel.textContent = '';
+    stagedEl.hidden = true;
+    prompt.hidden = false;
+    uploadBtn.disabled = true;
+  }
+
+  clearBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    clearFile();
+  });
 
   zone.addEventListener('click', () => input.click());
   zone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') input.click(); });

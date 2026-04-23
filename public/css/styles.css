@@ -1281,9 +1281,38 @@ footer {
   text-decoration: underline;
 }
 
+.drop-zone-staged:not([hidden]) {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
 .drop-zone-filename {
   font-weight: bold;
-  margin: 0;
+}
+
+#clear-file-btn {
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 2px 4px;
+}
+
+#clear-file-btn img {
+  max-width: none;
+  opacity: 0.5;
+  padding: 0;
+}
+
+#clear-file-btn:hover {
+   background: var(--red1);
+}
+
+#clear-file-btn:hover img {
+  opacity: 1;
 }
 
 .upload-image-section {

@@ -166,7 +166,10 @@ $flash             = $session->message();
         <form method="post" enctype="multipart/form-data" id="upload-form">
           <div class="drop-zone" id="drop-zone" role="button" tabindex="0" aria-label="Drop SVG file here or click to browse">
             <p class="drop-zone-prompt">Drag &amp; drop an SVG here, or <span class="drop-zone-link">browse</span></p>
-            <p class="drop-zone-filename" id="drop-zone-filename" hidden></p>
+            <div class="drop-zone-staged" id="drop-zone-staged" hidden>
+              <span id="drop-zone-filename"></span>
+              <button type="button" id="clear-file-btn" aria-label="Remove staged file"><img src="/assets/icons/trash.svg" alt="" width="16" height="16"></button>
+            </div>
             <input type="file" id="svg_file" name="svg_file" accept=".svg" required>
           </div>
 
