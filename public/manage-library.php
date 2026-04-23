@@ -254,7 +254,9 @@ $flash             = $session->message();
                             value="<?= htmlspecialchars($img['rel_path']) ?>">
                           <input type="hidden" name="delete_type"
                             value="<?= htmlspecialchars($delete_type) ?>">
-                          <button type="submit" class="btn btn-delete">Delete</button>
+                          <button type="submit" class="btn btn-delete" aria-label="Delete <?= htmlspecialchars($img['filename']) ?>">
+                            <img src="/assets/icons/trash.svg" alt="" width="16" height="16">
+                          </button>
                         </form>
                       </td>
                     </tr>

@@ -1468,7 +1468,13 @@ footer {
 
 .library-table th:nth-child(4),
 .library-table td:nth-child(4) {
+  text-align: center;
   width: 90px;
+}
+
+.library-table td:nth-child(4) form {
+  display: flex;
+  justify-content: center;
 }
 
 .library-thumb {
@@ -1481,7 +1487,17 @@ footer {
 }
 
 .btn-delete {
+  align-items: center;
   background-color: var(--red1);
   color: var(--text-light);
-  padding: 4px 10px;
+  display: flex;
+  padding: 6px 10px;
+}
+
+.btn-delete img {
+  display: block;
+  filter: brightness(0) invert(1);
+  height: 16px;
+  max-width: none;
+  width: 16px;
 }
