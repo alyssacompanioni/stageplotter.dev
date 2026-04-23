@@ -1321,6 +1321,7 @@ footer {
   display: flex;
   font-weight: normal;
   gap: 6px;
+  margin-bottom: 0;
   margin-top: 0;
 }
 
@@ -1335,6 +1336,10 @@ footer {
   margin-top: 0;
 }
 
+#upload-subcategory {
+  font: inherit;
+}
+
 #upload-btn {
   background-color: var(--bright-blue);
   color: #fff;
@@ -1343,6 +1348,10 @@ footer {
   display: block;
   margin: 0 auto;
   padding: 8px 16px;
+}
+
+#upload-btn:hover {
+  background-color: var(--teal-hover);
 }
 
 .library-section {
@@ -1365,6 +1374,7 @@ footer {
 }
 
 .library-table {
+  border: 2px solid var(--border-color);
   border-collapse: collapse;
   margin-bottom: 12px;
   table-layout: fixed;
