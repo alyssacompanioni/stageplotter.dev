@@ -399,6 +399,7 @@ p.error {
 
 table thead {
   background-color: var(--accent-blue);
+  background: linear-gradient(90deg,rgba(111, 136, 185, 1) 0%, rgba(98, 152, 188, 0.95) 100%);
 }
 
 table tbody tr:nth-child(even) {
