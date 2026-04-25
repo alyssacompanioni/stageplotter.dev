@@ -4,3 +4,4 @@
 .ddev/.dbimageBuild
 .ddev/mutagen
 private/db_connection.php
+vendor/
