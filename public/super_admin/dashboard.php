@@ -10,6 +10,7 @@ $session->require_role('super_admin');
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Super Admin Dashboard | Stage Plotter</title>
+  <meta name="description" content="Super Admin Dashboard — platform-wide user management and oversight.">
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 

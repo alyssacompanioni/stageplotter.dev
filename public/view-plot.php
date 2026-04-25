@@ -91,6 +91,7 @@ $subtitle = implode(' — ', array_filter([$date, $plot['venue_staplot']]));
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= htmlspecialchars($plot['title_staplot']) ?> | Stage Plotter</title>
+  <meta name="description" content="View the stage plot &ldquo;<?= htmlspecialchars($plot['title_staplot']) ?>&rdquo; on Stage Plotter.">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
 </head>

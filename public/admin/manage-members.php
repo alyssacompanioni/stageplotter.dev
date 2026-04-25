@@ -43,6 +43,7 @@ $flash   = $session->message();
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manage Members | Stage Plotter</title>
+  <meta name="description" content="Manage organization members, roles, and access permissions.">
   <link rel="stylesheet" href="/css/styles.css">
   <script src="/js/manage-members.js" defer></script>
 </head>

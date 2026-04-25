@@ -79,6 +79,7 @@ function redirect_by_role(string $role): void
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Log In | Stage Plotter</title>
+  <meta name="description" content="Log in to Stage Plotter to access your stage plots and manage your account.">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 

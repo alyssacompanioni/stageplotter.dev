@@ -10,6 +10,7 @@ $show_hero = !$session->is_logged_in();
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stage Plotter</title>
+  <meta name="description" content="Stage Plotter — create, save, and share professional stage plot diagrams for your band or live event.">
   <link rel="stylesheet" href="/css/styles.css">
   <script src="/js/index.js" defer></script>
 </head>

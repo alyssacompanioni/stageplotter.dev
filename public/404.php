@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>404 Not Found</title>
+  <meta name="description" content="The page you're looking for couldn't be found.">
 </head>
 
 <body>

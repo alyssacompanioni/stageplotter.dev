@@ -10,6 +10,7 @@ $session->require_role('member');
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Build a Stage Plot | Stage Plotter</title>
+  <meta name="description" content="Build a stage plot for your band or live event. Drag and drop instruments, equipment, and labels to design your setup.">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>

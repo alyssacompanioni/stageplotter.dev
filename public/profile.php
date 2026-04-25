@@ -131,6 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Profile | Stage Plotter</title>
+  <meta name="description" content="Manage your Stage Plotter profile and account settings.">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
   <script src="/js/forms.js" defer></script>

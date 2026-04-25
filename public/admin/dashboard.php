@@ -10,6 +10,7 @@ $session->require_role('admin');
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard | Stage Plotter</title>
+  <meta name="description" content="Admin Dashboard — manage members and review platform activity.">
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 

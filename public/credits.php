@@ -7,6 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Credits</title>
+  <meta name="description" content="Credits and attributions for Stage Plotter.">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 
