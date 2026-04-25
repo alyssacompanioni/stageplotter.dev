@@ -22,6 +22,7 @@ $show_hero = !$session->is_logged_in();
     <div class="hero-inner">
       <h1>Build your stage plot in minutes.</h1>
       <p>Drag and drop instruments onto your stage, label every input, then share a link or print a PDF — all for free.</p>
+      <p>Sign up or log in to get started!</p>
       <div class="hero-ctas">
         <a href="/login.php" class="hero-cta">Log In</a>
         <a href="/register.php" class="hero-cta hero-cta--secondary">Sign Up</a>

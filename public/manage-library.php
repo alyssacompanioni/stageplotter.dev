@@ -169,7 +169,7 @@ $flash             = $session->message();
       </div>
 
       <div class="upload-image-section">
-        <h2>Upload New Image</h2>
+        <h2>Upload a New Image</h2>
 
         <form method="post" enctype="multipart/form-data" id="upload-form">
           <div class="drop-zone" id="drop-zone" role="button" tabindex="0" aria-label="Drop SVG file here or click to browse">
