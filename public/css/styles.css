@@ -661,7 +661,8 @@ table thead th .sort-icon {
 
 /* Canvas Container Styles */
 .canvas-container {
-  background-color: var(--light-brown);
+  background: var(--light-brown);
+  background: linear-gradient(134deg, rgba(171, 173, 179, 1) 0%, rgba(128, 128, 128, 1) 100%);
   border: 1px solid var(--border-color);
   grid-column: 2 / -1;
   grid-row: 1 / -1;
@@ -836,7 +837,7 @@ table thead th .sort-icon {
 }
 
 .element-card-container {
-  background: #9EADD2;
+  background: var(--palette);
   background: linear-gradient(134deg,rgba(158, 173, 210, 1) 0%, rgba(98, 152, 188, 0.9) 100%);
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
