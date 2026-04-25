@@ -1,6 +1,7 @@
 <?php
 
 require_once('db_connection.php');
+require_once __DIR__ . '/../vendor/autoload.php';
 
 // Autoload class definitions
 function my_autoload($class)

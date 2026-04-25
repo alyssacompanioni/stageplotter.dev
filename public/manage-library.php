@@ -59,20 +59,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['svg_file'])) {
     if (mime_content_type($tmp) !== 'image/svg+xml' || $ext !== 'svg') {
       $session->message('Only SVG files are accepted.');
     } else {
-      $base     = preg_replace('/[^a-z0-9_\-]/', '_', strtolower(pathinfo($_FILES['svg_file']['name'], PATHINFO_FILENAME)));
-      $filename = $base . '.svg';
-      $dest     = $dest_dir . $filename;
+      $sanitizer = new enshrined\svgSanitize\Sanitizer();
+      $sanitizer->removeRemoteReferences(true);
+      $clean_svg = $sanitizer->sanitize(file_get_contents($tmp));
 
-      // Appends a Unix timestamp if the filename already exists to avoid overwriting
-      if (file_exists($dest)) {
-        $filename = $base . '_' . time() . '.svg';
-        $dest     = $dest_dir . $filename;
-      }
-
-      if (move_uploaded_file($tmp, $dest)) {
-        $session->message(htmlspecialchars($filename) . ' uploaded successfully.');
+      if ($clean_svg === false || trim($clean_svg) === '') {
+        $session->message('The SVG file was rejected — it may contain disallowed elements or be malformed.');
       } else {
-        $session->message('Upload failed. Please try again.');
+        $base     = preg_replace('/[^a-z0-9_\-]/', '_', strtolower(pathinfo($_FILES['svg_file']['name'], PATHINFO_FILENAME)));
+        $filename = $base . '.svg';
+        $dest     = $dest_dir . $filename;
+
+        // Appends a Unix timestamp if the filename already exists to avoid overwriting
+        if (file_exists($dest)) {
+          $filename = $base . '_' . time() . '.svg';
+          $dest     = $dest_dir . $filename;
+        }
+
+        if (file_put_contents($dest, $clean_svg) !== false) {
+          $session->message(htmlspecialchars($filename) . ' uploaded successfully.');
+        } else {
+          $session->message('Upload failed. Please try again.');
+        }
       }
     }
   }
