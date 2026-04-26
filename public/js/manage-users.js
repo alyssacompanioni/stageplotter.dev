@@ -8,6 +8,13 @@
   searchInput.addEventListener('input', filterRows);
 
   document.querySelectorAll('thead th[data-col]').forEach(function(th) {
+    const img = document.createElement('img');
+    img.src = '/assets/icons/down-arrow.svg';
+    img.alt = '';
+    img.className = 'sort-icon';
+    img.style.visibility = 'hidden';
+    th.appendChild(img);
+
     th.addEventListener('click', function() {
       const idx = th.cellIndex;
       if (sortColIdx === idx) {
@@ -44,17 +51,14 @@
   function updateSortIndicators(activeTh) {
     document.querySelectorAll('thead th[data-col]').forEach(function(th) {
       th.removeAttribute('data-sort');
-      const icon = th.querySelector('.sort-icon');
-      if (icon) icon.remove();
+      th.querySelector('.sort-icon').style.visibility = 'hidden';
     });
     activeTh.setAttribute('data-sort', sortDir);
-    const img = document.createElement('img');
-    img.src = sortDir === 'asc' ? '/assets/icons/down-arrow.svg' : '/assets/icons/up-arrow.svg';
-    img.alt = sortDir === 'asc' ? 'ascending' : 'descending';
-    img.className = 'sort-icon';
-    activeTh.appendChild(img);
+    const icon = activeTh.querySelector('.sort-icon');
+    icon.src = sortDir === 'asc' ? '/assets/icons/down-arrow.svg' : '/assets/icons/up-arrow.svg';
+    icon.alt = sortDir === 'asc' ? 'ascending' : 'descending';
+    icon.style.visibility = 'visible';
   }
-
 
   document.querySelectorAll('.flash-message .msg-close-btn').forEach(btn => {
     btn.addEventListener('click', () => { btn.closest('.flash-message').hidden = true; });
