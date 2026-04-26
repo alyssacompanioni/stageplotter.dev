@@ -73,7 +73,6 @@ $flash   = $session->message();
               <th data-col="username">Username</th>
               <th data-col="email">Email</th>
               <th data-col="status">Status</th>
-              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -82,14 +81,17 @@ $flash   = $session->message();
                 <td data-label="Name"><?= htmlspecialchars($member->first_name_usr . ' ' . $member->last_name_usr) ?></td>
                 <td data-label="Username"><?= htmlspecialchars($member->username_usr) ?></td>
                 <td data-label="Email"><?= htmlspecialchars($member->email_usr) ?></td>
-                <td data-label="Status"><?= $member->is_active_usr ? 'Active' : 'Inactive' ?></td>
-                <td data-label="Action">
-                  <form method="post">
-                    <input type="hidden" name="user_id" value="<?= $member->id ?>">
-                    <button type="submit">
-                      <?= $member->is_active_usr ? 'Deactivate' : 'Activate' ?>
-                    </button>
-                  </form>
+                <td data-label="Status">
+                  <span class="status-cell">
+                    <form method="post" class="status-toggle-form">
+                      <input type="hidden" name="user_id" value="<?= $member->id ?>">
+                      <input type="checkbox" class="status-toggle" role="switch"
+                        <?= $member->is_active_usr ? 'checked' : '' ?>
+                        onchange="this.form.submit()"
+                        aria-label="<?= $member->is_active_usr ? 'Active — click to deactivate' : 'Inactive — click to activate' ?>">
+                    </form>
+                    <span class="status-label"><?= $member->is_active_usr ? 'Active' : 'Inactive' ?></span>
+                  </span>
                 </td>
               </tr>
             <?php } ?>

@@ -1534,3 +1534,50 @@ footer {
   max-width: none;
   width: 16px;
 }
+
+.status-cell {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.status-label {
+  display: inline-block;
+  min-width: 3.5em;
+}
+
+.status-toggle-form {
+  display: contents;
+}
+
+.status-toggle {
+  appearance: none;
+  background: var(--red1);
+  border-radius: 10px;
+  cursor: pointer;
+  flex-shrink: 0;
+  height: 20px;
+  position: relative;
+  transition: background 0.2s;
+  width: 36px;
+}
+
+.status-toggle::after {
+  background: #fff;
+  border-radius: 50%;
+  content: "";
+  height: 14px;
+  left: 3px;
+  position: absolute;
+  top: 3px;
+  transition: left 0.2s;
+  width: 14px;
+}
+
+.status-toggle:checked {
+  background: #3cba54;
+}
+
+.status-toggle:checked::after {
+  left: 19px;
+}
