@@ -217,7 +217,10 @@ $flash             = $session->message();
 
       <div class="library-search">
         <h2>Search Plot Elements</h2>
-        <input type="text" id="library-search-input" placeholder="Search images...">
+        <div class="library-search-wrap">
+          <input type="text" id="library-search-input" placeholder="Search images..." autocomplete="off">
+          <button type="button" id="library-search-clear" class="library-search-clear" aria-label="Clear search" hidden>&times;</button>
+        </div>
       </div>
 
       <script>
