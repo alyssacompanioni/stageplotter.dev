@@ -707,6 +707,24 @@ table thead th .sort-icon {
   position: relative;
 }
 
+.autosave-status {
+  color: var(--text-gray);
+  font-size: 0.75rem;
+  transition: color 0.2s;
+}
+
+.autosave-status[data-status="saving"] {
+  color: var(--text-gray);
+}
+
+.autosave-status[data-status="saved"] {
+  color: var(--light-cyan);
+}
+
+.autosave-status[data-status="unsaved"] {
+  color: var(--amber);
+}
+
 /* Stage Plot Canvas Styles */
 /* Note: [position: relative;] is essential so the placed-elements can be absolutely positioned/anchored to it. */
 .placed-element {

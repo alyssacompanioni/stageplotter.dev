@@ -79,6 +79,7 @@ canvas.addEventListener("drop", (e) => {
   const y = e.clientY - rect.top;
 
   placeElement(data, x, y);
+  scheduleAutoSave();
 });
 
 /**
@@ -245,6 +246,7 @@ function handleAction(action) {
       selectedEl.style.zIndex = Math.max(0, parseInt(selectedEl.style.zIndex || "0") - 1).toString();
       break;
   }
+  scheduleAutoSave();
 }
 
 // ─── Drag to Reposition ────────────────────────────────────────────────────────
@@ -299,7 +301,8 @@ function mouseUpHandler() {
   canvas.removeEventListener("mousemove", mouseMoveHandler);
   canvas.removeEventListener("mouseup", mouseUpHandler);
 
-  if (!hasDragged && activeEl) selectElement(activeEl);
+  if (hasDragged) scheduleAutoSave();
+  else if (activeEl) selectElement(activeEl);
 
   activeEl = null;
 }
@@ -384,6 +387,67 @@ function serializeInputs() {
   };
 }
 
+// ─── Auto-save ─────────────────────────────────────────────────────────────────
+
+let autoSaveTimer = null;
+
+const AUTO_SAVE_DELAY = 2000;
+
+const STATUS_TEXT = { saving: "Saving…", saved: "Saved", unsaved: "Unsaved changes", "": "" };
+
+function setAutoSaveStatus(status) {
+  const el = document.getElementById("autosave-status");
+  el.dataset.status = status;
+  el.textContent = STATUS_TEXT[status] ?? "";
+}
+
+function scheduleAutoSave() {
+  setAutoSaveStatus("unsaved");
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer = setTimeout(autoSavePlot, AUTO_SAVE_DELAY);
+}
+
+async function autoSavePlot() {
+  const title = document.getElementById("plot-title").value.trim();
+  const gigDate = document.getElementById("plot-gig-date").value.trim();
+
+  if (!currentPlotId && (!title || !gigDate)) return;
+  if (!hasUnsavedChanges()) {
+    setAutoSaveStatus("saved");
+    return;
+  }
+
+  setAutoSaveStatus("saving");
+
+  try {
+    const res = await fetch("/api/save-plot.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        plot_id: currentPlotId,
+        title,
+        gig_date: gigDate,
+        venue: document.getElementById("plot-venue").value.trim() || null,
+        is_public: document.getElementById("plot-public-toggle").checked,
+        elements: serializeCanvas(),
+        inputs: serializeInputs(),
+      }),
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      currentPlotId = data.plot_id;
+      lastSavedState = getCurrentState();
+      setAutoSaveStatus("saved");
+    } else {
+      setAutoSaveStatus("unsaved");
+    }
+  } catch {
+    setAutoSaveStatus("unsaved");
+  }
+}
+
 /**
  * Saves the current plot (creates new or updates existing) via the API.
  * Stores the returned plot_id so subsequent saves perform an update.
@@ -420,13 +484,17 @@ async function savePlot() {
     if (data.success) {
       currentPlotId = data.plot_id;
       lastSavedState = getCurrentState();
+      clearTimeout(autoSaveTimer);
+      setAutoSaveStatus("saved");
       alert("Plot saved!");
       return true;
     } else {
+      setAutoSaveStatus("unsaved");
       alert("Save failed:\n" + (data.errors ? data.errors.join("\n") : data.error));
       return false;
     }
   } catch {
+    setAutoSaveStatus("unsaved");
     alert("Error: could not reach the server.");
     return false;
   }
@@ -529,6 +597,8 @@ async function loadPlot(plotId) {
     }
 
     lastSavedState = getCurrentState();
+    clearTimeout(autoSaveTimer);
+    setAutoSaveStatus("saved");
   } catch {
     alert("Error: could not reach the server.");
   }
@@ -548,6 +618,8 @@ function resetPlot() {
   document.getElementById("channel-list").innerHTML = "";
   currentPlotId = null;
   lastSavedState = null;
+  clearTimeout(autoSaveTimer);
+  setAutoSaveStatus("");
 }
 
 /**
@@ -874,7 +946,15 @@ document.getElementById("clear-stage-btn").addEventListener("click", () => {
   closeDropdown();
   deselectAll();
   canvas.querySelectorAll(".placed-element").forEach((el) => el.remove());
+  scheduleAutoSave();
 });
+
+// ─── Auto-save change listeners ────────────────────────────────────────────────
+
+["plot-title", "plot-gig-date", "plot-venue"].forEach((id) => {
+  document.getElementById(id).addEventListener("input", scheduleAutoSave);
+});
+document.getElementById("plot-public-toggle").addEventListener("change", scheduleAutoSave);
 
 // ─── Inputs Panel ──────────────────────────────────────────────────────────────
 
@@ -898,7 +978,10 @@ function createChannelRow(placeholder = "", channelNum = null, labelValue = "") 
     <input type="text" class="channel-label" placeholder="${placeholder}"${labelValue ? ` value="${labelValue}"` : ""}>
     <button class="btn btn-ghost channel-delete-btn" aria-label="Delete channel">✕</button>
   `;
-  li.querySelector(".channel-delete-btn").addEventListener("click", () => li.remove());
+  li.querySelector(".channel-delete-btn").addEventListener("click", () => {
+    li.remove();
+    scheduleAutoSave();
+  });
   return li;
 }
 
@@ -983,7 +1066,11 @@ document.getElementById("input-palette-toggle").addEventListener("click", showIn
 
 document.getElementById("add-channel-btn").addEventListener("click", () => {
   channelList.appendChild(createChannelRow());
+  scheduleAutoSave();
 });
+
+document.getElementById("inputs-details").addEventListener("input", scheduleAutoSave);
+channelList.addEventListener("input", scheduleAutoSave);
 
 document.getElementById("channels-tab-btn").addEventListener("click", () => {
   channelsView.removeAttribute("hidden");

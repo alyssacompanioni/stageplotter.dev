@@ -24,7 +24,7 @@ $session->require_role('member');
       <h1>Stage Plotter Dashboard</h1>
       <div class="canvas-container">
         <header id="plot-toolbar">
-          <div class="plot-meta-fields">
+          <div class="plot-meta-fields" id="plot-meta-fields">
             <label for="plot-title"><span class="sr-only">Title (required)</span>
               <input type="text" id="plot-title" class="plot-field" placeholder="Plot title *" maxlength="50">
             </label>
@@ -35,6 +35,7 @@ $session->require_role('member');
               <input type="text" id="plot-venue" class="plot-field" placeholder="Venue (optional)" maxlength="100">
             </label>
           </div>
+          <span id="autosave-status" class="autosave-status" aria-live="polite"></span>
           <div class="plot-settings">
             <input type="checkbox" id="plot-toolbar-toggle" class="dropdown-menu-checkbox">
             <label for="plot-toolbar-toggle" class="dropdown-menu-toggle" aria-label="Open plot actions menu">
