@@ -117,6 +117,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_file'])) {
   exit;
 }
 
+// ── Handle label edit POST ────────────────────────────────────────────────────
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_label'])) {
+  $type        = $_POST['label_type']        ?? '';
+  $subcategory = $_POST['label_subcategory'] ?? '';
+  $filename    = basename($_POST['label_filename'] ?? '');
+  $new_label   = trim($_POST['new_label'] ?? '');
+
+  if ($type === 'instruments' && array_key_exists($subcategory, $instrument_categories)) {
+    $dir = ASSETS_INSTRUMENTS_DIR . $subcategory . '/';
+  } elseif ($type === 'equipment' && array_key_exists($subcategory, $equipment_categories)) {
+    $dir = ASSETS_EQUIPMENT_DIR . $subcategory . '/';
+  } else {
+    $session->message('Invalid category.');
+    header('Location: manage-library.php');
+    exit;
+  }
+
+  if ($filename === '' || !is_file($dir . $filename)) {
+    $session->message('File not found.');
+    header('Location: manage-library.php');
+    exit;
+  }
+
+  $labels_file = $dir . 'labels.json';
+  $labels      = [];
+  if (is_file($labels_file)) {
+    $decoded = json_decode(file_get_contents($labels_file), true);
+    if (is_array($decoded)) $labels = $decoded;
+  }
+
+  if ($new_label === '') {
+    unset($labels[$filename]);
+  } else {
+    $labels[$filename] = $new_label;
+  }
+
+  if (file_put_contents($labels_file, json_encode($labels, JSON_PRETTY_PRINT)) !== false) {
+    $session->message('Label updated.');
+  } else {
+    $session->message('Could not save label. Please try again.');
+  }
+
+  header('Location: manage-library.php');
+  exit;
+}
+
 // ── Build image data grouped by section ──────────────────────────────────────
 /**
  * Returns [ 'subcategory_slug' => [ ['slug'=>…, 'filename'=>…, 'src'=>…, 'label'=>…], … ], … ]
@@ -128,14 +174,23 @@ function gather_images(array $categories, string $base_dir, string $url_prefix):
     $dir   = $base_dir . $slug . '/';
     $files = is_dir($dir) ? (glob($dir . '*.{svg,png}', GLOB_BRACE) ?: []) : [];
     sort($files);
-    $result[$slug] = array_map(function (string $file) use ($slug, $url_prefix): array {
-      $filename = basename($file);
+
+    $labels_file   = $dir . 'labels.json';
+    $custom_labels = [];
+    if (is_file($labels_file)) {
+      $decoded = json_decode(file_get_contents($labels_file), true);
+      if (is_array($decoded)) $custom_labels = $decoded;
+    }
+
+    $result[$slug] = array_map(function (string $file) use ($slug, $url_prefix, $custom_labels): array {
+      $filename   = basename($file);
+      $auto_label = ucwords(str_replace(['-', '_'], ' ', pathinfo($filename, PATHINFO_FILENAME)));
       return [
         'slug'     => $slug,
         'filename' => $filename,
         'rel_path' => $slug . '/' . $filename,
         'src'      => $url_prefix . $slug . '/' . rawurlencode($filename),
-        'label'    => ucwords(str_replace(['-', '_'], ' ', pathinfo($filename, PATHINFO_FILENAME))),
+        'label'    => $custom_labels[$filename] ?? $auto_label,
       ];
     }, $files);
   }
@@ -268,18 +323,29 @@ $flash             = $session->message();
                             class="library-thumb">
                         </td>
                         <td><?= htmlspecialchars($img['filename']) ?></td>
-                        <td><?= htmlspecialchars($img['label']) ?></td>
+                        <td class="library-label-cell"
+                            data-filename="<?= htmlspecialchars($img['filename']) ?>"
+                            data-type="<?= htmlspecialchars($delete_type) ?>"
+                            data-subcategory="<?= htmlspecialchars($img['slug']) ?>">
+                          <span class="library-label-text"><?= htmlspecialchars($img['label']) ?></span>
+                        </td>
                         <td>
-                          <form method="post"
-                            onsubmit="return confirm('Delete <?= htmlspecialchars(addslashes($img['filename'])) ?>?');">
-                            <input type="hidden" name="delete_file"
-                              value="<?= htmlspecialchars($img['rel_path']) ?>">
-                            <input type="hidden" name="delete_type"
-                              value="<?= htmlspecialchars($delete_type) ?>">
-                            <button type="submit" class="btn btn-delete" aria-label="Delete <?= htmlspecialchars($img['filename']) ?>">
-                              <img src="/assets/icons/trash.svg" alt="" width="16" height="16">
+                          <div class="library-actions">
+                            <button type="button" class="btn btn-edit"
+                              aria-label="Edit label for <?= htmlspecialchars($img['filename']) ?>">
+                              <img src="/assets/icons/edit.svg" alt="" width="16" height="16">
                             </button>
-                          </form>
+                            <form method="post"
+                              onsubmit="return confirm('Delete <?= htmlspecialchars(addslashes($img['filename'])) ?>?');">
+                              <input type="hidden" name="delete_file"
+                                value="<?= htmlspecialchars($img['rel_path']) ?>">
+                              <input type="hidden" name="delete_type"
+                                value="<?= htmlspecialchars($delete_type) ?>">
+                              <button type="submit" class="btn btn-delete" aria-label="Delete <?= htmlspecialchars($img['filename']) ?>">
+                                <img src="/assets/icons/trash.svg" alt="" width="16" height="16">
+                              </button>
+                            </form>
+                          </div>
                         </td>
                       </tr>
                     <?php endforeach; ?>

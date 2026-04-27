@@ -1565,12 +1565,71 @@ footer {
 .library-table th:nth-child(4),
 .library-table td:nth-child(4) {
   text-align: center;
-  width: 90px;
+  width: 110px;
 }
 
-.library-table td:nth-child(4) form {
+.library-actions {
+  align-items: center;
   display: flex;
+  gap: 6px;
   justify-content: center;
+}
+
+.btn-edit {
+  align-items: center;
+  background-color: var(--accent-blue);
+  color: var(--text-light);
+  display: flex;
+  padding: 6px 10px;
+}
+
+.btn-edit img {
+  display: block;
+  filter: brightness(0) invert(1);
+  height: 16px;
+  max-width: none;
+  width: 16px;
+}
+
+.btn-edit:hover {
+  background-color: var(--teal-hover);
+}
+
+.library-label-edit-wrap {
+  align-items: center;
+  display: flex;
+  gap: 6px;
+}
+
+.library-label-input {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  flex: 1;
+  font-size: inherit;
+  min-width: 60px;
+  padding: 2px 6px;
+}
+
+.btn-save-label {
+  background-color: var(--bright-accent-blue);
+  color: var(--text-light);
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+
+.btn-cancel-label {
+  background: none;
+  border: none;
+  color: var(--dark-gray);
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 2px 4px;
+}
+
+.btn-cancel-label:hover {
+  color: var(--red1);
 }
 
 .library-thumb {
