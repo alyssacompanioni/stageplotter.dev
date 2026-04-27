@@ -38,7 +38,7 @@ $session->require_role('member');
           <div class="plot-settings">
             <input type="checkbox" id="plot-toolbar-toggle" class="dropdown-menu-checkbox">
             <label for="plot-toolbar-toggle" class="dropdown-menu-toggle" aria-label="Open plot actions menu">
-              <img src="/assets/icons/gear.svg" alt="Plot actions" width="24" height="24">
+              <img src="/assets/icons/tools.svg" alt="Plot actions" width="24" height="24">
             </label>
             <ul class="dropdown-menu">
               <li><button id="new-plot-btn" class="btn">New Plot</button></li>
