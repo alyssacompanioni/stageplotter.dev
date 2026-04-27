@@ -1094,7 +1094,7 @@ footer {
 }
 
 /**********************
- * Load Plot Modal    *
+ * My Plots Modal     *
  **********************/
 .modal-overlay {
   align-items: center;
@@ -1127,13 +1127,13 @@ footer {
   margin: 0 0 16px;
 }
 
-.load-plot-list {
+.my-plots-list {
   list-style: none;
   margin: 0 0 16px;
   padding: 0;
 }
 
-.load-plot-item {
+.my-plots-item {
   border: 1px solid var(--border-color);
   border-radius: 6px;
   cursor: pointer;
@@ -1145,20 +1145,20 @@ footer {
   transition: background 0.15s;
 }
 
-.load-plot-item:hover {
+.my-plots-item:hover {
   background: var(--hover-bg);
 }
 
-.load-plot-title {
+.my-plots-title {
   font-weight: 600;
 }
 
-.load-plot-meta {
+.my-plots-meta {
   color: var(--text-gray);
   font-size: 0.85rem;
 }
 
-.load-plot-empty {
+.my-plots-empty {
   color: var(--text-gray);
   padding: 12px 0;
   text-align: center;

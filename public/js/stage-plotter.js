@@ -501,9 +501,9 @@ async function savePlot() {
 }
 
 /**
- * Fetches the user's saved plots and opens the load modal.
+ * Fetches the user's saved plots and opens the My Plots modal.
  */
-async function showLoadModal() {
+async function showMyPlots() {
   closeDropdown();
 
   try {
@@ -515,25 +515,25 @@ async function showLoadModal() {
       return;
     }
 
-    const list = document.getElementById("load-plot-list");
+    const list = document.getElementById("my-plots-list");
     list.innerHTML = "";
 
     if (data.plots.length === 0) {
-      list.innerHTML = '<li class="load-plot-empty">No saved plots found.</li>';
+      list.innerHTML = '<li class="my-plots-empty">No saved plots found.</li>';
     } else {
       data.plots.forEach((plot) => {
         const li = document.createElement("li");
-        li.className = "load-plot-item";
+        li.className = "my-plots-item";
         li.innerHTML = `
-          <span class="load-plot-title">${plot.title}</span>
-          <span class="load-plot-meta">${plot.gig_date}${plot.venue ? " — " + plot.venue : ""}</span>
+          <span class="my-plots-title">${plot.title}</span>
+          <span class="my-plots-meta">${plot.gig_date}${plot.venue ? " — " + plot.venue : ""}</span>
         `;
         li.addEventListener("click", () => loadPlot(plot.id));
         list.appendChild(li);
       });
     }
 
-    document.getElementById("load-plot-modal").removeAttribute("hidden");
+    document.getElementById("my-plots-modal").removeAttribute("hidden");
   } catch {
     alert("Error: could not reach the server.");
   }
@@ -544,7 +544,7 @@ async function showLoadModal() {
  * @param {number} plotId
  */
 async function loadPlot(plotId) {
-  closeLoadModal();
+  closeMyPlots();
 
   try {
     const res = await fetch("/api/load-plot.php?id=" + plotId);
@@ -677,10 +677,10 @@ async function sharePlot() {
 }
 
 /**
- * Closes the load plot modal.
+ * Closes the My Plots modal.
  */
-function closeLoadModal() {
-  document.getElementById("load-plot-modal").setAttribute("hidden", "");
+function closeMyPlots() {
+  document.getElementById("my-plots-modal").setAttribute("hidden", "");
 }
 
 /**
@@ -927,8 +927,8 @@ document.getElementById("print-plot-btn").addEventListener("click", printPlot);
 document.getElementById("share-plot-btn").addEventListener("click", sharePlot);
 document.getElementById("new-plot-btn").addEventListener("click", newPlot);
 document.getElementById("save-plot-btn").addEventListener("click", savePlot);
-document.getElementById("load-plot-btn").addEventListener("click", showLoadModal);
-document.getElementById("load-modal-cancel").addEventListener("click", closeLoadModal);
+document.getElementById("my-plots-btn").addEventListener("click", showMyPlots);
+document.getElementById("my-plots-cancel").addEventListener("click", closeMyPlots);
 document.getElementById("share-modal-close").addEventListener("click", () => {
   document.getElementById("share-modal").setAttribute("hidden", "");
 });

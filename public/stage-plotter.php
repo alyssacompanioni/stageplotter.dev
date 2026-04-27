@@ -43,7 +43,7 @@ $session->require_role('member');
             </label>
             <ul class="dropdown-menu">
               <li><button id="new-plot-btn" class="btn">New Plot</button></li>
-              <li><button id="load-plot-btn" class="btn">Load Plot</button></li>
+              <li><button id="my-plots-btn" class="btn">My Plots</button></li>
               <li><button id="save-plot-btn" class="btn">Save Plot</button></li>
               <li><button id="share-plot-btn" class="btn">Share Plot</button></li>
               <li><button id="export-plot-btn" class="btn">Export Plot</button></li>
@@ -165,13 +165,13 @@ $session->require_role('member');
     </div>
   </div>
 
-  <div id="load-plot-modal" class="modal-overlay" hidden>
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="load-modal-title">
-      <h2 id="load-modal-title">Load Plot</h2>
-      <ul id="load-plot-list" class="load-plot-list">
-        <!-- Populated by showLoadModal() in stage-plotter.js -->
+  <div id="my-plots-modal" class="modal-overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="my-plots-modal-title">
+      <h2 id="my-plots-modal-title">My Plots</h2>
+      <ul id="my-plots-list" class="my-plots-list">
+        <!-- Populated by showMyPlots() in stage-plotter.js -->
       </ul>
-      <button id="load-modal-cancel" class="btn btn-ghost">Cancel</button>
+      <button id="my-plots-cancel" class="btn btn-ghost">Cancel</button>
     </div>
   </div>
 </body>
