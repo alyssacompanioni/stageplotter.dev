@@ -616,7 +616,17 @@ table thead th .sort-icon {
 }
 
 #plot-search,
-.table-search, 
+.table-search {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  display: block;
+  font: inherit;
+  margin: 0 auto 12px;
+  max-width: 500px;
+  padding: 8px 12px;
+  width: 100%;
+}
+
 .library-search-wrap {
   margin: 0 auto 12px;
   max-width: 500px;
