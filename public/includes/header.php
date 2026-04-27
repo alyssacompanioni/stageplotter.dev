@@ -13,7 +13,12 @@
 
 <header>
   <div class="header-wrapper<?= isset($show_hero) && $show_hero ? ' hero-header' : '' ?>">
-    <a href="/index.php" class="logo"><img src="/assets/brand/logo-blue.svg" alt="Stage Plotter logo."></a>
+    <div class="header-left">
+      <a href="/index.php" class="logo"><img src="/assets/brand/logo-blue.svg" alt="Stage Plotter logo."></a>
+      <?php if (isset($show_back) && $show_back): ?>
+        <button class="back-btn" onclick="history.back()" aria-label="Go back"><img src="/assets/icons/back.svg" alt="" width="20" height="20"></button>
+      <?php endif; ?>
+    </div>
 
     <nav aria-label="Main navigation">
       <ul>

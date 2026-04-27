@@ -97,7 +97,7 @@ $subtitle = implode(' — ', array_filter([$date, $plot['venue_staplot']]));
 </head>
 
 <body>
-  <?php require_once 'includes/header.php'; ?>
+  <?php $show_back = true; require_once 'includes/header.php'; ?>
 
   <div class="wrapper">
     <main class="shared-plot-main">

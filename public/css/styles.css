@@ -132,6 +132,26 @@ header {
   padding: 12px 24px;
 }
 
+.header-left {
+  align-items: center;
+  display: flex;
+  gap: 16px;
+}
+
+.back-btn {
+  background: none;
+  border: 1px solid var(--icon-blue);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  margin-left: 20px;
+  padding: 4px;
+}
+
+.back-btn:hover {
+  background: rgba(215, 224, 235, 0.15);
+}
+
 .header-wrapper {
   align-items: center;
   max-width: 1600px;
@@ -329,6 +349,12 @@ form input[type="tel"]:focus {
   border-color: var(-- --bright-blue);
   box-shadow: 0 0 0 3px rgba(0, 151, 178, 0.15);
   outline: none;
+}
+
+select {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font: inherit;
 }
 
 form input[type="submit"] {
@@ -1485,6 +1511,7 @@ footer {
 
 #upload-subcategory {
   font: inherit;
+  padding: 4px 8px;
 }
 
 #upload-btn {
