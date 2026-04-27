@@ -700,10 +700,25 @@ function closeDropdown() {
  * @param {boolean} flipped     - Whether to flip horizontally
  * @returns {Promise<string>} PNG data URL
  */
-function rasterizeElement(src, sizePx, rotationDeg, flipped) {
+async function rasterizeElement(src, sizePx, rotationDeg, flipped) {
+  // Fetch the file and, for SVGs, strip <foreignObject> nodes before drawing.
+  // SVGs containing <foreignObject> taint the canvas and cause toDataURL() to
+  // throw a SecurityError, silently dropping the element from the PDF.
+  const res = await fetch(src);
+  let blobUrl;
+
+  if (src.toLowerCase().endsWith(".svg")) {
+    const text = await res.text();
+    const doc = new DOMParser().parseFromString(text, "image/svg+xml");
+    doc.querySelectorAll("foreignObject").forEach((el) => el.remove());
+    const cleaned = new XMLSerializer().serializeToString(doc.documentElement);
+    blobUrl = URL.createObjectURL(new Blob([cleaned], { type: "image/svg+xml" }));
+  } else {
+    blobUrl = URL.createObjectURL(await res.blob());
+  }
+
   return new Promise((resolve, reject) => {
     const img = new Image();
-    img.crossOrigin = "anonymous";
     img.onload = () => {
       try {
         const cvs = document.createElement("canvas");
@@ -726,10 +741,15 @@ function rasterizeElement(src, sizePx, rotationDeg, flipped) {
         resolve(cvs.toDataURL("image/png"));
       } catch (err) {
         reject(err);
+      } finally {
+        URL.revokeObjectURL(blobUrl);
       }
     };
-    img.onerror = reject;
-    img.src = src;
+    img.onerror = (err) => {
+      URL.revokeObjectURL(blobUrl);
+      reject(err);
+    };
+    img.src = blobUrl;
   });
 }
 
@@ -780,8 +800,9 @@ async function buildPdf() {
   const plotX = margin;
   const plotY = cursorY;
 
-  pdf.setFillColor(156, 182, 197); // #9cb6c5 (--blue1)
-  pdf.rect(plotX, plotY, canvasW * scale, canvasH * scale, "F");
+  pdf.setDrawColor(30, 30, 30);
+  pdf.setLineWidth(1.5);
+  pdf.rect(plotX, plotY, canvasW * scale, canvasH * scale, "S");
 
   // ── Place each element
   for (const el of elements) {
