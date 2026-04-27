@@ -231,56 +231,63 @@ $flash             = $session->message();
       // ── Reusable helper: render one category section ──────────────────────
       function render_section(string $section_title, string $delete_type, array $categories, array $images_by_slug): void
       { ?>
-        <section class="library-section">
-          <h2><?= htmlspecialchars($section_title) ?></h2>
+        <details class="library-section" open>
+          <summary class="library-section-summary">
+            <h2><?= htmlspecialchars($section_title) ?></h2>
+          </summary>
 
           <?php foreach ($categories as $slug => $cat_label):
             $images = $images_by_slug[$slug] ?? [];
           ?>
-            <h3><?= htmlspecialchars($cat_label) ?></h3>
+            <details class="library-subcategory" open>
+              <summary class="library-subcategory-summary">
+                <h3><?= htmlspecialchars($cat_label) ?></h3>
+              </summary>
 
-            <?php if (empty($images)): ?>
-              <p class="library-empty">No images in this category yet.</p>
-            <?php else: ?>
-              <table class="library-table">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th data-col="1">Filename</th>
-                    <th data-col="2">Label</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php foreach ($images as $img): ?>
+              <?php if (empty($images)): ?>
+                <p class="library-empty">No images in this category yet.</p>
+              <?php else: ?>
+                <table class="library-table">
+                  <thead>
                     <tr>
-                      <td>
-                        <img src="<?= htmlspecialchars($img['src']) ?>"
-                          alt="<?= htmlspecialchars($img['label']) ?>"
-                          class="library-thumb">
-                      </td>
-                      <td><?= htmlspecialchars($img['filename']) ?></td>
-                      <td><?= htmlspecialchars($img['label']) ?></td>
-                      <td>
-                        <form method="post"
-                          onsubmit="return confirm('Delete <?= htmlspecialchars(addslashes($img['filename'])) ?>?');">
-                          <input type="hidden" name="delete_file"
-                            value="<?= htmlspecialchars($img['rel_path']) ?>">
-                          <input type="hidden" name="delete_type"
-                            value="<?= htmlspecialchars($delete_type) ?>">
-                          <button type="submit" class="btn btn-delete" aria-label="Delete <?= htmlspecialchars($img['filename']) ?>">
-                            <img src="/assets/icons/trash.svg" alt="" width="16" height="16">
-                          </button>
-                        </form>
-                      </td>
+                      <th></th>
+                      <th data-col="1">Filename</th>
+                      <th data-col="2">Label</th>
+                      <th>Actions</th>
                     </tr>
-                  <?php endforeach; ?>
-                </tbody>
-              </table>
-            <?php endif; ?>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($images as $img): ?>
+                      <tr>
+                        <td>
+                          <img src="<?= htmlspecialchars($img['src']) ?>"
+                            alt="<?= htmlspecialchars($img['label']) ?>"
+                            class="library-thumb">
+                        </td>
+                        <td><?= htmlspecialchars($img['filename']) ?></td>
+                        <td><?= htmlspecialchars($img['label']) ?></td>
+                        <td>
+                          <form method="post"
+                            onsubmit="return confirm('Delete <?= htmlspecialchars(addslashes($img['filename'])) ?>?');">
+                            <input type="hidden" name="delete_file"
+                              value="<?= htmlspecialchars($img['rel_path']) ?>">
+                            <input type="hidden" name="delete_type"
+                              value="<?= htmlspecialchars($delete_type) ?>">
+                            <button type="submit" class="btn btn-delete" aria-label="Delete <?= htmlspecialchars($img['filename']) ?>">
+                              <img src="/assets/icons/trash.svg" alt="" width="16" height="16">
+                            </button>
+                          </form>
+                        </td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
+              <?php endif; ?>
+
+            </details>
 
           <?php endforeach; ?>
-        </section>
+        </details>
       <?php } ?>
 
       <?php render_section('Instruments', 'instruments', $instrument_categories, $instrument_images); ?>

@@ -1460,14 +1460,55 @@ footer {
   margin-top: 32px;
 }
 
-.library-section h2 {
+.library-section-summary,
+.library-subcategory-summary {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  user-select: none;
+}
+
+.library-section-summary::-webkit-details-marker,
+.library-subcategory-summary::-webkit-details-marker {
+  display: none;
+}
+
+.library-section-summary::before,
+.library-subcategory-summary::before {
+  content: '';
+  background: url('/assets/icons/down-arrow.svg') center / contain no-repeat;
+  display: inline-block;
+  flex-shrink: 0;
+  height: 12px;
+  transition: transform 0.2s;
+  width: 12px;
+}
+
+.library-section:not([open]) > .library-section-summary::before,
+.library-subcategory:not([open]) > .library-subcategory-summary::before {
+  transform: rotate(-90deg);
+}
+
+.library-section > .library-section-summary {
   border-bottom: 2px solid var(--medium-blue2);
   margin-bottom: 16px;
   padding-bottom: 6px;
 }
 
-.library-section h3 {
+.library-section-summary h2 {
+  flex: 1;
+  margin: 0;
+  text-align: left;
+}
+
+.library-subcategory {
   margin: 20px 0 8px;
+}
+
+.library-subcategory-summary h3 {
+  margin: 0;
 }
 
 .library-empty {
