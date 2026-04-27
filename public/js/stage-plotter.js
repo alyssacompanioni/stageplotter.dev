@@ -703,25 +703,30 @@ function closeDropdown() {
 function rasterizeElement(src, sizePx, rotationDeg, flipped) {
   return new Promise((resolve, reject) => {
     const img = new Image();
+    img.crossOrigin = "anonymous";
     img.onload = () => {
-      const cvs = document.createElement("canvas");
-      cvs.width = sizePx;
-      cvs.height = sizePx;
-      const ctx = cvs.getContext("2d");
+      try {
+        const cvs = document.createElement("canvas");
+        cvs.width = sizePx;
+        cvs.height = sizePx;
+        const ctx = cvs.getContext("2d");
 
-      // Scale to fit while preserving aspect ratio, centered — mirrors the
-      // browser's default preserveAspectRatio="xMidYMid meet" on <img> elements.
-      const natW = img.naturalWidth || sizePx;
-      const natH = img.naturalHeight || sizePx;
-      const ratio = Math.min(sizePx / natW, sizePx / natH);
-      const drawW = natW * ratio;
-      const drawH = natH * ratio;
+        // SVGs exported from Illustrator often have no explicit width/height —
+        // fall back to sizePx so drawImage has valid destination dimensions.
+        const natW = img.naturalWidth || sizePx;
+        const natH = img.naturalHeight || sizePx;
+        const ratio = Math.min(sizePx / natW, sizePx / natH);
+        const drawW = natW * ratio;
+        const drawH = natH * ratio;
 
-      ctx.translate(sizePx / 2, sizePx / 2);
-      if (rotationDeg) ctx.rotate((rotationDeg * Math.PI) / 180);
-      if (flipped) ctx.scale(-1, 1);
-      ctx.drawImage(img, -drawW / 2, -drawH / 2, drawW, drawH);
-      resolve(cvs.toDataURL("image/png"));
+        ctx.translate(sizePx / 2, sizePx / 2);
+        if (rotationDeg) ctx.rotate((rotationDeg * Math.PI) / 180);
+        if (flipped) ctx.scale(-1, 1);
+        ctx.drawImage(img, -drawW / 2, -drawH / 2, drawW, drawH);
+        resolve(cvs.toDataURL("image/png"));
+      } catch (err) {
+        reject(err);
+      }
     };
     img.onerror = reject;
     img.src = src;
@@ -733,6 +738,8 @@ function rasterizeElement(src, sizePx, rotationDeg, flipped) {
  * @returns {Promise<{pdf: jsPDF, title: string}>}
  */
 async function buildPdf() {
+  if (!window.jspdf) throw new Error("PDF library failed to load. Please refresh and try again.");
+
   deselectAll();
 
   const title = document.getElementById("plot-title").value.trim() || "Stage Plot";
@@ -887,9 +894,13 @@ async function buildPdf() {
  */
 async function exportPlot() {
   closeDropdown();
-  const { pdf, title } = await buildPdf();
-  const filename = title.replace(/[^a-z0-9]/gi, "_").replace(/_+/g, "_") + ".pdf";
-  pdf.save(filename);
+  try {
+    const { pdf, title } = await buildPdf();
+    const filename = title.replace(/[^a-z0-9]/gi, "_").replace(/_+/g, "_") + ".pdf";
+    pdf.save(filename);
+  } catch (err) {
+    alert("Export failed: " + err.message);
+  }
 }
 
 /**
@@ -908,8 +919,9 @@ async function printPlot() {
     const url = URL.createObjectURL(pdf.output("blob"));
     win.location.href = url;
     win.addEventListener("unload", () => URL.revokeObjectURL(url), { once: true });
-  } catch {
+  } catch (err) {
     win.close();
+    alert("Print failed: " + err.message);
   }
 }
 
