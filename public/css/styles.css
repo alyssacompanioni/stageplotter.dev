@@ -59,6 +59,11 @@
   --blue5: #195d84;
 
   --red1: #d74132;
+
+  --light-orange: #f3e0cf;
+  --light-orange2: #fff1ec;
+  --marigold: #aa925a;
+  --bright-yellow: #ffdd89;
 }
 
 /******************
@@ -1572,6 +1577,52 @@ footer {
   border-bottom: 2px solid var(--medium-blue2);
   margin-bottom: 16px;
   padding-bottom: 6px;
+}
+
+.library-section--equipment > .library-section-summary {
+  border-bottom-color: var(--marigold);
+}
+
+.library-section--equipment table thead {
+  background: linear-gradient(90deg, rgba(170, 146, 90, 1) 0%, rgba(197, 168, 100, 0.95) 100%);
+}
+
+.library-section--equipment table tbody tr:nth-child(even) {
+  background-color: var(--light-orange);
+}
+
+.library-section--equipment .library-thumb {
+  background: var(--light-orange);
+}
+
+.library-section--equipment .btn-edit {
+  background-color: var(--marigold);
+}
+
+.library-section--equipment .btn-edit:hover {
+  background-color: #8a7240;
+}
+
+.library-section--equipment .btn-save-label {
+  background-color: var(--marigold);
+}
+
+.library-section--equipment .btn-save-label:hover {
+  background-color: #8a7240;
+}
+
+@media (max-width: 640px) {
+  .library-section--equipment table tbody tr {
+    border-color: var(--bright-yellow);
+  }
+
+  .library-section--equipment table tbody td {
+    border-bottom-color: var(--light-orange);
+  }
+
+  .library-section--equipment table tbody td:first-child {
+    background-color: var(--light-orange);
+  }
 }
 
 .library-section-summary h2 {

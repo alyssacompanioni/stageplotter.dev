@@ -289,7 +289,7 @@ $flash             = $session->message();
       // ── Reusable helper: render one category section ──────────────────────
       function render_section(string $section_title, string $delete_type, array $categories, array $images_by_slug): void
       { ?>
-        <details class="library-section" open>
+        <details class="library-section<?= $delete_type === 'equipment' ? ' library-section--equipment' : '' ?>" open>
           <summary class="library-section-summary">
             <h2><?= htmlspecialchars($section_title) ?></h2>
           </summary>
