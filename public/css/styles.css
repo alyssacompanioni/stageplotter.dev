@@ -595,6 +595,10 @@ table thead th .sort-icon {
   margin: 0 0 32px;
 }
 
+.header-wrapper .logo img {
+  max-width: 175px;
+}
+
 .hero-header {
   justify-content: center;
 }
