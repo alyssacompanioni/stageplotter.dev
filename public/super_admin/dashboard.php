@@ -34,4 +34,6 @@ $session->require_role('super_admin');
         </a>
       </div>
     </main>
+  </div>
 </body>
+</html>
