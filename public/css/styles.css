@@ -704,6 +704,17 @@ table thead th .sort-icon {
 }
 
 /*********************
+ *  Login            *
+ ********************/
+
+ .login-main {
+  padding: 24px 0;
+  margin: 0 auto;
+  max-width: 600px; 
+}
+
+
+/*********************
   *  Stage Plotter  *
   *******************/
 #stage-plotter-wrapper {

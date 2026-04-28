@@ -86,7 +86,7 @@ function redirect_by_role(string $role): void
 <body>
   <?php require_once __DIR__ . '/includes/header.php'; ?>
   <div class="wrapper">
-    <main>
+    <main class="login-main">
       <h1>Log In</h1>
 
       <?php if (!empty($errors)) { ?>
