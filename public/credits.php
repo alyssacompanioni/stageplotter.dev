@@ -67,6 +67,9 @@
           <li>Mixing Desk by Random Panda from <a href="https://thenounproject.com/browse/icons/term/mixing-desk/" target="_blank" title="Mixing Desk Icons">Noun Project</a> (CC BY 3.0)</li>
           <li>curtains by tezar tantular from <a href="https://thenounproject.com/browse/icons/term/curtains/" target="_blank" title="curtains Icons">Noun Project</a> (CC BY 3.0)</li>
           <li>Stairs by ghufronagustian from <a href="https://thenounproject.com/browse/icons/term/stairs/" target="_blank" title="Stairs Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>Couch by Olifernes Tejeros from <a href="https://thenounproject.com/browse/icons/term/couch/" target="_blank" title="Couch Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Armchair" aka Couch by Lê Khắc Bảo Thoại from <a href="https://thenounproject.com/browse/icons/term/couch/" target="_blank" title="Couch Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>Disco Ball by Icon Market from <a href="https://thenounproject.com/browse/icons/term/disco-ball/" target="_blank" title="Disco Ball Icons">Noun Project</a> (CC BY 3.0)</li>
         </ul>
       </section>
 
