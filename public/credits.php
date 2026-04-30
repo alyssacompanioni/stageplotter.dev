@@ -57,6 +57,16 @@
           <li>"DJ" icon by Piyapong Khemawattana from <a href="https://thenounproject.com/browse/icons/term/dj/" target="_blank" title="dj Icons">Noun Project</a> (CC BY 3.0)</li>
           <li>"Microphone on Stand" icon by Olena Panasovska from <a href="https://thenounproject.com/browse/icons/term/microphone-on-stand/" target="_blank" title="microphone on stand Icons">Noun Project</a> (CC BY 3.0)</li>
           <li>"Keyboard" icon by Hey Rabbit from <a href="https://thenounproject.com/browse/icons/term/keyboard/" target="_blank" title="Keyboard Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Spotlight" icon by Rafiico Creative Studio from <a href="https://thenounproject.com/browse/icons/term/spotlight/" target="_blank" title="Spotlight Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Stage-light" by TENTELIER from <a href="https://thenounproject.com/browse/icons/term/stage-light/" target="_blank" title="stage light Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Studio lighting equipment" by Marco Livolsi from <a href="https://thenounproject.com/browse/icons/term/studio-lighting-equipment/" target="_blank" title="Studio lighting equipment Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Ear-piece" by Luis Prado from <a href="https://thenounproject.com/browse/icons/term/ear-piece/" target="_blank" title="ear piece Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>"Guitar stand" by Janika Mandel ( Leisalu ) from <a href="https://thenounproject.com/browse/icons/term/guitar-stand/" target="_blank" title="Guitar stand Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>Amplifier by Thijs Leydens from <a href="https://thenounproject.com/browse/icons/term/amplifier/" target="_blank" title="Amplifier Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>XLR Connector by Random Panda from <a href="https://thenounproject.com/browse/icons/term/xlr-connector/" target="_blank" title="XLR Connector Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>Mixing Desk by Random Panda from <a href="https://thenounproject.com/browse/icons/term/mixing-desk/" target="_blank" title="Mixing Desk Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>curtains by tezar tantular from <a href="https://thenounproject.com/browse/icons/term/curtains/" target="_blank" title="curtains Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>Stairs by ghufronagustian from <a href="https://thenounproject.com/browse/icons/term/stairs/" target="_blank" title="Stairs Icons">Noun Project</a> (CC BY 3.0)</li>
         </ul>
       </section>
 
