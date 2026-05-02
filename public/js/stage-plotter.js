@@ -407,11 +407,14 @@ function scheduleAutoSave() {
   autoSaveTimer = setTimeout(autoSavePlot, AUTO_SAVE_DELAY);
 }
 
+const GIG_DATE_PATTERN = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/;
+
 async function autoSavePlot() {
   const title = document.getElementById("plot-title").value.trim();
   const gigDate = document.getElementById("plot-gig-date").value.trim();
 
   if (!currentPlotId && (!title || !gigDate)) return;
+  if (gigDate && !GIG_DATE_PATTERN.test(gigDate)) return;
   if (!hasUnsavedChanges()) {
     setAutoSaveStatus("saved");
     return;
@@ -459,6 +462,11 @@ async function savePlot() {
 
   if (!title || !gigDate) {
     alert("Title and Gig Date are required to save.");
+    return;
+  }
+
+  if (!GIG_DATE_PATTERN.test(gigDate)) {
+    alert("Gig Date must be in mm/dd/yyyy format (e.g. 06/15/2026).");
     return;
   }
 

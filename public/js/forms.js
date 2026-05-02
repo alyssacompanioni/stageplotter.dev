@@ -1,8 +1,20 @@
 /**
  * forms.js
- * Client-side validation for register.php and profile.php.
+ * Client-side validation for login.php, register.php, and profile.php.
  * Each section is guarded so only the forms present on the current page run.
  */
+
+// ── Login Form ────────────────────────────────────────────────────────────────
+
+if (document.getElementById('login-form')) {
+  document.getElementById('login-form').addEventListener('submit', (e) => {
+    if (!validateLoginFields()) e.preventDefault();
+  });
+
+  ['username', 'password'].forEach(id => {
+    document.getElementById(id).addEventListener('input', () => clearError(id));
+  });
+}
 
 // ── Register Form ─────────────────────────────────────────────────────────────
 
@@ -43,6 +55,28 @@ if (document.getElementById('password-form')) {
 }
 
 // ── Shared Validators ─────────────────────────────────────────────────────────
+
+/**
+ * Validates the login form (username + password both required).
+ */
+function validateLoginFields() {
+  let valid = true;
+
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
+
+  if (!username) {
+    setError('username', 'Username cannot be blank.');
+    valid = false;
+  }
+
+  if (!password) {
+    setError('password', 'Password cannot be blank.');
+    valid = false;
+  }
+
+  return valid;
+}
 
 /**
  * Validates the five account fields shared by register.php and profile.php.

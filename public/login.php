@@ -81,6 +81,7 @@ function redirect_by_role(string $role): void
   <title>Log In | Stage Plotter</title>
   <meta name="description" content="Log in to Stage Plotter to access your stage plots and manage your account.">
   <link rel="stylesheet" href="css/styles.css">
+  <script src="/js/forms.js" defer></script>
 </head>
 
 <body>
@@ -110,7 +111,6 @@ function redirect_by_role(string $role): void
     </main>
   </div>
   <?php require_once __DIR__ . '/includes/footer.php'; ?>
-  <!-- Don't forget js validation  -->
 </body>
 
 </html>
