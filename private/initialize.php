@@ -19,4 +19,17 @@ spl_autoload_register('my_autoload');
 // }
 
 DatabaseObject::set_database($db);
+
+// Harden the session cookie before session_start() fires inside new Session().
+// httponly: blocks JS from reading the cookie, limiting XSS-based session theft.
+// SameSite=Strict: blocks the cookie from being sent on cross-origin requests,
+//   providing CSRF protection without a separate token on same-site forms.
+// use_strict_mode: PHP rejects session IDs supplied by the client that don't
+//   match an existing server-side session, blocking session fixation attempts.
+ini_set('session.use_strict_mode', '1');
+session_set_cookie_params([
+  'httponly' => true,
+  'samesite' => 'Strict',
+]);
+
 $session = new Session;
