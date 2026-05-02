@@ -87,7 +87,6 @@ foreach (($body['elements'] ?? []) as $el) {
     'z_index_pele'    => max(1, min(100, (int) ($el['z_index'] ?? 1))),
     'px_size_pele'    => (int)   ($el['size']     ?? 48),
     'src_pele'        =>          $el['src']      ?? '',
-    'type_pele'       => type_from_src($el['src'] ?? ''),
     'name_pele'       =>          $el['label']    ?? '',
     'flipped_pele'    => (int) (bool) ($el['flipped'] ?? false),
   ]);
@@ -137,28 +136,3 @@ if ($plot->is_public_staplot) {
 }
 
 echo json_encode(['success' => true, 'plot_id' => $plot->id]);
-
-// ── Helper ─────────────────────────────────────────────────────────────────
-
-/**
- * Derives the ENUM type value from a canvas element's SVG src path.
- * Expects paths like /assets/instruments/{category}/filename.svg.
- *
- * @param string $src
- * @return string  One of the VALID_TYPES values; falls back to 'Misc'.
- */
-function type_from_src(string $src): string
-{
-  $map = [
-    'guitars'    => 'Guitar',
-    'percussion' => 'Percussion',
-    'keys'       => 'Keys',
-    'strings'    => 'Strings',
-    'winds'      => 'Winds',
-    'amps'       => 'Amps',
-    'misc'       => 'Misc',
-  ];
-
-  $category = basename(dirname($src));  // e.g. "guitars" from ".../instruments/guitars/..."
-  return $map[$category] ?? 'Misc';
-}

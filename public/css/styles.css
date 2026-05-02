@@ -1120,13 +1120,13 @@ table thead th .sort-icon {
  ** Footer Styles **
  *********************/
 footer {
-  background-color: #545454;
-  background-image: url("/assets/brand/footer-blue.svg");
+  background-color: blue;
+  background-image: url("/assets/brand/crowd2.png");
   background-repeat: repeat-x;
   background-size: auto 100%;
   display: flex;
   color: #fff;
-  height: 200px;
+  height: 125px;
   padding: 12px 24px;
   width: 100%;
   text-align: center;

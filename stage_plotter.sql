@@ -30,7 +30,6 @@ CREATE TABLE IF NOT EXISTS `input_list_channel_inplstch` (
   `id_inplst_inplstch` int(11) NOT NULL,
   `channel_num_inplstch` int(11) NOT NULL,
   `label_inplstch` varchar(100) NOT NULL DEFAULT '',
-  `id_pele_inplstch` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_inplstch`),
   UNIQUE KEY `input_list_channel_inplstch_index_0` (`id_inplst_inplstch`,`channel_num_inplstch`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -58,37 +57,18 @@ CREATE TABLE IF NOT EXISTS `input_list_inplst` (
 
 DROP TABLE IF EXISTS `plot_element_pele`;
 CREATE TABLE IF NOT EXISTS `plot_element_pele` (
-  `id_pele`        int(11)                                                            NOT NULL AUTO_INCREMENT,
-  `id_staplot_pele` int(11)                                                           NOT NULL,
-  `x_pos_pele`     decimal(6,2)                                                       NOT NULL,
-  `y_pos_pele`     decimal(6,2)                                                       NOT NULL,
-  `rotation_pele`  smallint(6)                                                        NOT NULL DEFAULT 0,
-  `z_index_pele`   int(11)                                                            NOT NULL DEFAULT 1,
-  `px_size_pele`   int(11)                                                            NOT NULL DEFAULT 48,
-  `src_pele`       varchar(255)                                                       NOT NULL DEFAULT '',
-  `type_pele`      enum('Guitar','Percussion','Keys','Strings','Winds','Amps','Misc') NOT NULL DEFAULT 'Misc',
-  `name_pele`      varchar(100)                                                       NOT NULL DEFAULT '',
-  `flipped_pele`   tinyint(1)                                                         NOT NULL DEFAULT 0,
+  `id_pele`        int(11)      NOT NULL AUTO_INCREMENT,
+  `id_staplot_pele` int(11)     NOT NULL,
+  `x_pos_pele`     decimal(6,2) NOT NULL,
+  `y_pos_pele`     decimal(6,2) NOT NULL,
+  `rotation_pele`  smallint(6)  NOT NULL DEFAULT 0,
+  `z_index_pele`   int(11)      NOT NULL DEFAULT 1,
+  `px_size_pele`   int(11)      NOT NULL DEFAULT 48,
+  `src_pele`       varchar(255) NOT NULL DEFAULT '',
+  `name_pele`      varchar(100) NOT NULL DEFAULT '',
+  `flipped_pele`   tinyint(1)   NOT NULL DEFAULT 0,
   PRIMARY KEY (`id_pele`),
   KEY `id_staplot_pele` (`id_staplot_pele`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `plot_permission_pltperm`
---
-
-DROP TABLE IF EXISTS `plot_permission_pltperm`;
-CREATE TABLE IF NOT EXISTS `plot_permission_pltperm` (
-  `id_pltperm` int(11) NOT NULL AUTO_INCREMENT,
-  `id_staplot_pltperm` int(11) NOT NULL,
-  `id_usr_pltperm` int(11) NOT NULL,
-  `permission_level_pltperm` enum('view','edit','admin') NOT NULL,
-  `created_at_pltperm` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id_pltperm`),
-  UNIQUE KEY `plot_permission_pltperm_index_1` (`id_staplot_pltperm`,`id_usr_pltperm`),
-  KEY `id_usr_pltperm` (`id_usr_pltperm`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -154,7 +134,8 @@ CREATE TABLE IF NOT EXISTS `user_usr` (
   `updated_at_usr` timestamp NOT NULL DEFAULT current_timestamp()
                                       ON UPDATE current_timestamp(),
   PRIMARY KEY (`id_usr`),
-  UNIQUE KEY `email_usr` (`email_usr`)
+  UNIQUE KEY `email_usr` (`email_usr`),
+  UNIQUE KEY `username_usr` (`username_usr`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -180,13 +161,6 @@ ALTER TABLE `input_list_inplst`
 --
 ALTER TABLE `plot_element_pele`
   ADD CONSTRAINT `plot_element_pele_ibfk_1` FOREIGN KEY (`id_staplot_pele`) REFERENCES `stage_plot_staplot` (`id_staplot`);
-
---
--- Constraints for table `plot_permission_pltperm`
---
-ALTER TABLE `plot_permission_pltperm`
-  ADD CONSTRAINT `plot_permission_pltperm_ibfk_1` FOREIGN KEY (`id_staplot_pltperm`) REFERENCES `stage_plot_staplot` (`id_staplot`),
-  ADD CONSTRAINT `plot_permission_pltperm_ibfk_2` FOREIGN KEY (`id_usr_pltperm`) REFERENCES `user_usr` (`id_usr`);
 
 --
 -- Constraints for table `shared_plot_shrplot`

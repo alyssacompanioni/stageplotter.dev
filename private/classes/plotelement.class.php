@@ -9,7 +9,7 @@
  *   - Real-world size in feet (width_pele, depth_pele) for usability reference
  *   - Rendered icon size in pixels (px_size_pele) for canvas display
  *   - Rotation in degrees (0–359) and horizontal flip state
- *   - Display info: SVG source path, category type, and element name
+ *   - Display info: SVG source path and element name
  *
  * Autoloaded as: PlotElement → plotelement.class.php
  *
@@ -30,7 +30,6 @@ class PlotElement extends DatabaseObject
     'z_index_pele',
     'px_size_pele',
     'src_pele',
-    'type_pele',
     'name_pele',
     'flipped_pele',
   ];
@@ -43,7 +42,6 @@ class PlotElement extends DatabaseObject
   public int    $z_index_pele    = 1;
   public int    $px_size_pele    = 48;     // pixels — rendered icon size on canvas
   public string $src_pele        = '';
-  public string $type_pele       = 'Misc';
   public string $name_pele       = '';
   public int    $flipped_pele    = 0;
 
@@ -56,8 +54,6 @@ class PlotElement extends DatabaseObject
   const MAX_ROT     = 359;
   const MIN_Z       =   1;
   const MAX_Z       = 100;
-
-  const VALID_TYPES = ['Guitar', 'Percussion', 'Keys', 'Strings', 'Winds', 'Amps', 'Misc'];
 
   // ============================================================
   // CONSTRUCTOR
@@ -72,7 +68,6 @@ class PlotElement extends DatabaseObject
     $this->z_index_pele    = isset($args['z_index_pele'])    ? (int)   $args['z_index_pele']    : 1;
     $this->px_size_pele    = isset($args['px_size_pele'])    ? (int)   $args['px_size_pele']    : 48;
     $this->src_pele        =        $args['src_pele']        ?? '';
-    $this->type_pele       =        $args['type_pele']       ?? 'Misc';
     $this->name_pele       =        $args['name_pele']       ?? '';
     $this->flipped_pele    = isset($args['flipped_pele'])    ? (int)   $args['flipped_pele']    : 0;
   }
@@ -155,10 +150,6 @@ class PlotElement extends DatabaseObject
 
     if ($this->src_pele === '') {
       $this->errors[] = 'Element source path is required.';
-    }
-
-    if (!in_array($this->type_pele, self::VALID_TYPES, true)) {
-      $this->errors[] = 'Element type must be one of: ' . implode(', ', self::VALID_TYPES) . '.';
     }
 
     if ($this->name_pele === '') {
