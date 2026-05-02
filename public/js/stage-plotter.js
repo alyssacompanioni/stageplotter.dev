@@ -44,16 +44,22 @@ async function switchPalette(category, type = "instruments") {
     const data = await res.json();
     if (!data.success) return;
 
-    cardContainer.innerHTML = data.icons
-      .map(
-        (icon) => `
-      <div class="element-card" draggable="true">
-        <img src="${icon.src}" alt="${icon.label} Icon." width="48" height="48">
-        <p>${icon.label}</p>
-      </div>
-    `,
-      )
-      .join("");
+    cardContainer.innerHTML = "";
+    data.icons.forEach((icon) => {
+      const card = document.createElement("div");
+      card.className = "element-card";
+      card.draggable = true;
+      const img = document.createElement("img");
+      img.src    = icon.src;
+      img.alt    = icon.label + " Icon.";
+      img.width  = 48;
+      img.height = 48;
+      const p = document.createElement("p");
+      p.textContent = icon.label;
+      card.appendChild(img);
+      card.appendChild(p);
+      cardContainer.appendChild(card);
+    });
   } catch {
     // Silently fail — the existing cards remain visible
   }
@@ -113,9 +119,18 @@ function placeElement(data, x, y) {
       <button data-action="layer-up" title="Layer Up"><img src="/assets/icons/layer-up.svg" alt="Layer Up" width="16" height="16"></button>
       <button data-action="layer-down" title="Layer Down"><img src="/assets/icons/layer-down.svg" alt="Layer Down" width="16" height="16"></button>
     </div>
-    <img src="${data.src}" alt="${data.label} Icon." width="${size}" height="${size}">
-    <p>${data.label}</p>
   `;
+
+  const img = document.createElement("img");
+  img.src    = data.src;
+  img.alt    = data.label + " Icon.";
+  img.width  = size;
+  img.height = size;
+  el.appendChild(img);
+
+  const labelP = document.createElement("p");
+  labelP.textContent = data.label;
+  el.appendChild(labelP);
 
   canvas.appendChild(el);
   applyTransform(el);
@@ -532,10 +547,14 @@ async function showMyPlots() {
       data.plots.forEach((plot) => {
         const li = document.createElement("li");
         li.className = "my-plots-item";
-        li.innerHTML = `
-          <span class="my-plots-title">${plot.title}</span>
-          <span class="my-plots-meta">${plot.gig_date}${plot.venue ? " — " + plot.venue : ""}</span>
-        `;
+        const titleSpan = document.createElement("span");
+        titleSpan.className = "my-plots-title";
+        titleSpan.textContent = plot.title;
+        const metaSpan = document.createElement("span");
+        metaSpan.className = "my-plots-meta";
+        metaSpan.textContent = plot.gig_date + (plot.venue ? " — " + plot.venue : "");
+        li.appendChild(titleSpan);
+        li.appendChild(metaSpan);
         li.addEventListener("click", () => loadPlot(plot.id));
         list.appendChild(li);
       });
@@ -1013,16 +1032,40 @@ function createChannelRow(placeholder = "", channelNum = null, labelValue = "") 
   const li = document.createElement("li");
   li.className = "channel-row";
   li.draggable = true;
-  li.innerHTML = `
-    <span class="channel-drag-handle" aria-hidden="true">⠿</span>
-    <input type="number" class="channel-num" min="1" max="999" placeholder="#"${channelNum !== null ? ` value="${channelNum}"` : ""}>
-    <input type="text" class="channel-label" placeholder="${placeholder}"${labelValue ? ` value="${labelValue}"` : ""}>
-    <button class="btn btn-ghost channel-delete-btn" aria-label="Delete channel">✕</button>
-  `;
-  li.querySelector(".channel-delete-btn").addEventListener("click", () => {
+
+  const handle = document.createElement("span");
+  handle.className = "channel-drag-handle";
+  handle.setAttribute("aria-hidden", "true");
+  handle.textContent = "⠿";
+
+  const numInput = document.createElement("input");
+  numInput.type = "number";
+  numInput.className = "channel-num";
+  numInput.min = "1";
+  numInput.max = "999";
+  numInput.placeholder = "#";
+  if (channelNum !== null) numInput.value = channelNum;
+
+  const labelInput = document.createElement("input");
+  labelInput.type = "text";
+  labelInput.className = "channel-label";
+  labelInput.placeholder = placeholder;
+  if (labelValue) labelInput.value = labelValue;
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.className = "btn btn-ghost channel-delete-btn";
+  deleteBtn.setAttribute("aria-label", "Delete channel");
+  deleteBtn.textContent = "✕";
+  deleteBtn.addEventListener("click", () => {
     li.remove();
     scheduleAutoSave();
   });
+
+  li.appendChild(handle);
+  li.appendChild(numInput);
+  li.appendChild(labelInput);
+  li.appendChild(deleteBtn);
+
   return li;
 }
 
