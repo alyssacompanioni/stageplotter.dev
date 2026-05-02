@@ -20,6 +20,16 @@ spl_autoload_register('my_autoload');
 
 DatabaseObject::set_database($db);
 
+/**
+ * HTML-escapes a string for safe output in any HTML context.
+ * ENT_QUOTES escapes both " and ' (needed for single-quoted attribute values).
+ * ENT_SUBSTITUTE replaces invalid UTF-8 sequences instead of returning ''.
+ */
+function esc(?string $str): string
+{
+  return htmlspecialchars($str ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
 // Harden the session cookie before session_start() fires inside new Session().
 // httponly: blocks JS from reading the cookie, limiting XSS-based session theft.
 // SameSite=Strict: blocks the cookie from being sent on cross-origin requests,

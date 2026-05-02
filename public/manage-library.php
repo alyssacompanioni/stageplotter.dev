@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['svg_file'])) {
         }
 
         if (file_put_contents($dest, $clean_svg) !== false) {
-          $session->message(htmlspecialchars($filename) . ' uploaded successfully.');
+          $session->message(esc($filename) . ' uploaded successfully.');
         } else {
           $session->message('Upload failed. Please try again.');
         }
@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_file'])) {
     is_file($real_file)
   ) {
     if (unlink($real_file)) {
-      $session->message(htmlspecialchars(basename($real_file)) . ' deleted.');
+      $session->message(esc(basename($real_file)) . ' deleted.');
     } else {
       $session->message('Could not delete file. Please try again.');
     }
@@ -222,7 +222,7 @@ $flash             = $session->message();
 
       <?php if ($flash !== '') { ?>
         <div class="flash-message">
-          <span><?= htmlspecialchars($flash) ?></span>
+          <span><?= esc($flash) ?></span>
           <button type="button" class="msg-close-btn" aria-label="Dismiss">&times;</button>
         </div>
       <?php } ?>
@@ -260,7 +260,7 @@ $flash             = $session->message();
               <label for="upload-subcategory">Category:</label>
               <select id="upload-subcategory" name="subcategory" required>
                 <?php foreach ($instrument_categories as $slug => $label): ?>
-                  <option value="<?= htmlspecialchars($slug) ?>"><?= htmlspecialchars($label) ?></option>
+                  <option value="<?= esc($slug) ?>"><?= esc($label) ?></option>
                 <?php endforeach; ?>
               </select>
             </div>
@@ -280,8 +280,8 @@ $flash             = $session->message();
 
       <script>
         window.SUBCATEGORY_OPTIONS = {
-          instruments: <?= json_encode($instrument_categories) ?>,
-          equipment: <?= json_encode($equipment_categories) ?>,
+          instruments: <?= json_encode($instrument_categories, JSON_HEX_TAG) ?>,
+          equipment: <?= json_encode($equipment_categories, JSON_HEX_TAG) ?>,
         };
       </script>
 
@@ -291,7 +291,7 @@ $flash             = $session->message();
       { ?>
         <details class="library-section<?= $delete_type === 'equipment' ? ' library-section--equipment' : '' ?>" open>
           <summary class="library-section-summary">
-            <h2><?= htmlspecialchars($section_title) ?></h2>
+            <h2><?= esc($section_title) ?></h2>
           </summary>
 
           <?php foreach ($categories as $slug => $cat_label):
@@ -299,7 +299,7 @@ $flash             = $session->message();
           ?>
             <details class="library-subcategory" open>
               <summary class="library-subcategory-summary">
-                <h3><?= htmlspecialchars($cat_label) ?></h3>
+                <h3><?= esc($cat_label) ?></h3>
               </summary>
 
               <?php if (empty($images)): ?>
@@ -318,30 +318,30 @@ $flash             = $session->message();
                     <?php foreach ($images as $img): ?>
                       <tr>
                         <td>
-                          <img src="<?= htmlspecialchars($img['src']) ?>"
-                            alt="<?= htmlspecialchars($img['label']) ?>"
+                          <img src="<?= esc($img['src']) ?>"
+                            alt="<?= esc($img['label']) ?>"
                             class="library-thumb">
                         </td>
-                        <td><?= htmlspecialchars($img['filename']) ?></td>
+                        <td><?= esc($img['filename']) ?></td>
                         <td class="library-label-cell"
-                            data-filename="<?= htmlspecialchars($img['filename']) ?>"
-                            data-type="<?= htmlspecialchars($delete_type) ?>"
-                            data-subcategory="<?= htmlspecialchars($img['slug']) ?>">
-                          <span class="library-label-text"><?= htmlspecialchars($img['label']) ?></span>
+                            data-filename="<?= esc($img['filename']) ?>"
+                            data-type="<?= esc($delete_type) ?>"
+                            data-subcategory="<?= esc($img['slug']) ?>">
+                          <span class="library-label-text"><?= esc($img['label']) ?></span>
                         </td>
                         <td>
                           <div class="library-actions">
                             <button type="button" class="btn btn-edit"
-                              aria-label="Edit label for <?= htmlspecialchars($img['filename']) ?>">
+                              aria-label="Edit label for <?= esc($img['filename']) ?>">
                               <img src="/assets/icons/edit.svg" alt="" width="16" height="16">
                             </button>
                             <form method="post"
-                              onsubmit="return confirm('Delete <?= htmlspecialchars(addslashes($img['filename'])) ?>?');">
+                              onsubmit="return confirm(<?= esc(json_encode('Delete ' . $img['filename'] . '?')) ?>);">
                               <input type="hidden" name="delete_file"
-                                value="<?= htmlspecialchars($img['rel_path']) ?>">
+                                value="<?= esc($img['rel_path']) ?>">
                               <input type="hidden" name="delete_type"
-                                value="<?= htmlspecialchars($delete_type) ?>">
-                              <button type="submit" class="btn btn-delete" aria-label="Delete <?= htmlspecialchars($img['filename']) ?>">
+                                value="<?= esc($delete_type) ?>">
+                              <button type="submit" class="btn btn-delete" aria-label="Delete <?= esc($img['filename']) ?>">
                                 <img src="/assets/icons/trash.svg" alt="" width="16" height="16">
                               </button>
                             </form>

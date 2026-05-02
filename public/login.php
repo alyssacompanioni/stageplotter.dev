@@ -92,14 +92,14 @@ function redirect_by_role(string $role): void
 
       <?php if (!empty($errors)) { ?>
         <p class="error" role="alert"><?php foreach ($errors as $error) {
-                                        echo htmlspecialchars($error) . "<br>";
+                                        echo esc($error) . "<br>";
                                       }
                                       ?></p>
       <?php } ?>
 
       <form action="login.php" method="post" id="login-form">
         <label for="username">Username <span class="required" aria-label="required">*</span></label><br>
-        <input type="text" id="username" name="username" value="<?= htmlspecialchars($username) ?>" required autocomplete="off"><br>
+        <input type="text" id="username" name="username" value="<?= esc($username) ?>" required autocomplete="off"><br>
 
         <label for="password">Password <span class="required" aria-label="required">*</span></label><br>
         <input type="password" id="password" name="password" required autocomplete="current-password"><br>

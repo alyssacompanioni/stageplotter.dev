@@ -90,8 +90,8 @@ $subtitle = implode(' — ', array_filter([$date, $plot['venue_staplot']]));
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= htmlspecialchars($plot['title_staplot']) ?> | Stage Plotter</title>
-  <meta name="description" content="View the stage plot &ldquo;<?= htmlspecialchars($plot['title_staplot']) ?>&rdquo; on Stage Plotter.">
+  <title><?= esc($plot['title_staplot']) ?> | Stage Plotter</title>
+  <meta name="description" content="View the stage plot &ldquo;<?= esc($plot['title_staplot']) ?>&rdquo; on Stage Plotter.">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
 </head>
@@ -105,9 +105,9 @@ $subtitle = implode(' — ', array_filter([$date, $plot['venue_staplot']]));
       <div class="shared-plot-body<?= (!empty($channels) || $details) ? ' has-inputs' : '' ?>">
 
         <div class="shared-plot-header">
-          <h1><?= htmlspecialchars($plot['title_staplot']) ?></h1>
+          <h1><?= esc($plot['title_staplot']) ?></h1>
           <?php if ($subtitle): ?>
-            <p class="shared-plot-subtitle"><?= htmlspecialchars($subtitle) ?></p>
+            <p class="shared-plot-subtitle"><?= esc($subtitle) ?></p>
           <?php endif; ?>
         </div>
 
@@ -118,8 +118,8 @@ $subtitle = implode(' — ', array_filter([$date, $plot['venue_staplot']]));
               <ol class="shared-channel-list">
                 <?php foreach ($channels as $ch): ?>
                   <li>
-                    <span class="shared-ch-num"><?= htmlspecialchars((string) $ch['num']) ?></span>
-                    <span class="shared-ch-label"><?= htmlspecialchars($ch['label']) ?></span>
+                    <span class="shared-ch-num"><?= esc((string) $ch['num']) ?></span>
+                    <span class="shared-ch-label"><?= esc($ch['label']) ?></span>
                   </li>
                 <?php endforeach; ?>
               </ol>
@@ -128,7 +128,7 @@ $subtitle = implode(' — ', array_filter([$date, $plot['venue_staplot']]));
             <?php if ($details): ?>
               <div class="shared-details">
                 <h3>Details</h3>
-                <p><?= nl2br(htmlspecialchars($details)) ?></p>
+                <p><?= nl2br(esc($details)) ?></p>
               </div>
             <?php endif; ?>
           </aside>
@@ -146,7 +146,7 @@ $subtitle = implode(' — ', array_filter([$date, $plot['venue_staplot']]));
   <?php require_once 'includes/footer.php'; ?>
 
   <script>
-    window.PLOT_ELEMENTS = <?= json_encode($elements) ?>;
+    window.PLOT_ELEMENTS = <?= json_encode($elements, JSON_HEX_TAG) ?>;
   </script>
   <script src="/js/view-plot.js"></script>
 </body>

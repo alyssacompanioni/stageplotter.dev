@@ -135,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <?php if (!empty($errors)) { ?>
         <ul class="error" role="alert">
           <?php foreach ($errors as $error) { ?>
-            <li><?= htmlspecialchars($error) ?></li>
+            <li><?= esc($error) ?></li>
           <?php } ?>
         </ul>
       <?php } ?>
@@ -144,27 +144,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <label for="first_name">First Name <span class="required" aria-label="required">*</span></label><br>
         <input type="text" id="first_name" name="first_name"
-          value="<?= htmlspecialchars($first_name) ?>"
+          value="<?= esc($first_name) ?>"
           maxlength="50" required autocomplete="given-name"><br>
 
         <label for="last_name">Last Name <span class="required" aria-label="required">*</span></label><br>
         <input type="text" id="last_name" name="last_name"
-          value="<?= htmlspecialchars($last_name) ?>"
+          value="<?= esc($last_name) ?>"
           maxlength="50" required autocomplete="family-name"><br>
 
         <label for="email">Email <span class="required" aria-label="required">*</span></label><br>
         <input type="email" id="email" name="email"
-          value="<?= htmlspecialchars($email) ?>"
+          value="<?= esc($email) ?>"
           maxlength="100" required autocomplete="email"><br>
 
         <label for="phone">Phone <span class="optional">(optional)</span></label><br>
         <input type="tel" id="phone" name="phone"
-          value="<?= htmlspecialchars($phone) ?>"
+          value="<?= esc($phone) ?>"
           maxlength="20" autocomplete="tel"><br>
 
         <label for="username">Username <span class="required" aria-label="required">*</span></label><br>
         <input type="text" id="username" name="username"
-          value="<?= htmlspecialchars($username) ?>"
+          value="<?= esc($username) ?>"
           maxlength="20" required autocomplete="username"><br>
 
         <label for="password">Password <span class="required" aria-label="required">*</span></label><br>

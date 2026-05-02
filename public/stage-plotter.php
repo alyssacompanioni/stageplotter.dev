@@ -91,14 +91,14 @@ $session->require_role('member');
                 : null;
             ?>
               <button type="button"
-                value="<?= htmlspecialchars($slug) ?>"
+                value="<?= esc($slug) ?>"
                 data-palette-type="instruments"
                 class="btn element-type-btn"
-                aria-label="Show <?= htmlspecialchars($label) ?> icons">
+                aria-label="Show <?= esc($label) ?> icons">
                 <?php if ($icon_src): ?>
-                  <img src="<?= htmlspecialchars($icon_src) ?>" alt="" width="32" height="32" aria-hidden="true">
+                  <img src="<?= esc($icon_src) ?>" alt="" width="32" height="32" aria-hidden="true">
                 <?php endif; ?>
-                <span><?= htmlspecialchars($label) ?></span>
+                <span><?= esc($label) ?></span>
               </button>
             <?php endforeach; ?>
           </div>
@@ -119,14 +119,14 @@ $session->require_role('member');
                 : null;
             ?>
               <button type="button"
-                value="<?= htmlspecialchars($slug) ?>"
+                value="<?= esc($slug) ?>"
                 data-palette-type="equipment"
                 class="btn element-type-btn"
-                aria-label="Show <?= htmlspecialchars($label) ?> equipment icons">
+                aria-label="Show <?= esc($label) ?> equipment icons">
                 <?php if ($icon_src): ?>
-                  <img src="<?= htmlspecialchars($icon_src) ?>" alt="" width="32" height="32" aria-hidden="true">
+                  <img src="<?= esc($icon_src) ?>" alt="" width="32" height="32" aria-hidden="true">
                 <?php endif; ?>
-                <span><?= htmlspecialchars($label) ?></span>
+                <span><?= esc($label) ?></span>
               </button>
             <?php endforeach; ?>
           </div>

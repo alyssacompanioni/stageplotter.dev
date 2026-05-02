@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
   if ($member && $member->role_usr === 'member') {
     if ($member->toggle_active()) {
       $label = $member->is_active_usr ? 'activated' : 'deactivated';
-      $session->message(htmlspecialchars($member->first_name_usr) . ' has been ' . $label . '.');
+      $session->message(esc($member->first_name_usr) . ' has been ' . $label . '.');
     } else {
       $session->message('Could not update member status. Please try again.');
     }
@@ -56,7 +56,7 @@ $flash   = $session->message();
 
       <?php if ($flash !== '') { ?>
         <div class="flash-message">
-          <span><?= htmlspecialchars($flash) ?></span>
+          <span><?= esc($flash) ?></span>
           <button type="button" class="msg-close-btn" aria-label="Dismiss">&times;</button>
         </div>
       <?php } ?>
@@ -78,9 +78,9 @@ $flash   = $session->message();
           <tbody>
             <?php foreach ($members as $member) { ?>
               <tr>
-                <td data-label="Name"><?= htmlspecialchars($member->first_name_usr . ' ' . $member->last_name_usr) ?></td>
-                <td data-label="Username"><?= htmlspecialchars($member->username_usr) ?></td>
-                <td data-label="Email"><?= htmlspecialchars($member->email_usr) ?></td>
+                <td data-label="Name"><?= esc($member->first_name_usr . ' ' . $member->last_name_usr) ?></td>
+                <td data-label="Username"><?= esc($member->username_usr) ?></td>
+                <td data-label="Email"><?= esc($member->email_usr) ?></td>
                 <td data-label="Status">
                   <span class="status-cell">
                     <form method="post" class="status-toggle-form">

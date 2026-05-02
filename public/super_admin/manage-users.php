@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
       if (in_array($new_role, ['member', 'admin'])) {
         $user->role_usr = $new_role;
         if ($user->save()) {
-          $session->message(htmlspecialchars($user->first_name_usr) . '\'s role has been updated to ' . $new_role . '.');
+          $session->message(esc($user->first_name_usr) . '\'s role has been updated to ' . $new_role . '.');
         } else {
           $session->message('Could not update role. Please try again.');
         }
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
     } else {
       if ($user->toggle_active()) {
         $label = $user->is_active_usr ? 'activated' : 'deactivated';
-        $session->message(htmlspecialchars($user->first_name_usr) . ' has been ' . $label . '.');
+        $session->message(esc($user->first_name_usr) . ' has been ' . $label . '.');
       } else {
         $session->message('Could not update user status. Please try again.');
       }
@@ -72,7 +72,7 @@ $flash = $session->message();
 
       <?php if ($flash !== '') { ?>
         <div class="flash-message">
-          <span><?= htmlspecialchars($flash) ?></span>
+          <span><?= esc($flash) ?></span>
           <button type="button" class="msg-close-btn" aria-label="Dismiss">&times;</button>
         </div>
       <?php } ?>
@@ -95,9 +95,9 @@ $flash = $session->message();
           <tbody>
             <?php foreach ($users as $user) { ?>
               <tr>
-                <td data-label="Name"><?= htmlspecialchars($user->first_name_usr . ' ' . $user->last_name_usr) ?></td>
-                <td data-label="Username"><?= htmlspecialchars($user->username_usr) ?></td>
-                <td data-label="Email"><?= htmlspecialchars($user->email_usr) ?></td>
+                <td data-label="Name"><?= esc($user->first_name_usr . ' ' . $user->last_name_usr) ?></td>
+                <td data-label="Username"><?= esc($user->username_usr) ?></td>
+                <td data-label="Email"><?= esc($user->email_usr) ?></td>
                 <td data-label="Role">
                   <form method="post">
                     <input type="hidden" name="user_id" value="<?= $user->id ?>">

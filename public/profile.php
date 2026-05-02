@@ -156,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if (!empty($profile_errors)): ?>
           <ul class="error" role="alert">
             <?php foreach ($profile_errors as $e): ?>
-              <li><?= htmlspecialchars($e) ?></li>
+              <li><?= esc($e) ?></li>
             <?php endforeach; ?>
           </ul>
         <?php endif; ?>
@@ -165,27 +165,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
           <label for="first_name">First Name <span class="required" aria-label="required">*</span></label><br>
           <input type="text" id="first_name" name="first_name"
-            value="<?= htmlspecialchars($user->first_name_usr) ?>"
+            value="<?= esc($user->first_name_usr) ?>"
             maxlength="50" required autocomplete="given-name"><br>
 
           <label for="last_name">Last Name <span class="required" aria-label="required">*</span></label><br>
           <input type="text" id="last_name" name="last_name"
-            value="<?= htmlspecialchars($user->last_name_usr) ?>"
+            value="<?= esc($user->last_name_usr) ?>"
             maxlength="50" required autocomplete="family-name"><br>
 
           <label for="email">Email <span class="required" aria-label="required">*</span></label><br>
           <input type="email" id="email" name="email"
-            value="<?= htmlspecialchars($user->email_usr) ?>"
+            value="<?= esc($user->email_usr) ?>"
             maxlength="100" required autocomplete="email"><br>
 
           <label for="phone">Phone <span class="optional">(optional)</span></label><br>
           <input type="tel" id="phone" name="phone"
-            value="<?= htmlspecialchars($user->phone_usr ?? '') ?>"
+            value="<?= esc($user->phone_usr ?? '') ?>"
             maxlength="20" autocomplete="tel"><br>
 
           <label for="username">Username <span class="required" aria-label="required">*</span></label><br>
           <input type="text" id="username" name="username"
-            value="<?= htmlspecialchars($user->username_usr) ?>"
+            value="<?= esc($user->username_usr) ?>"
             maxlength="20" required autocomplete="username"><br>
 
           <input type="submit" name="update_profile" value="Save Changes">
@@ -203,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if (!empty($password_errors)): ?>
           <ul class="error" role="alert">
             <?php foreach ($password_errors as $e): ?>
-              <li><?= htmlspecialchars($e) ?></li>
+              <li><?= esc($e) ?></li>
             <?php endforeach; ?>
           </ul>
         <?php endif; ?>
