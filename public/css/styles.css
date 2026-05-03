@@ -707,7 +707,8 @@ table thead th .sort-icon {
  *  Login            *
  ********************/
 
- .login-main {
+ .login-main,
+ .register-main {
   padding: 24px 0;
   margin: 0 auto;
   max-width: 600px; 
