@@ -368,10 +368,10 @@ form input[type="submit"] {
   border-radius: 6px;
   color: #fff;
   cursor: pointer;
-  display: inline-block;
+  display: block;
   font: inherit;
   font-weight: 600;
-  margin-top: 20px;
+  margin: 20px auto 0;
   padding: 10px 24px;
   transition: background 0.15s;
 }
@@ -430,7 +430,7 @@ p.error {
 
 table thead {
   background-color: var(--accent-blue);
-  background: linear-gradient(90deg,rgba(111, 136, 185, 1) 0%, rgba(98, 152, 188, 0.95) 100%);
+  background: linear-gradient(90deg, rgba(111, 136, 185, 1) 0%, rgba(98, 152, 188, 0.95) 100%);
 }
 
 table tbody tr:nth-child(even) {
@@ -703,15 +703,20 @@ table thead th .sort-icon {
   text-align: center;
 }
 
-/*********************
- *  Login            *
- ********************/
+/*************************
+ *  Login and Register            *
+ *************************/
 
- .login-main,
- .register-main {
+.login-main,
+.register-main {
   padding: 24px 0;
   margin: 0 auto;
-  max-width: 600px; 
+  max-width: 600px;
+}
+
+.register-main p,
+.login-main p {
+  text-align: center;
 }
 
 /*********************
@@ -937,7 +942,7 @@ table thead th .sort-icon {
 
 .element-card-container {
   background: var(--palette);
-  background: linear-gradient(134deg,rgba(158, 173, 210, 1) 0%, rgba(98, 152, 188, 0.9) 100%);
+  background: linear-gradient(134deg, rgba(158, 173, 210, 1) 0%, rgba(98, 152, 188, 0.9) 100%);
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   gap: 8px;
@@ -1454,7 +1459,7 @@ footer {
 }
 
 #clear-file-btn:hover {
-   background: var(--red1);
+  background: var(--red1);
 }
 
 #clear-file-btn:hover img {
@@ -1487,7 +1492,6 @@ footer {
 .msg-close-btn:hover {
   opacity: 1;
 }
-
 
 .upload-image-section {
   background: var(--section-bg);
@@ -1584,8 +1588,8 @@ footer {
 
 .library-section-summary::before,
 .library-subcategory-summary::before {
-  content: '';
-  background: url('/assets/icons/down-arrow.svg') center / contain no-repeat;
+  content: "";
+  background: url("/assets/icons/down-arrow.svg") center / contain no-repeat;
   display: inline-block;
   flex-shrink: 0;
   height: 12px;
