@@ -652,6 +652,19 @@ table thead th .sort-icon {
 }
 
 #plot-search,
+.btn-update {
+  background-color: var(--medium-blue2);
+  color: #fff;
+  display: block;
+  font: inherit;
+  margin-top: 12px;
+  padding: 8px 20px;
+}
+
+.btn-update:hover {
+  background-color: var(--dark-blue);
+}
+
 .table-search {
   border: 1px solid var(--border-color);
   border-radius: 6px;

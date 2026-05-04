@@ -12,37 +12,35 @@
 require_once __DIR__ . '/../../private/initialize.php';
 $session->require_role('super_admin');
 
-// ── Handle POST ───────────────────────────────────────────────────────────────
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
-  $user_id = (int) $_POST['user_id'];
-  $user    = User::find_by_id($user_id);
-  $action  = $_POST['action'] ?? 'toggle_active';
+// ── Handle bulk role update POST ──────────────────────────────────────────────
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roles'])) {
+  $updated = 0;
+  foreach ((array) $_POST['roles'] as $user_id => $new_role) {
+    if (!in_array($new_role, ['member', 'admin'])) continue;
+    $user = User::find_by_id((int) $user_id);
+    if (!$user || !in_array($user->role_usr, ['member', 'admin'])) continue;
+    if ($user->role_usr === $new_role) continue;
+    $user->role_usr = $new_role;
+    if ($user->save()) $updated++;
+  }
+  $session->message($updated > 0 ? 'Roles updated.' : 'No changes made.');
+  header('Location: manage-users.php');
+  exit;
+}
 
+// ── Handle toggle active POST ─────────────────────────────────────────────────
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
+  $user = User::find_by_id((int) $_POST['user_id']);
   if ($user && in_array($user->role_usr, ['member', 'admin'])) {
-    if ($action === 'change_role') {
-      $new_role = $_POST['new_role'] ?? '';
-      if (in_array($new_role, ['member', 'admin'])) {
-        $user->role_usr = $new_role;
-        if ($user->save()) {
-          $session->message(esc($user->first_name_usr) . '\'s role has been updated to ' . $new_role . '.');
-        } else {
-          $session->message('Could not update role. Please try again.');
-        }
-      } else {
-        $session->message('Invalid role.');
-      }
+    if ($user->toggle_active()) {
+      $label = $user->is_active_usr ? 'activated' : 'deactivated';
+      $session->message(esc($user->first_name_usr) . ' has been ' . $label . '.');
     } else {
-      if ($user->toggle_active()) {
-        $label = $user->is_active_usr ? 'activated' : 'deactivated';
-        $session->message(esc($user->first_name_usr) . ' has been ' . $label . '.');
-      } else {
-        $session->message('Could not update user status. Please try again.');
-      }
+      $session->message('Could not update user status. Please try again.');
     }
   } else {
     $session->message('User not found.');
   }
-
   header('Location: manage-users.php');
   exit;
 }
@@ -78,6 +76,7 @@ $flash = $session->message();
       <?php } ?>
 
       <input type="search" id="user-search" class="table-search" placeholder="Search" autocomplete="off" aria-label="Search users">
+      <form id="roles-form" method="post"></form>
       <?php if (empty($users)) { ?>
         <p>No users found.</p>
       <?php } else { ?>
@@ -98,14 +97,11 @@ $flash = $session->message();
                 <td data-label="Username"><?= esc($user->username_usr) ?></td>
                 <td data-label="Email"><?= esc($user->email_usr) ?></td>
                 <td data-label="Role">
-                  <form method="post">
-                    <input type="hidden" name="user_id" value="<?= $user->id ?>">
-                    <input type="hidden" name="action" value="change_role">
-                    <select name="new_role" onchange="this.form.submit()">
-                      <option value="member" <?= $user->role_usr === 'member' ? 'selected' : '' ?>>Member</option>
-                      <option value="admin" <?= $user->role_usr === 'admin'  ? 'selected' : '' ?>>Admin</option>
-                    </select>
-                  </form>
+                  <select name="roles[<?= $user->id ?>]" form="roles-form"
+                    aria-label="Role for <?= esc($user->first_name_usr . ' ' . $user->last_name_usr) ?>">
+                    <option value="member" <?= $user->role_usr === 'member' ? 'selected' : '' ?>>Member</option>
+                    <option value="admin" <?= $user->role_usr === 'admin'  ? 'selected' : '' ?>>Admin</option>
+                  </select>
                 </td>
                 <td data-label="Status">
                   <span class="status-cell">
@@ -124,6 +120,7 @@ $flash = $session->message();
             <?php } ?>
           </tbody>
         </table>
+        <input type="submit" form="roles-form" class="btn-update" value="Update Roles" aria-label="Update user roles">
       <?php } ?>
 
     </main>
