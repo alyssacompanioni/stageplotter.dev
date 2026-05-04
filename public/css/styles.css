@@ -41,7 +41,7 @@
   --dark-blue: #1b2333;
   --medium-blue2: #5a72aa;
   --accent-blue: #6f88b9;
-  --bright-accent-blue: #6298bc;
+  --bright-accent-blue2: #6298bc;
   --palette: #9eadd2;
   --light-blue: #cfe2f3;
   --light-blue2: #ecfaff;
@@ -631,7 +631,7 @@ table thead th .sort-icon {
 }
 
 .hero-cta {
-  background: var(--bright-accent-blue);
+  background: var(--blue4);
   color: var(--text-light);
   border-radius: 8px;
   padding: 12px 28px;
@@ -648,7 +648,7 @@ table thead th .sort-icon {
 
 .hero-cta--secondary {
   background: transparent;
-  border: 2px solid var(--bright-accent-blue);
+  border: 2px solid var(--bright-accent-blue2);
 }
 
 .index-main {
@@ -1786,7 +1786,7 @@ footer {
 }
 
 .btn-save-label {
-  background-color: var(--bright-accent-blue);
+  background-color: var(--bright-accent-blue2);
   color: var(--text-light);
   font-size: 0.8rem;
   padding: 4px 8px;
