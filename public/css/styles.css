@@ -1839,3 +1839,20 @@ footer {
 .status-toggle:checked::after {
   left: 19px;
 }
+
+/*************** 404 Page *****************/
+.not-found {
+  align-items: center;
+  background: var(--dark-blue);
+  color: var(--text-light);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 60px 24px;
+  text-align: center;
+}
+
+.not-found div div video {
+  max-width: 400px;
+  height: auto;
+}

@@ -32,7 +32,7 @@
         <ul>
           <li>"Electric Guitar" icon by Melvin Salas from <a href="https://thenounproject.com/browse/icons/term/electric-guitar/" target="_blank" title="electric guitar Icons">Noun Project</a> (CC BY 3.0)</li>
           <li>"User" icon by Baboon designs from <a href="https://thenounproject.com/browse/icons/term/user/" target="_blank" title="User Icons">Noun Project</a> (CC BY 3.0)</li>
-          <li><a target="_blank" href="https://icons8.com/icon/2969/settings">Settings</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></li>   
+          <li><a target="_blank" href="https://icons8.com/icon/2969/settings">Settings</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></li>
           <li><a target="_blank" href="https://www.svgrepo.com/svg/370237/layer-up" title="layer-up icon">Layer Up</a> icon by <a target="_blank" href="https://www.svgrepo.com/">SVGrepo</a></li>
           <li><a target="_blank" href="https://www.svgrepo.com/svg/370233/layer-down" title="layer-down icon">Layer Down</a> icon by <a target="_blank" href="https://www.svgrepo.com/">SVGrepo</a></li>
           <li><a target="_blank" href="https://www.svgrepo.com/svg/142150/up-arrow" title="up-arrow icon">Up Arrow</a> icon by <a target="_blank" href="https://www.svgrepo.com/">SVGrepo</a></li>

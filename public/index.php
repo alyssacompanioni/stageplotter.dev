@@ -19,23 +19,23 @@ $show_hero = !$session->is_logged_in();
   <?php require_once __DIR__ . '/includes/header.php'; ?>
 
   <?php if ($show_hero) { ?>
-  <section class="hero">
-    <div class="hero-inner">
-      <h1>Build your stage plot in minutes.</h1>
-      <p>Drag and drop instruments onto your stage, label every input, then share a link or print a PDF — all for free.</p>
-      <p>Sign up or log in to get started!</p>
-      <div class="hero-ctas">
-        <a href="/login.php" class="hero-cta">Log In</a>
-        <a href="/register.php" class="hero-cta hero-cta--secondary">Sign Up</a>
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Build your stage plot in minutes.</h1>
+        <p>Drag and drop instruments onto your stage, label every input, then share a link or print a PDF — all for free.</p>
+        <p>Sign up or log in to get started!</p>
+        <div class="hero-ctas">
+          <a href="/login.php" class="hero-cta">Log In</a>
+          <a href="/register.php" class="hero-cta hero-cta--secondary">Sign Up</a>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
   <?php } ?>
 
   <div class="wrapper">
     <main class="index-main">
       <?php if ($session->is_logged_in()) { ?>
-      <h1>Welcome to StagePlotter!</h1>
+        <h1>Welcome to StagePlotter!</h1>
       <?php } ?>
 
       <section class="about">
