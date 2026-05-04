@@ -412,7 +412,7 @@ $flash             = $session->message();
       // ── Reusable helper: render one category section ──────────────────────
       function render_section(string $section_title, string $delete_type, array $categories, array $images_by_slug): void
       { ?>
-        <details class="library-section<?= $delete_type === 'equipment' ? ' library-section--equipment' : '' ?>" open>
+        <details class="library-section" open>
           <summary class="library-section-summary">
             <h2><?= esc($section_title) ?></h2>
           </summary>
@@ -514,10 +514,9 @@ $flash             = $session->message();
           <?php else: ?>
             <?php $n = count($cleanup_results); ?>
             <p class="cleanup-found">Found <?= $n ?> broken plot element<?= $n === 1 ? '' : 's' ?>:</p>
-            <table class="library-table">
+            <table class="library-table cleanup-table">
               <thead>
                 <tr>
-                  <th scope="col">ID</th>
                   <th scope="col">Plot</th>
                   <th scope="col">Element Name</th>
                   <th scope="col">Missing Source</th>
@@ -526,7 +525,6 @@ $flash             = $session->message();
               <tbody>
                 <?php foreach ($cleanup_results as $row): ?>
                   <tr>
-                    <td><?= esc((string) $row['id_pele']) ?></td>
                     <td><?= esc($row['plot_title']) ?></td>
                     <td><?= esc($row['name_pele']) ?></td>
                     <td class="cleanup-src"><?= esc($row['src_pele']) ?></td>

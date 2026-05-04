@@ -70,7 +70,8 @@
           <li>Couch by Olifernes Tejeros from <a href="https://thenounproject.com/browse/icons/term/couch/" target="_blank" title="Couch Icons">Noun Project</a> (CC BY 3.0)</li>
           <li>"Armchair" aka Couch by Lê Khắc Bảo Thoại from <a href="https://thenounproject.com/browse/icons/term/couch/" target="_blank" title="Couch Icons">Noun Project</a> (CC BY 3.0)</li>
           <li>Disco Ball by Icon Market from <a href="https://thenounproject.com/browse/icons/term/disco-ball/" target="_blank" title="Disco Ball Icons">Noun Project</a> (CC BY 3.0)</li>
-          <li>Disco Ball by Lula Sugiantoro from <a href="https://thenounproject.com/browse/icons/term/disco-ball/" target="_blank" title="Disco Ball Icons">Noun Project</a> (CC BY 3.0)
+          <li>Disco Ball by Lula Sugiantoro from <a href="https://thenounproject.com/browse/icons/term/disco-ball/" target="_blank" title="Disco Ball Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>Delete by AS Design from <a href="https://thenounproject.com/browse/icons/term/delete/" target="_blank" title="Delete Icons">Noun Project</a> (CC BY 3.0)</li>
         </ul>
       </section>
 
