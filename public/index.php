@@ -46,7 +46,7 @@ $show_hero = !$session->is_logged_in();
 
       <section class="browse-stage-plots">
         <h2>Browse and Search Existing Stage Plots</h2>
-        <input type="search" id="plot-search" placeholder="Search" autocomplete="off">
+        <input type="search" id="plot-search" placeholder="Search" autocomplete="off" aria-label="Search stage plots">
 
         <table>
           <thead>

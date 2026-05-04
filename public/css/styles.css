@@ -58,7 +58,7 @@
   --blue4: #287194;
   --blue5: #195d84;
 
-  --red1: #d74132;
+  --red1: #91261d;
 
   --light-orange: #f3e0cf;
   --light-orange2: #fff1ec;
@@ -170,6 +170,7 @@ header {
 #plot-toolbar,
 .palette-container header {
   align-items: center;
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
   padding: 12px 24px;
@@ -363,7 +364,7 @@ select {
 }
 
 form input[type="submit"] {
-  background: var(--bright-accent-blue);
+  background: var(--blue4);
   border: none;
   border-radius: 6px;
   color: #fff;
@@ -917,6 +918,7 @@ table thead th .sort-icon {
 
 .element-type {
   background-color: var(--stage-plot-canvas);
+  border-bottom: 1px solid var(--border-color);
   border-right: 1px solid var(--border-color);
   padding: 12px;
 }
@@ -1848,8 +1850,9 @@ footer {
   color: var(--text-light);
   display: flex;
   flex-direction: column;
+  flex: 1;
   gap: 16px;
-  padding: 60px 24px;
+  padding: 0 24px;
   text-align: center;
 }
 
