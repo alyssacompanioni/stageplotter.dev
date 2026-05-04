@@ -1088,6 +1088,7 @@ table thead th .sort-icon {
  * StagePlotter Styles *
  *********************/
 .dashboard-wrapper {
+  flex: 1;
   padding: 24px 0;
   margin: 0 auto;
   max-width: 800px;

@@ -400,15 +400,15 @@ $flash             = $session->message();
                             class="library-thumb">
                         </td>
                         <td class="library-filename-cell"
-                            data-filename="<?= esc($img['filename']) ?>"
-                            data-type="<?= esc($delete_type) ?>"
-                            data-subcategory="<?= esc($img['slug']) ?>">
+                          data-filename="<?= esc($img['filename']) ?>"
+                          data-type="<?= esc($delete_type) ?>"
+                          data-subcategory="<?= esc($img['slug']) ?>">
                           <span class="library-filename-text"><?= esc($img['filename']) ?></span>
                         </td>
                         <td class="library-label-cell"
-                            data-filename="<?= esc($img['filename']) ?>"
-                            data-type="<?= esc($delete_type) ?>"
-                            data-subcategory="<?= esc($img['slug']) ?>">
+                          data-filename="<?= esc($img['filename']) ?>"
+                          data-type="<?= esc($delete_type) ?>"
+                          data-subcategory="<?= esc($img['slug']) ?>">
                           <span class="library-label-text"><?= esc($img['label']) ?></span>
                         </td>
                         <td>
@@ -448,4 +448,5 @@ $flash             = $session->message();
   </div>
   <?php require_once 'includes/footer.php'; ?>
 </body>
+
 </html>

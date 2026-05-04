@@ -104,7 +104,7 @@ $flash = $session->message();
                     <input type="hidden" name="action" value="change_role">
                     <select name="new_role" onchange="this.form.submit()">
                       <option value="member" <?= $user->role_usr === 'member' ? 'selected' : '' ?>>Member</option>
-                      <option value="admin"  <?= $user->role_usr === 'admin'  ? 'selected' : '' ?>>Admin</option>
+                      <option value="admin" <?= $user->role_usr === 'admin'  ? 'selected' : '' ?>>Admin</option>
                     </select>
                   </form>
                 </td>

@@ -17,9 +17,6 @@
       <h1>Uh oh!</h1>
       <p>Sorry, the page you are looking for does not exist.</p>
       <div>
-        <!-- <video autoplay loop muted playsinline>
-          <source src="assets/brand/logo-animated.mp4" type="video/mp4">
-        </video> -->
         <video autoplay loop muted playsinline>
           <source src="assets/brand/logo-animated2.mp4" type="video/mp4">
         </video>
