@@ -15,7 +15,7 @@
   <?php require_once 'includes/header.php'; ?>
   <div class="wrapper">
     <h1>Credits</h1>
-    <main>
+    <main class="credits-wrapper">
 
       <section>
         <h2>Special Thanks</h2>

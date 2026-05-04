@@ -516,6 +516,7 @@ footer {
 }
 
 .footer-top {
+  background-color: var(--dark-blue);
   background-image: url("/assets/brand/blue-silhouette-final.png");
   background-repeat: repeat-x;
   background-size: auto 100%;
@@ -1841,8 +1842,14 @@ details.cleanup-section {
 
 /******* credits.php *******/
 
-.credits {
-  text-align: center;
+.credits-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.credits-wrapper h2 {
+  text-align: left;
+  margin-top: 32px;
 }
 
 /******* 404.php *******/
