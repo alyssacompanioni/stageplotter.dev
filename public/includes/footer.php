@@ -1,5 +1,6 @@
 <footer>
-  <div class="footer-wrapper">
+  <div class="footer-top"></div>
+  <div class="footer-gradient">
     <div class="credits">
       <p>&copy; 2026 StagePlotter.dev All rights reserved.</p>
       <p>Designed and developed by <a href="https://www.alyssacodes.dev" target="_blank">AlyssaCodes&trade;</a>.</p>
