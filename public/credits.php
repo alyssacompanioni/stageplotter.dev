@@ -72,6 +72,7 @@
           <li>Disco Ball by Icon Market from <a href="https://thenounproject.com/browse/icons/term/disco-ball/" target="_blank" title="Disco Ball Icons">Noun Project</a> (CC BY 3.0)</li>
           <li>Disco Ball by Lula Sugiantoro from <a href="https://thenounproject.com/browse/icons/term/disco-ball/" target="_blank" title="Disco Ball Icons">Noun Project</a> (CC BY 3.0)</li>
           <li>Delete by AS Design from <a href="https://thenounproject.com/browse/icons/term/delete/" target="_blank" title="Delete Icons">Noun Project</a> (CC BY 3.0)</li>
+          <li>Footer image inspiration: <a href="https://www.magnific.com/free-vector/collection-three-different-party-crowd-silhouettes_853867.htm#fromView=keyword&page=1&position=1&uuid=aee170c0-dc33-4499-bdfc-d43fa7691cc4&query=Svg+crowd+people">Image by kjpargeter on Magnific</a> (CC BY 4.0)</li>
         </ul>
       </section>
 
