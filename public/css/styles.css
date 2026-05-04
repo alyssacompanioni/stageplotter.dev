@@ -1519,12 +1519,19 @@ footer {
 
 .upload-type-group {
   align-items: center;
+  border: none;
   display: flex;
   gap: 16px;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
 }
 
 .upload-type-label {
+  float: none;
   font-weight: bold;
+  padding: 0;
+  width: auto;
 }
 
 .upload-type-option {

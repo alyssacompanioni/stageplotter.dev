@@ -319,19 +319,19 @@ $flash             = $session->message();
               <span id="drop-zone-filename"></span>
               <button type="button" id="clear-file-btn" aria-label="Remove staged file"><img src="/assets/icons/trash.svg" alt="" width="16" height="16"></button>
             </div>
-            <input type="file" id="svg_file" name="svg_file" accept=".svg" required>
+            <input type="file" id="svg_file" name="svg_file" accept=".svg" required aria-label="SVG file to upload">
           </div>
 
           <div class="upload-category-row">
-            <div class="upload-type-group">
-              <span class="upload-type-label">Type:</span>
+            <fieldset class="upload-type-group">
+              <legend class="upload-type-label">Type:</legend>
               <label class="upload-type-option">
                 <input type="radio" name="type" value="instruments" checked> Instruments
               </label>
               <label class="upload-type-option">
                 <input type="radio" name="type" value="equipment"> Equipment
               </label>
-            </div>
+            </fieldset>
 
             <div class="upload-subcategory-group">
               <label for="upload-subcategory">Category:</label>
@@ -350,7 +350,7 @@ $flash             = $session->message();
       <div class="library-search">
         <h2>Search Plot Elements</h2>
         <div class="library-search-wrap">
-          <input type="text" id="library-search-input" placeholder="Search images..." autocomplete="off">
+          <input type="text" id="library-search-input" placeholder="Search images..." autocomplete="off" aria-label="Search plot elements">
           <button type="button" id="library-search-clear" class="library-search-clear" aria-label="Clear search" hidden>&times;</button>
         </div>
       </div>
@@ -385,10 +385,10 @@ $flash             = $session->message();
                 <table class="library-table">
                   <thead>
                     <tr>
-                      <th></th>
-                      <th data-col="1">Filename</th>
-                      <th data-col="2">Label</th>
-                      <th>Actions</th>
+                      <th scope="col" aria-label="Preview"></th>
+                      <th scope="col" data-col="1">Filename</th>
+                      <th scope="col" data-col="2">Label</th>
+                      <th scope="col">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
