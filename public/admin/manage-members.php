@@ -61,7 +61,7 @@ $flash   = $session->message();
         </div>
       <?php } ?>
 
-      <input type="search" id="member-search" class="table-search" placeholder="Search" autocomplete="off">
+      <input type="search" id="member-search" class="table-search" placeholder="Search" autocomplete="off" aria-label="Search members">
 
       <?php if (empty($members)) { ?>
         <p>No members found.</p>
