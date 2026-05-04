@@ -240,6 +240,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rename_file'])) {
   exit;
 }
 
+// ── Superadmin maintenance: cleanup broken elements ───────────────────────────
+$cleanup_results = null;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $session->has_role('super_admin')) {
+  if (isset($_POST['cleanup_scan'])) {
+    $all_rows = $db->query(
+      "SELECT e.id_pele, e.src_pele, e.name_pele,
+              COALESCE(s.title_staplot, '[deleted plot]') AS plot_title
+       FROM plot_element_pele e
+       LEFT JOIN stage_plot_staplot s ON s.id_staplot = e.id_staplot_pele
+       ORDER BY s.title_staplot, e.name_pele"
+    )->fetchAll();
+
+    $cleanup_results = [];
+    foreach ($all_rows as $row) {
+      if (!file_exists(__DIR__ . $row['src_pele'])) {
+        $cleanup_results[] = $row;
+      }
+    }
+  } elseif (isset($_POST['cleanup_delete'])) {
+    $all_rows = $db->query(
+      "SELECT id_pele, src_pele FROM plot_element_pele"
+    )->fetchAll();
+
+    $broken_ids = [];
+    foreach ($all_rows as $row) {
+      if (!file_exists(__DIR__ . $row['src_pele'])) {
+        $broken_ids[] = $row['id_pele'];
+      }
+    }
+
+    if (empty($broken_ids)) {
+      $session->message('No broken elements found. Nothing to delete.');
+    } else {
+      $placeholders = implode(',', array_fill(0, count($broken_ids), '?'));
+      $stmt = $db->prepare("DELETE FROM plot_element_pele WHERE id_pele IN ({$placeholders})");
+      $stmt->execute($broken_ids);
+      $deleted = $stmt->rowCount();
+      $session->message('Deleted ' . $deleted . ' broken plot element' . ($deleted === 1 ? '' : 's') . '.');
+    }
+
+    header('Location: manage-library.php');
+    exit;
+  }
+}
+
 // ── Build image data grouped by section ──────────────────────────────────────
 /**
  * Returns [ 'subcategory_slug' => [ ['slug'=>…, 'filename'=>…, 'src'=>…, 'label'=>…], … ], … ]
@@ -443,6 +489,65 @@ $flash             = $session->message();
 
       <?php render_section('Instruments', 'instruments', $instrument_categories, $instrument_images); ?>
       <?php render_section('Equipment',   'equipment',   $equipment_categories,  $equipment_images);  ?>
+
+      <?php if ($session->has_role('super_admin')): ?>
+        <details class="library-section cleanup-section" <?= $cleanup_results !== null ? 'open' : '' ?>>
+          <summary class="library-section-summary">
+            <h2>Maintenance</h2>
+          </summary>
+
+          <p class="cleanup-description">Remove plot element records whose SVG file is no longer present on disk.</p>
+
+          <?php if ($cleanup_results === null): ?>
+            <form method="post">
+              <input type="hidden" name="cleanup_scan" value="1">
+              <button type="submit" class="btn btn-update">Scan for Broken Elements</button>
+            </form>
+
+          <?php elseif (empty($cleanup_results)): ?>
+            <p class="cleanup-ok">No broken elements found.</p>
+            <form method="post">
+              <input type="hidden" name="cleanup_scan" value="1">
+              <button type="submit" class="btn btn-update">Scan Again</button>
+            </form>
+
+          <?php else: ?>
+            <?php $n = count($cleanup_results); ?>
+            <p class="cleanup-found">Found <?= $n ?> broken plot element<?= $n === 1 ? '' : 's' ?>:</p>
+            <table class="library-table">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Plot</th>
+                  <th scope="col">Element Name</th>
+                  <th scope="col">Missing Source</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php foreach ($cleanup_results as $row): ?>
+                  <tr>
+                    <td><?= esc((string) $row['id_pele']) ?></td>
+                    <td><?= esc($row['plot_title']) ?></td>
+                    <td><?= esc($row['name_pele']) ?></td>
+                    <td class="cleanup-src"><?= esc($row['src_pele']) ?></td>
+                  </tr>
+                <?php endforeach; ?>
+              </tbody>
+            </table>
+            <div class="cleanup-actions">
+              <form method="post">
+                <input type="hidden" name="cleanup_scan" value="1">
+                <button type="submit" class="btn btn-update">Scan Again</button>
+              </form>
+              <form method="post" onsubmit="return confirm('Permanently delete <?= $n ?> broken plot element<?= $n === 1 ? '' : 's' ?>? This cannot be undone.');">
+                <input type="hidden" name="cleanup_delete" value="1">
+                <button type="submit" class="btn btn-delete">Delete <?= $n ?> Broken Element<?= $n === 1 ? '' : 's' ?></button>
+              </form>
+            </div>
+          <?php endif; ?>
+
+        </details>
+      <?php endif; ?>
 
     </main>
   </div>

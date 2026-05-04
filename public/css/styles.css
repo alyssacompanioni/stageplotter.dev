@@ -1896,3 +1896,41 @@ footer {
   max-width: 400px;
   height: auto;
 }
+
+/*************** Maintenance (cleanup) section *****************/
+.cleanup-section {
+  border-top: 2px solid var(--red1);
+}
+
+.cleanup-description {
+  margin: 8px 0 16px;
+}
+
+.cleanup-ok {
+  color: green;
+  font-weight: 600;
+  margin: 8px 0 16px;
+}
+
+.cleanup-found {
+  color: var(--red1);
+  font-weight: 600;
+  margin: 8px 0 12px;
+}
+
+.cleanup-src {
+  font-family: monospace;
+  font-size: 0.85rem;
+  word-break: break-all;
+}
+
+.cleanup-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+details.cleanup-section {
+  margin-bottom: 20px;
+  padding-top: 20px;
+}
