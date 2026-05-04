@@ -163,6 +163,83 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_label'])) {
   exit;
 }
 
+// ── Handle file rename POST ───────────────────────────────────────────────────
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rename_file'])) {
+  $type         = $_POST['rename_type']        ?? '';
+  $subcategory  = $_POST['rename_subcategory'] ?? '';
+  $old_filename = basename($_POST['old_filename'] ?? '');
+  $raw_new      = trim($_POST['new_filename']   ?? '');
+
+  if ($type === 'instruments' && array_key_exists($subcategory, $instrument_categories)) {
+    $dir = ASSETS_INSTRUMENTS_DIR . $subcategory . '/';
+  } elseif ($type === 'equipment' && array_key_exists($subcategory, $equipment_categories)) {
+    $dir = ASSETS_EQUIPMENT_DIR . $subcategory . '/';
+  } else {
+    $session->message('Invalid category.');
+    header('Location: manage-library.php');
+    exit;
+  }
+
+  $new_base     = preg_replace('/[^a-z0-9_\-]/', '_', strtolower(pathinfo($raw_new, PATHINFO_FILENAME)));
+  $new_filename = $new_base . '.svg';
+
+  if ($old_filename === '' || pathinfo($old_filename, PATHINFO_EXTENSION) !== 'svg' || !is_file($dir . $old_filename)) {
+    $session->message('File not found.');
+    header('Location: manage-library.php');
+    exit;
+  }
+
+  if ($new_base === '') {
+    $session->message('Invalid new filename.');
+    header('Location: manage-library.php');
+    exit;
+  }
+
+  if ($old_filename === $new_filename) {
+    $session->message('Filename unchanged.');
+    header('Location: manage-library.php');
+    exit;
+  }
+
+  if (file_exists($dir . $new_filename)) {
+    $session->message(esc($new_filename) . ' already exists. Choose a different name.');
+    header('Location: manage-library.php');
+    exit;
+  }
+
+  if (!rename($dir . $old_filename, $dir . $new_filename)) {
+    $session->message('Could not rename file. Please try again.');
+    header('Location: manage-library.php');
+    exit;
+  }
+
+  // Transfer any custom label from old key to new key in labels.json
+  $labels_file = $dir . 'labels.json';
+  if (is_file($labels_file)) {
+    $labels = json_decode(file_get_contents($labels_file), true) ?: [];
+    if (isset($labels[$old_filename])) {
+      $labels[$new_filename] = $labels[$old_filename];
+      unset($labels[$old_filename]);
+      file_put_contents($labels_file, json_encode($labels, JSON_PRETTY_PRINT));
+    }
+  }
+
+  // Update all plot elements that reference the old src path
+  $old_src = '/assets/' . $type . '/' . $subcategory . '/' . $old_filename;
+  $new_src = '/assets/' . $type . '/' . $subcategory . '/' . $new_filename;
+  $stmt    = $db->prepare("UPDATE plot_element_pele SET src_pele = ? WHERE src_pele = ?");
+  $stmt->execute([$new_src, $old_src]);
+  $updated = $stmt->rowCount();
+
+  $msg = esc($old_filename) . ' renamed to ' . esc($new_filename) . '.';
+  if ($updated > 0) {
+    $msg .= ' Updated ' . $updated . ' plot element' . ($updated === 1 ? '' : 's') . '.';
+  }
+  $session->message($msg);
+  header('Location: manage-library.php');
+  exit;
+}
+
 // ── Build image data grouped by section ──────────────────────────────────────
 /**
  * Returns [ 'subcategory_slug' => [ ['slug'=>…, 'filename'=>…, 'src'=>…, 'label'=>…], … ], … ]
@@ -322,7 +399,12 @@ $flash             = $session->message();
                             alt="<?= esc($img['label']) ?>"
                             class="library-thumb">
                         </td>
-                        <td><?= esc($img['filename']) ?></td>
+                        <td class="library-filename-cell"
+                            data-filename="<?= esc($img['filename']) ?>"
+                            data-type="<?= esc($delete_type) ?>"
+                            data-subcategory="<?= esc($img['slug']) ?>">
+                          <span class="library-filename-text"><?= esc($img['filename']) ?></span>
+                        </td>
                         <td class="library-label-cell"
                             data-filename="<?= esc($img['filename']) ?>"
                             data-type="<?= esc($delete_type) ?>"
@@ -331,6 +413,8 @@ $flash             = $session->message();
                         </td>
                         <td>
                           <div class="library-actions">
+                            <button type="button" class="btn btn-rename"
+                              aria-label="Rename <?= esc($img['filename']) ?>">Rename</button>
                             <button type="button" class="btn btn-edit"
                               aria-label="Edit label for <?= esc($img['filename']) ?>">
                               <img src="/assets/icons/edit.svg" alt="" width="16" height="16">

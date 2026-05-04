@@ -182,6 +182,78 @@
     });
   });
 
+  document.querySelectorAll('.btn-rename').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const cell = btn.closest('tr').querySelector('.library-filename-cell');
+      if (cell.classList.contains('editing')) return;
+      cell.classList.add('editing');
+
+      const span     = cell.querySelector('.library-filename-text');
+      const baseName = cell.dataset.filename.replace(/\.svg$/i, '');
+      span.hidden = true;
+
+      const input = document.createElement('input');
+      input.type      = 'text';
+      input.value     = baseName;
+      input.className = 'library-label-input';
+
+      const suffix = document.createElement('span');
+      suffix.textContent = '.svg';
+      suffix.className   = 'library-rename-suffix';
+
+      const saveBtn = document.createElement('button');
+      saveBtn.type        = 'button';
+      saveBtn.textContent = 'Save';
+      saveBtn.className   = 'btn btn-save-label';
+
+      const cancelBtn = document.createElement('button');
+      cancelBtn.type        = 'button';
+      cancelBtn.textContent = '×';
+      cancelBtn.className   = 'btn-cancel-label';
+      cancelBtn.setAttribute('aria-label', 'Cancel');
+
+      const wrap = document.createElement('div');
+      wrap.className = 'library-label-edit-wrap';
+      wrap.append(input, suffix, saveBtn, cancelBtn);
+      cell.appendChild(wrap);
+      input.focus();
+      input.select();
+
+      function cancel() {
+        span.hidden = false;
+        wrap.remove();
+        cell.classList.remove('editing');
+      }
+
+      function save() {
+        const form = document.createElement('form');
+        form.method = 'post';
+        [
+          ['rename_file',        '1'],
+          ['rename_type',        cell.dataset.type],
+          ['rename_subcategory', cell.dataset.subcategory],
+          ['old_filename',       cell.dataset.filename],
+          ['new_filename',       input.value.trim()],
+        ].forEach(function([name, value]) {
+          const hidden = document.createElement('input');
+          hidden.type  = 'hidden';
+          hidden.name  = name;
+          hidden.value = value;
+          form.appendChild(hidden);
+        });
+        document.body.appendChild(form);
+        form.submit();
+      }
+
+      cancelBtn.addEventListener('click', cancel);
+      saveBtn.addEventListener('click', save);
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter')  save();
+        if (e.key === 'Escape') cancel();
+      });
+    });
+  });
+
   const searchInput = document.getElementById('library-search-input');
   const searchClear = document.getElementById('library-search-clear');
 
