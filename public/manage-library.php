@@ -413,8 +413,6 @@ $flash             = $session->message();
                         </td>
                         <td>
                           <div class="library-actions">
-                            <button type="button" class="btn btn-rename"
-                              aria-label="Rename <?= esc($img['filename']) ?>">Rename</button>
                             <button type="button" class="btn btn-edit"
                               aria-label="Edit label for <?= esc($img['filename']) ?>">
                               <img src="/assets/icons/edit.svg" alt="" width="16" height="16">

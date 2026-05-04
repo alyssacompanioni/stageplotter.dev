@@ -182,7 +182,7 @@
     });
   });
 
-  document.querySelectorAll('.btn-rename').forEach(function(btn) {
+  document.querySelectorAll('.btn-edit').forEach(function(btn) {
     btn.addEventListener('click', function() {
       const cell = btn.closest('tr').querySelector('.library-filename-cell');
       if (cell.classList.contains('editing')) return;

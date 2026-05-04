@@ -45,16 +45,40 @@ $el_stmt = $db->prepare("
   ORDER  BY z_index_pele ASC
 ");
 $el_stmt->execute([$plot_id]);
+$rows = $el_stmt->fetchAll();
+
+// Resolve each element's current label from labels.json instead of the stored name.
+// Loads each category directory's labels.json once, keyed by src_pele path.
+$label_map   = [];
+$loaded_dirs = [];
+foreach ($rows as $r) {
+  $src   = $r['src_pele'];
+  $parts = explode('/', ltrim($src, '/'));
+  // Expected format: assets / (instruments|equipment) / subcategory / filename.svg
+  if (count($parts) !== 4 || $parts[0] !== 'assets') continue;
+  [, $type, $subcategory, $filename] = $parts;
+  $dir_key = $type . '/' . $subcategory;
+  if (!isset($loaded_dirs[$dir_key])) {
+    $json_path            = __DIR__ . '/assets/' . $type . '/' . $subcategory . '/labels.json';
+    $loaded_dirs[$dir_key] = is_file($json_path)
+      ? (json_decode(file_get_contents($json_path), true) ?: [])
+      : [];
+  }
+  $labels = $loaded_dirs[$dir_key];
+  $label_map[$src] = $labels[$filename]
+    ?? ucwords(str_replace(['-', '_'], ' ', pathinfo($filename, PATHINFO_FILENAME)));
+}
+
 $elements = array_map(fn($r) => [
   'src'      => $r['src_pele'],
-  'label'    => $r['name_pele'],
+  'label'    => $label_map[$r['src_pele']] ?? $r['name_pele'],
   'x'        => (float) $r['x_pos_pele'],
   'y'        => (float) $r['y_pos_pele'],
   'rotation' => (int)   $r['rotation_pele'],
   'size'     => (int)   $r['px_size_pele'],
   'flipped'  => (bool)  $r['flipped_pele'],
   'z_index'  => (int)   $r['z_index_pele'],
-], $el_stmt->fetchAll());
+], $rows);
 
 // Inputs
 $inp_stmt = $db->prepare("
