@@ -719,6 +719,8 @@ table thead th .sort-icon {
   *******************/
 #stage-plotter-wrapper {
   display: flex;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 #stage-plotter-wrapper header {
@@ -1137,11 +1139,11 @@ footer {
   width: 100%;
 }
 
-.footer-gradient {
+.footer-bottom {
   background: var(--dark-blue);
   /* background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(27, 35, 51, 1) 36%); */
   width: 100%;
-  padding: 16px 24px;
+  padding: 20px 24px;
 }
 
 .credits {
