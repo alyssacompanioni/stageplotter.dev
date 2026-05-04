@@ -120,7 +120,7 @@ $flash = $session->message();
             <?php } ?>
           </tbody>
         </table>
-        <input type="submit" form="roles-form" class="btn-update" value="Update Roles" aria-label="Update user roles">
+        <input type="submit" form="roles-form" class=" btn btn-update" value="Update" aria-label="Update user roles">
       <?php } ?>
 
     </main>

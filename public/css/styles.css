@@ -363,7 +363,21 @@ select {
   font: inherit;
 }
 
+.btn {
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  margin: 4px 0;
+}
+
+.btn:hover {
+  transform: scale(1.1);
+}
+
+.btn-update,
 form input[type="submit"] {
+  
   background: var(--blue4);
   border: none;
   border-radius: 6px;
@@ -377,6 +391,7 @@ form input[type="submit"] {
   transition: background 0.15s;
 }
 
+.btn-update:hover,
 form input[type="submit"]:hover {
   background: var(--teal-hover);
 }
@@ -651,8 +666,8 @@ table thead th .sort-icon {
   width: 100%;
 }
 
-#plot-search,
-.btn-update {
+
+/* .btn-update {
   background-color: var(--medium-blue2);
   color: #fff;
   display: block;
@@ -663,6 +678,18 @@ table thead th .sort-icon {
 
 .btn-update:hover {
   background-color: var(--dark-blue);
+} */
+
+#plot-search,
+.table-search {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  display: block;
+  font: inherit;
+  margin: 0 auto 12px;
+  max-width: 500px;
+  padding: 8px 12px;
+  width: 100%;
 }
 
 .table-search {
@@ -942,18 +969,6 @@ table thead th .sort-icon {
   flex-direction: column;
   align-items: center;
   width: 100%;
-}
-
-.btn {
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  padding: 8px 16px;
-  margin: 4px 0;
-}
-
-.btn:hover {
-  transform: scale(1.1);
 }
 
 .element-card-container {
