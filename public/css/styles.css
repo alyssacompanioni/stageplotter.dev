@@ -1309,6 +1309,7 @@ footer {
 }
 
 .shared-inputs h2 {
+  text-align: start;
   margin: 0 0 10px;
   font-size: 1.05rem;
 }
@@ -1371,7 +1372,7 @@ footer {
 }
 
 .profile-section h2 {
-  text-align: left;
+  text-align: center;
   margin: 0 0 16px;
 }
 
