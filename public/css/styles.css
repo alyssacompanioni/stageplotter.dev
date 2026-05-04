@@ -386,7 +386,7 @@ form input[type="submit"]:hover {
 }
 
 .optional {
-  color: var(--text-gray);
+  color: var(--earthy-brown);
   font-size: 0.85rem;
   font-weight: 400;
 }
@@ -713,6 +713,7 @@ table thead th .sort-icon {
   padding: 24px 0;
   margin: 0 auto;
   max-width: 600px;
+  min-width: 400px;
 }
 
 .register-main p,
