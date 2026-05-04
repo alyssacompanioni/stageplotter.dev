@@ -35,5 +35,6 @@ $session->require_role('super_admin');
       </div>
     </main>
   </div>
+  <?php require_once '../includes/footer.php'; ?>
 </body>
 </html>

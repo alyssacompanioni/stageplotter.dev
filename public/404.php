@@ -12,6 +12,7 @@
   <h1>404 Not Found</h1>
   <p>Sorry, the page you are looking for does not exist.</p>
   <p><a href="index.php">Return to Home Page</a></p>
+  <?php require_once 'includes/footer.php'; ?>
 </body>
 
 </html>
