@@ -77,7 +77,10 @@ $flash = $session->message();
         </div>
       <?php } ?>
 
-      <input type="search" id="user-search" class="table-search" placeholder="Search" autocomplete="off">
+      <input type="search" id="user-search" class="table-search" placeholder="Search" autocomplete="off" aria-label="Search users">
+
+       <?php if (empty($users)) { ?>
+        <p>No users found.</p>
 
       <?php if (empty($users)) { ?>
         <p>No users found.</p>
