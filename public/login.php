@@ -11,8 +11,8 @@ $username = "";
 $password = "";
 
 // If already logged in, redirect
-if (isset($_SESSION["user_id"])) {
-	redirect_by_role($_SESSION["role"]);
+if ($session->is_logged_in()) {
+	redirect_by_role($session->get_role());
 }
 
 // Handle form submission

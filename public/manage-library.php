@@ -12,24 +12,8 @@ $session->require_role('admin');
 define('ASSETS_INSTRUMENTS_DIR', __DIR__ . '/assets/instruments/');
 define('ASSETS_EQUIPMENT_DIR', __DIR__ . '/assets/equipment/');
 
-// ── Category definitions ──────────────────────────────────────────────────────
-$instrument_categories = [
-	'guitars' => 'Guitars',
-	'drums' => 'Drums',
-	'keys' => 'Keys',
-	'strings' => 'Strings',
-	'brass' => 'Brass',
-	'winds' => 'Woodwinds',
-	'percussion' => 'Percussion',
-	'misc' => 'Misc',
-];
-
-$equipment_categories = [
-	'audio' => 'Audio',
-	'furniture' => 'Furniture',
-	'lighting' => 'Lighting',
-	'misc' => 'Misc',
-];
+$instrument_categories = INSTRUMENT_CATEGORIES;
+$equipment_categories  = EQUIPMENT_CATEGORIES;
 
 // ── Handle SVG upload POST ────────────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['svg_file'])) {

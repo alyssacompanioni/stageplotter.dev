@@ -79,17 +79,7 @@ $session->require_role('member');
           <div class="palette">
             <div class="element-type" id="instrument-subcategories">
               <?php
-              $categories = [
-              	'guitars' => 'Guitars',
-              	'drums' => 'Drums',
-              	'keys' => 'Keys',
-              	'strings' => 'Strings',
-              	'brass' => 'Brass',
-              	'winds' => 'Woodwinds',
-              	'percussion' => 'Percussion',
-              	'misc' => 'Misc',
-              ];
-              foreach ($categories as $slug => $label):
+              foreach (INSTRUMENT_CATEGORIES as $slug => $label):
 
               	$dir = __DIR__ . '/assets/instruments/' . $slug . '/';
               	$files = glob($dir . '*.{svg,png}', GLOB_BRACE) ?: [];
@@ -112,13 +102,7 @@ $session->require_role('member');
             </div>
             <div class="element-type" id="equipment-subcategories" hidden>
               <?php
-              $equipment_categories = [
-              	'audio' => 'Audio',
-              	'furniture' => 'Furniture',
-              	'lighting' => 'Lighting',
-              	'misc' => 'Misc',
-              ];
-              foreach ($equipment_categories as $slug => $label):
+              foreach (EQUIPMENT_CATEGORIES as $slug => $label):
 
               	$dir = __DIR__ . '/assets/equipment/' . $slug . '/';
               	$files = glob($dir . '*.{svg,png}', GLOB_BRACE) ?: [];

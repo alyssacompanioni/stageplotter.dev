@@ -30,38 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$confirm = $_POST['confirm_password'] ?? '';
 
 	// ---- Validation ----
-
-	if (empty($first_name)) {
-		$errors[] = 'First name cannot be blank.';
-	} elseif (strlen($first_name) > 50) {
-		$errors[] = 'First name cannot exceed 50 characters.';
-	}
-
-	if (empty($last_name)) {
-		$errors[] = 'Last name cannot be blank.';
-	} elseif (strlen($last_name) > 50) {
-		$errors[] = 'Last name cannot exceed 50 characters.';
-	}
-
-	if (empty($email)) {
-		$errors[] = 'Email cannot be blank.';
-	} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		$errors[] = 'Please enter a valid email address.';
-	} elseif (strlen($email) > 100) {
-		$errors[] = 'Email cannot exceed 100 characters.';
-	}
-
-	if (!empty($phone) && strlen($phone) > 20) {
-		$errors[] = 'Phone number cannot exceed 20 characters.';
-	}
-
-	if (empty($username)) {
-		$errors[] = 'Username cannot be blank.';
-	} elseif (strlen($username) > 20) {
-		$errors[] = 'Username cannot exceed 20 characters.';
-	} elseif (!preg_match('/\A[a-zA-Z0-9_]+\z/', $username)) {
-		$errors[] = 'Username may only contain letters, numbers, and underscores.';
-	}
+	$errors = validate_user_fields($first_name, $last_name, $email, $phone, $username);
 
 	if (empty($password)) {
 		$errors[] = 'Password cannot be blank.';

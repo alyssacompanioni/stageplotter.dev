@@ -15,24 +15,17 @@ $session->require_role('member');
 
 header('Content-Type: application/json');
 
-$valid_instrument_categories = ['guitars', 'drums', 'keys', 'strings', 'brass', 'winds', 'percussion', 'misc'];
-$valid_equipment_categories  = ['audio', 'furniture', 'lighting', 'misc'];
-
 $type     = $_GET['type'] ?? 'instruments';
 $category = $_GET['category'] ?? '';
 
 if ($type === 'equipment') {
-  if (!in_array($category, $valid_equipment_categories, true)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'error' => 'Invalid category']);
-    exit;
+  if (!array_key_exists($category, EQUIPMENT_CATEGORIES)) {
+    json_error('Invalid category');
   }
   $asset_base = '/assets/equipment/';
 } else {
-  if (!in_array($category, $valid_instrument_categories, true)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'error' => 'Invalid category']);
-    exit;
+  if (!array_key_exists($category, INSTRUMENT_CATEGORIES)) {
+    json_error('Invalid category');
   }
   $asset_base = '/assets/instruments/';
 }

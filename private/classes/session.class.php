@@ -18,8 +18,6 @@
  *   $session->has_role('admin');       // bool — admins pass, members don't
  *   $session->require_role('member');  // redirects to login if not met
  *   $session->logout();
- *
- * @author  Alyssa Companioni
  */
 
 class Session
@@ -211,7 +209,7 @@ class Session
       $this->username   =       $_SESSION['username']   ?? '';
       $this->first_name =       $_SESSION['first_name'] ?? '';
       $this->role       =       $_SESSION['role']       ?? '';
-      $this->last_login = (int) $_SESSION['last_login'] ?? 0;
+      $this->last_login = (int) ($_SESSION['last_login'] ?? 0);
     }
   }
 

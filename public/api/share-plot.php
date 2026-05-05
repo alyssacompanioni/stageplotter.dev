@@ -17,25 +17,19 @@ $session->require_role('member');
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-  http_response_code(405);
-  echo json_encode(['success' => false, 'error' => 'Method not allowed']);
-  exit;
+  json_error('Method not allowed', 405);
 }
 
 $body    = json_decode(file_get_contents('php://input'), true);
 $plot_id = isset($body['plot_id']) ? (int) $body['plot_id'] : 0;
 
 if ($plot_id < 1) {
-  http_response_code(400);
-  echo json_encode(['success' => false, 'error' => 'Invalid plot ID']);
-  exit;
+  json_error('Invalid plot ID');
 }
 
 $plot = StagePlot::find_owned_by($plot_id, $session->get_user_id());
 if (!$plot) {
-  http_response_code(403);
-  echo json_encode(['success' => false, 'error' => 'Plot not found or access denied']);
-  exit;
+  json_error('Plot not found or access denied', 403);
 }
 
 // Return existing token if one already exists for this plot

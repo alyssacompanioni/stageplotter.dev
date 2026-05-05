@@ -10,7 +10,6 @@
  */
 
 require_once __DIR__ . '/../../private/initialize.php';
-/* require_once $_SERVER['DOCUMENT_ROOT'] . '/../private/initialize.php'; */
 
 header('Content-Type: application/json');
 
@@ -32,13 +31,9 @@ $stmt->execute();
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $plots = array_map(function (array $row): array {
-  $d = $row['gig_date_staplot'];
-  if (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $d, $m)) {
-    $d = $m[2] . '/' . $m[3] . '/' . $m[1];
-  }
   return [
     'title'      => $row['title_staplot'],
-    'gig_date'   => $d,
+    'gig_date'   => db_date_to_display($row['gig_date_staplot']),
     'venue'      => $row['venue_staplot'] ?? '',
     'created_by' => $row['username_usr'],
     'token'      => $row['share_token_shrplot'],

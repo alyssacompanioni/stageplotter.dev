@@ -110,6 +110,25 @@ class PlotElement extends DatabaseObject
   }
 
   // ============================================================
+  // SERIALIZATION
+  // ============================================================
+
+  /** Returns a plain array suitable for JSON output to the client. */
+  public function to_array(): array
+  {
+    return [
+      'src'      => $this->src_pele,
+      'label'    => $this->name_pele,
+      'x'        => (float) $this->x_pos_pele,
+      'y'        => (float) $this->y_pos_pele,
+      'rotation' => (int)   $this->rotation_pele,
+      'size'     => (int)   $this->px_size_pele,
+      'flipped'  => (bool)  $this->flipped_pele,
+      'z_index'  => (int)   $this->z_index_pele,
+    ];
+  }
+
+  // ============================================================
   // VALIDATION
   // ============================================================
 

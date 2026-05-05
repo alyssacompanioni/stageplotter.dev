@@ -21,32 +21,15 @@ header('Content-Type: application/json');
 
 $plot_id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 if ($plot_id < 1) {
-  http_response_code(400);
-  echo json_encode(['success' => false, 'error' => 'Missing or invalid plot id']);
-  exit;
+  json_error('Missing or invalid plot id');
 }
 
 $plot = StagePlot::find_owned_by($plot_id, $session->get_user_id());
 if (!$plot) {
-  http_response_code(404);
-  echo json_encode(['success' => false, 'error' => 'Plot not found']);
-  exit;
+  json_error('Plot not found', 404);
 }
 
-$raw_elements = PlotElement::find_by_plot($plot->id);
-
-$elements = array_map(function (PlotElement $el): array {
-  return [
-    'src'      => $el->src_pele,
-    'label'    => $el->name_pele,
-    'x'        => (float) $el->x_pos_pele,
-    'y'        => (float) $el->y_pos_pele,
-    'rotation' => (int)   $el->rotation_pele,
-    'size'     => (int)   $el->px_size_pele,
-    'flipped'  => (bool)  $el->flipped_pele,
-    'z_index'  => (int)   $el->z_index_pele,
-  ];
-}, $raw_elements);
+$elements = array_map(fn(PlotElement $el) => $el->to_array(), PlotElement::find_by_plot($plot->id));
 
 // ── Fetch inputs (channels + details) ─────────────────────────────────────
 $stmt = $db->prepare("
@@ -83,19 +66,3 @@ echo json_encode([
   'elements'  => $elements,
   'inputs'    => ['channels' => $channels, 'details' => $details],
 ]);
-
-// ── Helper ─────────────────────────────────────────────────────────────────
-
-/**
- * Converts a stored YYYY-MM-DD date string back to mm/dd/yyyy for display.
- *
- * @param string $db_date
- * @return string
- */
-function db_date_to_display(string $db_date): string
-{
-  if (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $db_date, $m)) {
-    return $m[2] . '/' . $m[3] . '/' . $m[1];
-  }
-  return $db_date;
-}

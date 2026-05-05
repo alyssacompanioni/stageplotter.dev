@@ -26,19 +26,3 @@ $list = array_map(function (StagePlot $p): array {
 }, $plots);
 
 echo json_encode(['success' => true, 'plots' => $list]);
-
-// ── Helper ─────────────────────────────────────────────────────────────────
-
-/**
- * Converts a stored YYYY-MM-DD date string back to mm/dd/yyyy for display.
- *
- * @param string $db_date
- * @return string
- */
-function db_date_to_display(string $db_date): string
-{
-  if (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $db_date, $m)) {
-    return $m[2] . '/' . $m[3] . '/' . $m[1];
-  }
-  return $db_date;
-}

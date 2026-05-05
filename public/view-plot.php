@@ -104,9 +104,7 @@ foreach ($input_rows as $row) {
 	}
 }
 
-// Format date mm/dd/yyyy
-$d = $plot['gig_date_staplot'];
-$date = preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $d, $m) ? "$m[2]/$m[3]/$m[1]" : $d;
+$date = db_date_to_display($plot['gig_date_staplot']);
 
 $subtitle = implode(' — ', array_filter([$date, $plot['venue_staplot']]));
 ?>
