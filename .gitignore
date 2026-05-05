@@ -5,3 +5,5 @@
 .ddev/mutagen
 private/db_connection.php
 vendor/
+node_modules/
+capstone.code-workspace
