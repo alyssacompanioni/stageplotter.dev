@@ -146,6 +146,14 @@ $session->require_role('member');
     </div>
     <?php require_once 'includes/footer.php'; ?>
 
+    <div id="narrow-screen-modal" class="modal-overlay" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="narrow-screen-title">
+        <h2 id="narrow-screen-title">Screen Too Narrow</h2>
+        <p>This application can only function properly on screens 1150 pixels or wider.</p>
+        <button id="narrow-screen-dismiss" class="btn btn-ghost">Dismiss</button>
+      </div>
+    </div>
+
     <div id="share-modal" class="modal-overlay" hidden>
       <div class="modal" role="dialog" aria-modal="true" aria-labelledby="share-modal-title">
         <h2 id="share-modal-title">Share Plot</h2>

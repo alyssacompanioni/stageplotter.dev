@@ -1222,3 +1222,26 @@ document.getElementById("details-tab-btn").addEventListener("click", () => {
 // Load the default palette category on page load.
 document.getElementById("instrument-palette-toggle").classList.add("active-tab");
 switchPalette("guitars", "instruments");
+
+// ─── Narrow Screen Warning ────────────────────────────────────────────────────
+
+const NARROW_SCREEN_MODAL = document.getElementById("narrow-screen-modal");
+const MIN_WIDTH = 1150;
+let narrowScreenDismissed = false;
+
+function checkScreenWidth() {
+  if (!narrowScreenDismissed && window.innerWidth < MIN_WIDTH) {
+    NARROW_SCREEN_MODAL.removeAttribute("hidden");
+  } else if (window.innerWidth >= MIN_WIDTH) {
+    narrowScreenDismissed = false;
+    NARROW_SCREEN_MODAL.setAttribute("hidden", "");
+  }
+}
+
+document.getElementById("narrow-screen-dismiss").addEventListener("click", () => {
+  narrowScreenDismissed = true;
+  NARROW_SCREEN_MODAL.setAttribute("hidden", "");
+});
+
+window.addEventListener("resize", checkScreenWidth);
+checkScreenWidth();
