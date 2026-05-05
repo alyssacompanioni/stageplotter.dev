@@ -811,6 +811,10 @@ footer {
   grid-template-rows: auto 1fr;
 }
 
+.palette-container header button {
+  margin: 0 auto;
+}
+
 /* Canvas Container */
 .canvas-container {
   background: linear-gradient(134deg, rgba(171, 173, 179, 1) 0%, rgba(128, 128, 128, 1) 100%);
@@ -837,7 +841,7 @@ footer {
 
 .autosave-status {
   color: var(--text-gray);
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   transition: color 0.2s;
 }
 
