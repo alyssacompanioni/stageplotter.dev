@@ -230,6 +230,10 @@ header ul {
   background: #f0f0f0;
 }
 
+.dropdown-menu a[aria-current="page"] {
+  background: var(--blue-gray);
+}
+
 .user-icon {
   border-radius: 50%;
   color: #000;

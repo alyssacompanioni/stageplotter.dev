@@ -5,6 +5,12 @@
  *
  * Requires: $session (provided by initialize.php on the parent page)
  */
+$_nav_current = $_SERVER['PHP_SELF'];
+function _nav_link(string $href, string $label): void {
+    global $_nav_current;
+    $current = $_nav_current === $href ? ' aria-current="page"' : '';
+    echo "<li><a href=\"{$href}\"{$current}>{$label}</a></li>\n";
+}
 ?>
 
 <header>
@@ -30,28 +36,28 @@
             <ul class="dropdown-menu">
 
               <?php if ($session->has_role('super_admin')) { ?>
-                <li><a href="/index.php">Home</a></li>
-                <li><a href="/super_admin/dashboard.php">Super Admin Dashboard</a></li>
-                <li><a href="/super_admin/manage-users.php">Manage Users</a></li>
-                <li><a href="/manage-library.php">Manage Library</a></li>
-                <li><a href="/stage-plotter.php">Stage Plotter</a></li>
-                <li><a href="/profile.php">My Profile</a></li>
-                <li><a href="/logout.php">Log Out</a></li>
+                <?php _nav_link('/index.php', 'Home'); ?>
+                <?php _nav_link('/super_admin/dashboard.php', 'Super Admin Dashboard'); ?>
+                <?php _nav_link('/super_admin/manage-users.php', 'Manage Users'); ?>
+                <?php _nav_link('/manage-library.php', 'Manage Library'); ?>
+                <?php _nav_link('/stage-plotter.php', 'Stage Plotter'); ?>
+                <?php _nav_link('/profile.php', 'My Profile'); ?>
+                <?php _nav_link('/logout.php', 'Log Out'); ?>
 
               <?php } elseif ($session->has_role('admin')) { ?>
-                <li><a href="/index.php">Home</a></li>
-                <li><a href="/admin/dashboard.php">Admin Dashboard</a></li>
-                <li><a href="/admin/manage-members.php">Manage Members</a></li>
-                <li><a href="/manage-library.php">Manage Library</a></li>
-                <li><a href="/stage-plotter.php">Stage Plotter</a></li>
-                <li><a href="/profile.php">My Profile</a></li>
-                <li><a href="/logout.php">Log Out</a></li>
+                <?php _nav_link('/index.php', 'Home'); ?>
+                <?php _nav_link('/admin/dashboard.php', 'Admin Dashboard'); ?>
+                <?php _nav_link('/admin/manage-members.php', 'Manage Members'); ?>
+                <?php _nav_link('/manage-library.php', 'Manage Library'); ?>
+                <?php _nav_link('/stage-plotter.php', 'Stage Plotter'); ?>
+                <?php _nav_link('/profile.php', 'My Profile'); ?>
+                <?php _nav_link('/logout.php', 'Log Out'); ?>
 
               <?php } elseif ($session->has_role('member')) { ?>
-                <li><a href="/index.php">Home</a></li>
-                <li><a href="/stage-plotter.php">Stage Plotter</a></li>
-                <li><a href="/profile.php">My Profile</a></li>
-                <li><a href="/logout.php">Log Out</a></li>
+                <?php _nav_link('/index.php', 'Home'); ?>
+                <?php _nav_link('/stage-plotter.php', 'Stage Plotter'); ?>
+                <?php _nav_link('/profile.php', 'My Profile'); ?>
+                <?php _nav_link('/logout.php', 'Log Out'); ?>
               <?php } ?>
 
             </ul>
