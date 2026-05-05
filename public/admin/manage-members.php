@@ -1,13 +1,11 @@
 <?php
-
 /**
  * manage-members.php
  * Lists all member accounts and lets admins activate or deactivate them.
  *
  * Requires: admin role or higher.
- *
- * @author Alyssa Companioni
  */
+
 require_once __DIR__ . '/../../private/initialize.php';
 $session->require_role('admin');
 

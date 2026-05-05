@@ -1,11 +1,9 @@
 <?php
 /**
  * header.php
- * Sitewide header. Displays a personalized logout link
- * for logged-in users, or a login link for guests.
+ * Sitewide header with navigation, logo, and personalized login/logout links.
  *
  * Requires: $session (provided by initialize.php on the parent page)
- *
  */
 ?>
 

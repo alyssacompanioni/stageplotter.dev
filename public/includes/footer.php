@@ -2,7 +2,6 @@
 /**
  * footer.php
  * Sitewide footer. Displays copyright information and credits.
- *
  */
 ?>
 

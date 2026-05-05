@@ -1,5 +1,10 @@
 <?php
-require_once __DIR__ . "/../private/initialize.php";
+/**
+ * index.php
+ * Homepage with a hero section for guests and dashboard links for logged-in users.
+ */
+
+require_once __DIR__ . '/../private/initialize.php';
 $show_hero = !$session->is_logged_in();
 ?>
 
@@ -16,7 +21,7 @@ $show_hero = !$session->is_logged_in();
   </head>
 
   <body>
-    <?php require_once __DIR__ . "/includes/header.php"; ?>
+    <?php require_once __DIR__ . '/includes/header.php'; ?>
 
     <?php if ($show_hero) { ?>
       <section class="hero">
@@ -67,6 +72,6 @@ $show_hero = !$session->is_logged_in();
         </section>
       </main>
     </div>
-    <?php require_once __DIR__ . "/includes/footer.php"; ?>
+    <?php require_once __DIR__ . '/includes/footer.php'; ?>
   </body>
 </html>

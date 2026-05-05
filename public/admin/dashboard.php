@@ -1,4 +1,11 @@
 <?php
+/**
+ * dashboard.php
+ * Admin dashboard providing quick access to admin functions and a platform overview.
+ *
+ * Requires: admin role or higher.
+ */
+
 require_once __DIR__ . '/../../private/initialize.php';
 $session->require_role('admin');
 ?>
@@ -8,8 +15,8 @@ $session->require_role('admin');
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard | Stage Plotter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Admin Dashboard — manage members and review platform activity.">
   <link rel="stylesheet" href="/css/styles.css">
 </head>

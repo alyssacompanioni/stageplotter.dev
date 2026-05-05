@@ -1,10 +1,7 @@
 <?php
-
 /**
  * logout.php
- * Destroys the session via the Session class and redirects home.
- * 
- * @author Alyssa Companioni
+ * Destroys the user session and redirects to the homepage.
  */
 
 require_once __DIR__ . '/../private/initialize.php';

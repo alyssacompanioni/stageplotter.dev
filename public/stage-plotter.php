@@ -1,4 +1,11 @@
 <?php
+/**
+ * stage-plotter.php
+ * Main stage plot creation interface with drag-and-drop canvas and building tools.
+ *
+ * Requires: member role or higher.
+ */
+
 require_once __DIR__ . '/../private/initialize.php';
 $session->require_role('member');
 ?>

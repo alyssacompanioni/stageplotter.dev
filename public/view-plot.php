@@ -1,10 +1,9 @@
 <?php
-
 /**
- * plot.php
- * Public read-only view of a shared stage plot. No login required.
+ * view-plot.php
+ * Public read-only view of a shared stage plot via share token. No login required.
  *
- * Query param: ?token=<share_token>
+ * Params: ?token=<share_token>
  */
 
 require_once __DIR__ . '/../private/initialize.php';

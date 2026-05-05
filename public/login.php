@@ -1,9 +1,7 @@
 <?php
-
 /**
- * Login page for StagePlotter.dev
- * Handles the display AND processing of the login form
- * Alyssa Companioni
+ * login.php
+ * Displays and processes the user login form.
  */
 
 require_once __DIR__ . "/../private/initialize.php";

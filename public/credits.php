@@ -1,4 +1,10 @@
-<?php require_once __DIR__ . "/../private/initialize.php"; ?>
+<?php
+/**
+ * credits.php
+ * Displays credits and attributions for the Stage Plotter project.
+ */
+
+require_once __DIR__ . '/../private/initialize.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +18,7 @@
   </head>
 
   <body>
-    <?php require_once "includes/header.php"; ?>
+    <?php require_once 'includes/header.php'; ?>
     <div class="wrapper">
       <h1>Credits</h1>
       <main class="credits-wrapper">
@@ -151,7 +157,7 @@
 
       </main>
     </div>
-    <?php require_once "includes/footer.php"; ?>
+    <?php require_once 'includes/footer.php'; ?>
   </body>
 
 </html>

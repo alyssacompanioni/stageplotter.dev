@@ -1,12 +1,9 @@
 <?php
 /**
  * manage-users.php
- * Lists all admin and member accounts and lets super_admins activate or
- * deactivate them.
+ * Lists all admin and member accounts and lets super_admins activate or deactivate them.
  *
  * Requires: super_admin role.
- *
- * @author Alyssa Companioni
  */
 
 require_once __DIR__ . '/../../private/initialize.php';

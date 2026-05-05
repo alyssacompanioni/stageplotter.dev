@@ -1,4 +1,11 @@
-<?php require_once __DIR__ . "/../private/initialize.php"; ?>
+<?php
+/**
+ * 404.php
+ * Displays a custom 404 Not Found error page.
+ */
+
+require_once __DIR__ . '/../private/initialize.php'; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +18,7 @@
   </head>
 
   <body>
-    <?php require_once "includes/header.php"; ?>
+    <?php require_once 'includes/header.php'; ?>
     <main class="not-found">
       <div class="wrapper">
         <h1>Uh oh!</h1>
@@ -24,7 +31,7 @@
         <p><a href="index.php">Return to Home Page</a></p>
       </div>
     </main>
-    <?php require_once "includes/footer.php"; ?>
+    <?php require_once 'includes/footer.php'; ?>
   </body>
 
 </html>

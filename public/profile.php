@@ -1,11 +1,9 @@
 <?php
-
 /**
  * profile.php
- * Allows any logged-in member (or higher) to view and update their account
- * information and change their password.
+ * Allows any logged-in member (or higher) to view and update their account information and change their password.
  *
- * @author Alyssa Companioni
+ * Requires: member role or higher.
  */
 
 require_once __DIR__ . '/../private/initialize.php';

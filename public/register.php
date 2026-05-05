@@ -1,11 +1,7 @@
 <?php
-
 /**
  * register.php
  * Handles display and processing of the new user registration form.
- * On success, sets a flash message and redirects to login.php.
- *
- * @author Alyssa Companioni
  */
 
 require_once __DIR__ . '/../private/initialize.php';

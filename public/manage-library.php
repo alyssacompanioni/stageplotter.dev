@@ -1,14 +1,11 @@
 <?php
-
 /**
  * manage-library.php
- * Lets admins and super_admins upload and browse the shared SVG
- * plot-element image library.
+ * Lets admins and super_admins upload and browse the shared SVG plot-element image library.
  *
  * Requires: admin role or higher.
- *
- * @author Alyssa Companioni
  */
+
 require_once __DIR__ . '/../private/initialize.php';
 $session->require_role('admin');
 
@@ -476,7 +473,9 @@ function render_section(string $section_title, string $delete_type, array $categ
                                   value="<?= esc($img['rel_path']) ?>">
                                 <input type="hidden" name="delete_type"
                                   value="<?= esc($delete_type) ?>">
-                                <button type="submit" class="btn btn-delete" aria-label="Delete <?= esc($img['filename']) ?>">
+                                <button type="submit" class="btn btn-delete" aria-label="Delete <?= esc(
+                                	$img['filename'],
+                                ) ?>">
                                   <img src="/assets/icons/trash.svg" alt="" width="16" height="16">
                                 </button>
                               </form>

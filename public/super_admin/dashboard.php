@@ -1,6 +1,13 @@
 <?php
-require_once __DIR__ . "/../../private/initialize.php";
-$session->require_role("super_admin");
+/**
+ * dashboard.php
+ * Super admin dashboard providing access to platform-wide user management and oversight.
+ *
+ * Requires: super_admin role.
+ */
+
+require_once __DIR__ . '/../../private/initialize.php';
+$session->require_role('super_admin');
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +22,7 @@ $session->require_role("super_admin");
   </head>
 
   <body>
-    <?php require_once "../includes/header.php"; ?>
+    <?php require_once '../includes/header.php'; ?>
     <div class="dashboard-wrapper">
       <main>
         <h1>Super-Admin Dashboard</h1>
@@ -35,7 +42,7 @@ $session->require_role("super_admin");
         </div>
       </main>
     </div>
-    <?php require_once "../includes/footer.php"; ?>
+    <?php require_once '../includes/footer.php'; ?>
   </body>
 
 </html>
