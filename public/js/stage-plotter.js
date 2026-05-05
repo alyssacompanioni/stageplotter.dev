@@ -98,17 +98,39 @@ canvas.addEventListener("dragover", (e) => {
 });
 
 canvas.addEventListener("drop", (e) => {
-  e.preventDefault(); // Prevents default browser behavior (e.g., opening the image)
+  e.preventDefault();
   const data = JSON.parse(e.dataTransfer.getData("text/plain"));
 
-  // Calculate drop position relative to canvas
   const rect = canvas.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
+  const size = data.size ?? 48;
+  const x = Math.min(Math.max(0, e.clientX - rect.left), canvas.clientWidth - size);
+  const y = Math.min(Math.max(0, e.clientY - rect.top), canvas.clientHeight - size);
 
   placeElement(data, x, y);
   scheduleAutoSave();
 });
+
+// ─── Proportional rescaling on canvas resize ───────────────────────────────────
+
+let prevCanvasWidth = 0;
+let prevCanvasHeight = 0;
+new ResizeObserver((entries) => {
+  const { width, height } = entries[0].contentRect;
+  if (prevCanvasWidth && width !== prevCanvasWidth) {
+    const sx = width / prevCanvasWidth;
+    canvas.querySelectorAll(".placed-element").forEach((el) => {
+      el.style.left = parseFloat(el.style.left) * sx + "px";
+    });
+  }
+  if (prevCanvasHeight && height !== prevCanvasHeight) {
+    const sy = height / prevCanvasHeight;
+    canvas.querySelectorAll(".placed-element").forEach((el) => {
+      el.style.top = parseFloat(el.style.top) * sy + "px";
+    });
+  }
+  prevCanvasWidth = width;
+  prevCanvasHeight = height;
+}).observe(canvas);
 
 /**
  * Places a new element on the canvas at the specified coordinates.
@@ -327,8 +349,10 @@ function mouseMoveHandler(e) {
   startX = e.clientX;
   startY = e.clientY;
 
-  activeEl.style.left = activeEl.offsetLeft - newX + "px";
-  activeEl.style.top = activeEl.offsetTop - newY + "px";
+  const maxLeft = canvas.clientWidth - activeEl.offsetWidth;
+  const maxTop = canvas.clientHeight - activeEl.offsetHeight;
+  activeEl.style.left = Math.min(Math.max(0, activeEl.offsetLeft - newX), maxLeft) + "px";
+  activeEl.style.top = Math.min(Math.max(0, activeEl.offsetTop - newY), maxTop) + "px";
 }
 
 /**
