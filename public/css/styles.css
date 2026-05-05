@@ -1333,7 +1333,7 @@ footer {
 .library-search-clear {
 	background: none;
 	border: none;
-	color: var(--dark-gray);
+	color: var(--medium-brown);
 	cursor: pointer;
 	font-size: 1rem;
 	line-height: 1;
@@ -1438,7 +1438,7 @@ footer {
 
 .flash-message:not([hidden]) {
 	align-items: center;
-	background: rgba(98, 152, 188, 0.3);
+	background: var(--medium-blue2);
 	border-radius: 4px;
 	color: #fff;
 	display: flex;
@@ -1655,7 +1655,7 @@ footer {
 
 .btn-edit {
 	align-items: center;
-	background-color: var(--accent-blue);
+	background-color: var(--medium-blue2);
 	color: var(--text-light);
 	display: flex;
 	padding: 6px 10px;
@@ -1689,7 +1689,7 @@ footer {
 }
 
 .btn-save-label {
-	background-color: var(--bright-accent-blue2);
+	background-color: var(--medium-blue2);
 	color: var(--text-light);
 	font-size: 0.8rem;
 	padding: 4px 8px;
@@ -1699,7 +1699,7 @@ footer {
 .btn-cancel-label {
 	background: none;
 	border: none;
-	color: var(--dark-gray);
+	color: var(--medium-brown);
 	cursor: pointer;
 	font-size: 1.1rem;
 	line-height: 1;
@@ -1841,6 +1841,10 @@ details.cleanup-section {
 }
 
 /******* credits.php *******/
+
+.credits {
+	text-align: center;
+}
 
 .credits-wrapper {
 	max-width: 800px;
