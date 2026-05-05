@@ -326,6 +326,7 @@ form input[type="submit"] {
 .btn-update:hover,
 form input[type="submit"]:hover {
   background: var(--teal-hover);
+  transform: none;
 }
 
 .required {
@@ -1608,6 +1609,16 @@ footer {
   background-color: var(--light-orange);
 }
 
+.delete-elements {
+  background-color: var(--red1);
+}
+
+.delete-elements:hover {
+  background-color: var(--text-light);
+  border: 2px solid var(--red1);
+  color: var(--red1);
+}
+
 .library-section-summary h2 {
   flex: 1;
   margin: 0;
@@ -1834,6 +1845,10 @@ details.cleanup-section {
   gap: 12px;
   justify-content: center;
   margin-top: 16px;
+}
+
+.cleanup-actions .btn:hover {
+  transform: none;
 }
 
 .cleanup-table th:nth-child(1),

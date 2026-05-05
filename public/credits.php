@@ -27,8 +27,8 @@ require_once __DIR__ . '/../private/initialize.php'; ?>
           <h2>Special Thanks</h2>
           <p>I would like to thank the following individuals and organizations for their support and contributions to this project:</p>
           <ul>
-            <li><strong>Alec Fehl</strong> &mdash; For providing invaluable resources, tools, guidance, and for teaching me all about front end development.</li>
-            <li><strong>Charlie Wallin</strong> &mdash; For teaching me all about PHP and backend development.</li>
+            <li><strong>Alec Fehl</strong> &mdash; For providing invaluable resources, tools, guidance, and for teaching me all about front-end development.</li>
+            <li><strong>Charlie Wallin</strong> &mdash; For teaching me all about PHP and back-end development.</li>
             <li><strong>Mark Locklear</strong> &mdash; For teaching me all about database design and management.</li>
             <li><strong>My Family and Friends</strong> &mdash; For their unwavering support and encouragement throughout the development process.</li>
             <li><strong>Asheville-Buncombe Technical Community College</strong> &mdash; For providing a web development program that has taught me invaluable skills that I can apply in my career.</li>
