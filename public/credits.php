@@ -20,8 +20,8 @@ require_once __DIR__ . '/../private/initialize.php'; ?>
   <body>
     <?php require_once 'includes/header.php'; ?>
     <div class="wrapper">
-      <h1>Credits</h1>
       <main class="credits-wrapper">
+      <h1>Credits</h1>
 
         <section>
           <h2>Special Thanks</h2>
