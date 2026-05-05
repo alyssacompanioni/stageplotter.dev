@@ -7,9 +7,9 @@
  */
 $_nav_current = $_SERVER['PHP_SELF'];
 function _nav_link(string $href, string $label): void {
-    global $_nav_current;
-    $current = $_nav_current === $href ? ' aria-current="page"' : '';
-    echo "<li><a href=\"{$href}\"{$current}>{$label}</a></li>\n";
+  global $_nav_current;
+  $current = $_nav_current === $href ? ' aria-current="page"' : '';
+  echo "<li><a href=\"{$href}\"{$current}>{$label}</a></li>\n";
 }
 ?>
 

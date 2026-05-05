@@ -11,22 +11,22 @@ $session->require_role('admin');
 
 // ── Handle activate/deactivate POST ──────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
-    $user_id = (int) $_POST['user_id'];
-    $member = User::find_by_id($user_id);
+  $user_id = (int) $_POST['user_id'];
+  $member = User::find_by_id($user_id);
 
-    if ($member && $member->role_usr === 'member') {
-        if ($member->toggle_active()) {
-            $label = $member->is_active_usr ? 'activated' : 'deactivated';
-            $session->message(esc($member->first_name_usr) . '\'s account has been ' . $label . '.');
-        } else {
-            $session->message('Could not update member status. Please try again.');
-        }
+  if ($member && $member->role_usr === 'member') {
+    if ($member->toggle_active()) {
+      $label = $member->is_active_usr ? 'activated' : 'deactivated';
+      $session->message(esc($member->first_name_usr) . '\'s account has been ' . $label . '.');
     } else {
-        $session->message('Member not found.');
+      $session->message('Could not update member status. Please try again.');
     }
+  } else {
+    $session->message('Member not found.');
+  }
 
-    header('Location: manage-members.php');
-    exit();
+  header('Location: manage-members.php');
+  exit();
 }
 
 // ── Fetch members ─────────────────────────────────────────────────────────────
@@ -87,8 +87,8 @@ $flash = $session->message();
                         <input type="checkbox" class="status-toggle" role="switch"
                           <?= $member->is_active_usr ? 'checked' : '' ?>
                           aria-label="<?= $member->is_active_usr
-                              ? 'Active — click to deactivate'
-                              : 'Inactive — click to activate' ?>">
+                            ? 'Active — click to deactivate'
+                            : 'Inactive — click to activate' ?>">
                       </form>
                       <span class="status-label"><?= $member->is_active_usr ? 'Active' : 'Inactive' ?></span>
                     </div>
