@@ -322,6 +322,7 @@ $flash = $session->message();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Upload and manage SVG plot element images for use across stage plots.">
     <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/utils.js" defer></script>
     <script src="/js/manage-library.js" defer></script>
   </head>
 

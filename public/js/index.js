@@ -4,10 +4,14 @@
  */
 
 (function () {
-	const PAGE_SIZE = 20;
+	const PAGE_SIZE   = 20;
+	const searchInput = document.getElementById("plot-search");
+	const tbody       = document.getElementById("plots-tbody");
+	const headerCells = document.querySelectorAll("thead th");
+
 	let allPlots = [];
-	let sortCol = "title";
-	let sortDir = "asc";
+	let sortCol  = "title";
+	let sortDir  = "asc";
 
 	// ── Fetch ────────────────────────────────────────────────
 	fetch("/api/get-public-plots.php")
@@ -18,14 +22,14 @@
 			render();
 		})
 		.catch(() => {
-			document.getElementById("plots-tbody").innerHTML = '<tr><td colspan="4">Failed to load plots.</td></tr>';
+			tbody.innerHTML = '<tr><td colspan="4">Failed to load plots.</td></tr>';
 		});
 
 	// ── Search ───────────────────────────────────────────────
-	document.getElementById("plot-search").addEventListener("input", render);
+	searchInput.addEventListener("input", render);
 
 	// ── Sort headers ─────────────────────────────────────────
-	document.querySelectorAll("thead th").forEach((th) => {
+	headerCells.forEach((th) => {
 		th.addEventListener("click", () => {
 			const col = th.dataset.col;
 			if (sortCol === col) {
@@ -43,7 +47,7 @@
 	 * Refreshes the sort arrow icon on each column header to reflect the current sort column and direction.
 	 */
 	function updateSortIndicators() {
-		document.querySelectorAll("thead th").forEach((th) => {
+		headerCells.forEach((th) => {
 			th.removeAttribute("data-sort");
 			const existing = th.querySelector(".sort-icon");
 			if (existing) existing.remove();
@@ -63,7 +67,7 @@
 	 * Filters and sorts the loaded plots, then writes the result rows into the table body.
 	 */
 	function render() {
-		const query = document.getElementById("plot-search").value.trim().toLowerCase();
+		const query = searchInput.value.trim().toLowerCase();
 		let results = allPlots;
 
 		if (query) {
@@ -93,7 +97,6 @@
 		}
 
 		const slice = results.slice(0, PAGE_SIZE);
-		const tbody = document.getElementById("plots-tbody");
 
 		if (slice.length === 0) {
 			tbody.innerHTML = '<tr><td colspan="4">No plots found.</td></tr>';

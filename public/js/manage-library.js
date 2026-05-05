@@ -2,21 +2,24 @@
  * manage-library.js
  * Handles the SVG drop-zone upload, inline label/filename editing, sortable tables,
  * and search filtering on the manage-library page.
+ * Depends on utils.js (initSortableTable, initFlashMessages).
  */
 
 (function () {
-	const zone = document.getElementById("drop-zone");
-	const input = document.getElementById("svg_file");
-	const stagedEl = document.getElementById("drop-zone-staged");
-	const fileLabel = document.getElementById("drop-zone-filename");
-	const clearBtn = document.getElementById("clear-file-btn");
-	const errorEl = document.getElementById("drop-zone-error");
-	const prompt = zone.querySelector(".drop-zone-prompt");
-	const uploadBtn = document.getElementById("upload-btn");
+	const zone       = document.getElementById("drop-zone");
+	const input      = document.getElementById("svg_file");
+	const stagedEl   = document.getElementById("drop-zone-staged");
+	const fileLabel  = document.getElementById("drop-zone-filename");
+	const clearBtn   = document.getElementById("clear-file-btn");
+	const errorEl    = document.getElementById("drop-zone-error");
+	const prompt     = zone.querySelector(".drop-zone-prompt");
+	const uploadBtn  = document.getElementById("upload-btn");
 	const typeRadios = document.querySelectorAll('input[name="type"]');
-	const subSelect = document.getElementById("upload-subcategory");
+	const subSelect  = document.getElementById("upload-subcategory");
 
 	const subcategoryOptions = window.SUBCATEGORY_OPTIONS || {};
+
+	// ── Subcategory select ────────────────────────────────────────────────────────
 
 	typeRadios.forEach((radio) => {
 		radio.addEventListener("change", (e) => {
@@ -26,6 +29,8 @@
 				.join("");
 		});
 	});
+
+	// ── Drop-zone ─────────────────────────────────────────────────────────────────
 
 	/**
 	 * Stages the given file in the drop zone, attaching it to the hidden file input and showing the filename.
@@ -54,252 +59,152 @@
 		uploadBtn.disabled = true;
 	}
 
-	clearBtn.addEventListener("click", (e) => {
-		e.stopPropagation();
-		clearFile();
-	});
-
+	clearBtn.addEventListener("click", (e) => { e.stopPropagation(); clearFile(); });
 	zone.addEventListener("click", () => input.click());
-	zone.addEventListener("keydown", (e) => {
-		if (e.key === "Enter" || e.key === " ") input.click();
-	});
+	zone.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") input.click(); });
 	input.addEventListener("change", () => setFile(input.files[0]));
-
-	zone.addEventListener("dragover", (e) => {
-		e.preventDefault();
-		zone.classList.add("drop-zone--active");
-	});
+	zone.addEventListener("dragover", (e) => { e.preventDefault(); zone.classList.add("drop-zone--active"); });
 	zone.addEventListener("dragleave", () => zone.classList.remove("drop-zone--active"));
 	zone.addEventListener("drop", (e) => {
 		e.preventDefault();
 		zone.classList.remove("drop-zone--active");
-		if (!stagedEl.hidden) {
-			errorEl.hidden = false;
-			return;
-		}
+		if (!stagedEl.hidden) { errorEl.hidden = false; return; }
 		setFile(e.dataTransfer.files[0]);
 	});
 
-	const errorCloseBtn = errorEl.querySelector(".msg-close-btn");
-	if (errorCloseBtn)
-		errorCloseBtn.addEventListener("click", () => {
-			errorEl.hidden = true;
-		});
+	errorEl.querySelector(".msg-close-btn")?.addEventListener("click", () => { errorEl.hidden = true; });
 
-	document.querySelectorAll(".flash-message .msg-close-btn").forEach((btn) => {
-		btn.addEventListener("click", () => {
-			btn.closest(".flash-message").hidden = true;
-		});
-	});
+	// ── Sortable tables ───────────────────────────────────────────────────────────
 
 	document.querySelectorAll(".library-table").forEach((table) => {
-		const tbody = table.querySelector("tbody");
-		let allRows = Array.from(tbody.querySelectorAll("tr"));
-		let sortColIdx = -1;
-		let sortDir = "asc";
+		initSortableTable(table.querySelector("tbody"), null, filterLibrary);
+	});
 
-		table.querySelectorAll("thead th[data-col]").forEach((th) => {
-			th.addEventListener("click", () => {
-				const idx = th.cellIndex;
-				if (sortColIdx === idx) {
-					sortDir = sortDir === "asc" ? "desc" : "asc";
-				} else {
-					sortColIdx = idx;
-					sortDir = "asc";
-				}
-				updateSortIndicators(th);
-				sortRows();
-			});
-		});
+	// ── Inline editing ────────────────────────────────────────────────────────────
 
-		/**
-		 * Re-sorts all rows in the table by the currently active column and direction, then re-inserts them.
-		 */
-		function sortRows() {
-			allRows.sort((a, b) => {
-				const av = a.cells[sortColIdx].textContent.trim().toLowerCase();
-				const bv = b.cells[sortColIdx].textContent.trim().toLowerCase();
-				if (av < bv) return sortDir === "asc" ? -1 : 1;
-				if (av > bv) return sortDir === "asc" ? 1 : -1;
-				return 0;
-			});
-			allRows.forEach((row) => tbody.appendChild(row));
+	/**
+	 * Builds and returns the DOM nodes for an inline text editor (input, suffix span, Save/Cancel buttons, wrapper).
+	 * @param {string} initialValue - Pre-filled input value.
+	 * @param {string|null} [suffix] - Static text after the input (e.g. '.svg'), or null.
+	 * @returns {{ input: HTMLInputElement, saveBtn: HTMLButtonElement, cancelBtn: HTMLButtonElement, wrap: HTMLDivElement }}
+	 */
+	function createInlineEditorUI(initialValue, suffix = null) {
+		const editorInput = document.createElement("input");
+		editorInput.type = "text";
+		editorInput.value = initialValue;
+		editorInput.className = "library-label-input";
+
+		const saveBtn = document.createElement("button");
+		saveBtn.type = "button";
+		saveBtn.textContent = "Save";
+		saveBtn.className = "btn btn-save-label";
+
+		const cancelBtn = document.createElement("button");
+		cancelBtn.type = "button";
+		cancelBtn.textContent = "×";
+		cancelBtn.className = "btn-cancel-label";
+		cancelBtn.setAttribute("aria-label", "Cancel");
+
+		const wrap = document.createElement("div");
+		wrap.className = "library-label-edit-wrap";
+
+		if (suffix) {
+			const suffixSpan = document.createElement("span");
+			suffixSpan.textContent = suffix;
+			suffixSpan.className = "library-rename-suffix";
+			wrap.append(editorInput, suffixSpan, saveBtn, cancelBtn);
+		} else {
+			wrap.append(editorInput, saveBtn, cancelBtn);
 		}
 
-		/**
-		 * Refreshes the sort arrow icon on each column header for this table.
-		 * @param {HTMLElement} activeTh - The header cell that was just clicked.
-		 */
-		function updateSortIndicators(activeTh) {
-			table.querySelectorAll("thead th[data-col]").forEach((th) => {
-				th.removeAttribute("data-sort");
-				const icon = th.querySelector(".sort-icon");
-				if (icon) icon.remove();
-			});
-			activeTh.setAttribute("data-sort", sortDir);
-			const img = document.createElement("img");
-			img.src = sortDir === "asc" ? "/assets/icons/down-arrow.svg" : "/assets/icons/up-arrow.svg";
-			img.alt = sortDir === "asc" ? "ascending" : "descending";
-			img.className = "sort-icon";
-			activeTh.appendChild(img);
-		}
-	});
+		return { input: editorInput, saveBtn, cancelBtn, wrap };
+	}
 
-	document.querySelectorAll(".btn-edit").forEach(function (btn) {
-		btn.addEventListener("click", function () {
-			const cell = btn.closest("tr").querySelector(".library-label-cell");
-			if (cell.classList.contains("editing")) return;
-			cell.classList.add("editing");
+	/**
+	 * Submits an array of name/value pairs as a hidden-field POST form.
+	 * @param {Array<[string, string]>} fields
+	 */
+	function submitFormPost(fields) {
+		const form = document.createElement("form");
+		form.method = "post";
+		fields.forEach(([name, value]) => {
+			const hidden = document.createElement("input");
+			hidden.type = "hidden";
+			hidden.name = name;
+			hidden.value = value;
+			form.appendChild(hidden);
+		});
+		document.body.appendChild(form);
+		form.submit();
+	}
 
-			const span = cell.querySelector(".library-label-text");
-			span.hidden = true;
+	/**
+	 * Opens an inline editor for one cell in the same row as btn.
+	 * Guards against re-entering if the cell is already being edited.
+	 * @param {HTMLElement} btn - The edit button that was clicked.
+	 * @param {string} cellSel - Selector for the editable cell within the row.
+	 * @param {string} spanSel - Selector for the text span to hide while editing.
+	 * @param {string|null} suffix - Static suffix text after the input (e.g. '.svg'), or null.
+	 * @param {function(cell: HTMLElement, value: string): Array<[string,string]>} buildFields - Returns the POST field pairs.
+	 */
+	function openInlineEdit(btn, cellSel, spanSel, suffix, buildFields) {
+		const cell = btn.closest("tr").querySelector(cellSel);
+		if (!cell || cell.classList.contains("editing")) return;
+		cell.classList.add("editing");
 
-			const input = document.createElement("input");
-			input.type = "text";
-			input.value = span.textContent;
-			input.className = "library-label-input";
+		const span = cell.querySelector(spanSel);
+		span.hidden = true;
 
-			const saveBtn = document.createElement("button");
-			saveBtn.type = "button";
-			saveBtn.textContent = "Save";
-			saveBtn.className = "btn btn-save-label";
+		const initVal = suffix ? cell.dataset.filename.replace(/\.svg$/i, "") : span.textContent;
+		const { input: editorInput, saveBtn, cancelBtn, wrap } = createInlineEditorUI(initVal, suffix);
+		cell.appendChild(wrap);
+		editorInput.focus();
+		editorInput.select();
 
-			const cancelBtn = document.createElement("button");
-			cancelBtn.type = "button";
-			cancelBtn.textContent = "×";
-			cancelBtn.className = "btn-cancel-label";
-			cancelBtn.setAttribute("aria-label", "Cancel");
+		const cancel = () => { span.hidden = false; wrap.remove(); cell.classList.remove("editing"); };
+		const save   = () => submitFormPost(buildFields(cell, editorInput.value.trim()));
 
-			const wrap = document.createElement("div");
-			wrap.className = "library-label-edit-wrap";
-			wrap.append(input, saveBtn, cancelBtn);
-			cell.appendChild(wrap);
-			input.focus();
-			input.select();
+		cancelBtn.addEventListener("click", cancel);
+		saveBtn.addEventListener("click", save);
+		editorInput.addEventListener("keydown", (e) => {
+			if (e.key === "Enter") save();
+			if (e.key === "Escape") cancel();
+		});
+	}
 
-			/** Cancels inline label editing, restoring the original label text. */
-			function cancel() {
-				span.hidden = false;
-				wrap.remove();
-				cell.classList.remove("editing");
-			}
-
-			/** Submits the updated label to the server via a dynamically constructed form POST. */
-			function save() {
-				const form = document.createElement("form");
-				form.method = "post";
-				[
-					["edit_label", "1"],
-					["label_type", cell.dataset.type],
-					["label_subcategory", cell.dataset.subcategory],
-					["label_filename", cell.dataset.filename],
-					["new_label", input.value.trim()],
-				].forEach(function ([name, value]) {
-					const hidden = document.createElement("input");
-					hidden.type = "hidden";
-					hidden.name = name;
-					hidden.value = value;
-					form.appendChild(hidden);
-				});
-				document.body.appendChild(form);
-				form.submit();
-			}
-
-			cancelBtn.addEventListener("click", cancel);
-			saveBtn.addEventListener("click", save);
-			input.addEventListener("keydown", function (e) {
-				if (e.key === "Enter") save();
-				if (e.key === "Escape") cancel();
-			});
+	document.querySelectorAll(".btn-edit").forEach((btn) => {
+		btn.addEventListener("click", () => {
+			openInlineEdit(btn, ".library-label-cell", ".library-label-text", null, (cell, value) => [
+				["edit_label",        "1"],
+				["label_type",        cell.dataset.type],
+				["label_subcategory", cell.dataset.subcategory],
+				["label_filename",    cell.dataset.filename],
+				["new_label",         value],
+			]);
+			openInlineEdit(btn, ".library-filename-cell", ".library-filename-text", ".svg", (cell, value) => [
+				["rename_file",        "1"],
+				["rename_type",        cell.dataset.type],
+				["rename_subcategory", cell.dataset.subcategory],
+				["old_filename",       cell.dataset.filename],
+				["new_filename",       value],
+			]);
 		});
 	});
 
-	document.querySelectorAll(".btn-edit").forEach(function (btn) {
-		btn.addEventListener("click", function () {
-			const cell = btn.closest("tr").querySelector(".library-filename-cell");
-			if (cell.classList.contains("editing")) return;
-			cell.classList.add("editing");
-
-			const span = cell.querySelector(".library-filename-text");
-			const baseName = cell.dataset.filename.replace(/\.svg$/i, "");
-			span.hidden = true;
-
-			const input = document.createElement("input");
-			input.type = "text";
-			input.value = baseName;
-			input.className = "library-label-input";
-
-			const suffix = document.createElement("span");
-			suffix.textContent = ".svg";
-			suffix.className = "library-rename-suffix";
-
-			const saveBtn = document.createElement("button");
-			saveBtn.type = "button";
-			saveBtn.textContent = "Save";
-			saveBtn.className = "btn btn-save-label";
-
-			const cancelBtn = document.createElement("button");
-			cancelBtn.type = "button";
-			cancelBtn.textContent = "×";
-			cancelBtn.className = "btn-cancel-label";
-			cancelBtn.setAttribute("aria-label", "Cancel");
-
-			const wrap = document.createElement("div");
-			wrap.className = "library-label-edit-wrap";
-			wrap.append(input, suffix, saveBtn, cancelBtn);
-			cell.appendChild(wrap);
-			input.focus();
-			input.select();
-
-			/** Cancels inline filename editing, restoring the original filename text. */
-			function cancel() {
-				span.hidden = false;
-				wrap.remove();
-				cell.classList.remove("editing");
-			}
-
-			/** Submits the new filename (without extension) to the server via a dynamically constructed form POST. */
-			function save() {
-				const form = document.createElement("form");
-				form.method = "post";
-				[
-					["rename_file", "1"],
-					["rename_type", cell.dataset.type],
-					["rename_subcategory", cell.dataset.subcategory],
-					["old_filename", cell.dataset.filename],
-					["new_filename", input.value.trim()],
-				].forEach(function ([name, value]) {
-					const hidden = document.createElement("input");
-					hidden.type = "hidden";
-					hidden.name = name;
-					hidden.value = value;
-					form.appendChild(hidden);
-				});
-				document.body.appendChild(form);
-				form.submit();
-			}
-
-			cancelBtn.addEventListener("click", cancel);
-			saveBtn.addEventListener("click", save);
-			input.addEventListener("keydown", function (e) {
-				if (e.key === "Enter") save();
-				if (e.key === "Escape") cancel();
-			});
-		});
-	});
+	// ── Library search ────────────────────────────────────────────────────────────
 
 	const searchInput = document.getElementById("library-search-input");
 	const searchClear = document.getElementById("library-search-clear");
 
 	if (searchInput) {
-		searchInput.addEventListener("input", function () {
+		searchInput.addEventListener("input", () => {
 			searchClear.hidden = searchInput.value === "";
 			filterLibrary();
 		});
 	}
 
 	if (searchClear) {
-		searchClear.addEventListener("click", function () {
+		searchClear.addEventListener("click", () => {
 			searchInput.value = "";
 			searchClear.hidden = true;
 			filterLibrary();
@@ -314,10 +219,9 @@
 	function filterLibrary() {
 		const query = searchInput.value.trim().toLowerCase();
 
-		document.querySelectorAll(".library-subcategory").forEach(function (subcategory) {
+		document.querySelectorAll(".library-subcategory").forEach((subcategory) => {
 			let hasMatch = false;
-
-			subcategory.querySelectorAll(".library-table tbody tr").forEach(function (row) {
+			subcategory.querySelectorAll(".library-table tbody tr").forEach((row) => {
 				const matches = query === "" || row.textContent.toLowerCase().includes(query);
 				row.style.display = matches ? "" : "none";
 				if (matches) hasMatch = true;
@@ -330,10 +234,12 @@
 			if (query !== "" && hasMatch) subcategory.open = true;
 		});
 
-		document.querySelectorAll(".library-section").forEach(function (section) {
+		document.querySelectorAll(".library-section").forEach((section) => {
 			const hasMatch = Array.from(section.querySelectorAll(".library-subcategory")).some((sub) => !sub.hidden);
 			section.hidden = !hasMatch;
 			if (query !== "" && hasMatch) section.open = true;
 		});
 	}
+
+	initFlashMessages();
 })();

@@ -5,6 +5,17 @@
  * PDF generation, and the inputs panel (channels + details).
  */
 
+// ─── Cached DOM references ─────────────────────────────────────────────────────
+// Queried once at load time; referenced throughout to avoid repeated lookups.
+
+const plotTitleEl     = document.getElementById("plot-title");
+const plotGigDateEl   = document.getElementById("plot-gig-date");
+const plotVenueEl     = document.getElementById("plot-venue");
+const plotPublicEl    = document.getElementById("plot-public-toggle");
+const inputsDetailsEl = document.getElementById("inputs-details");
+const channelList      = document.getElementById("channel-list");
+const autosaveStatusEl = document.getElementById("autosave-status");
+
 // ─── Palette ───────────────────────────────────────────────────────────────────
 
 const cardContainer = document.querySelector(".element-card-container");
@@ -345,10 +356,10 @@ let lastSavedState = null;
  */
 function getCurrentState() {
 	return JSON.stringify({
-		title: document.getElementById("plot-title").value.trim(),
-		gig_date: document.getElementById("plot-gig-date").value.trim(),
-		venue: document.getElementById("plot-venue").value.trim(),
-		is_public: document.getElementById("plot-public-toggle").checked,
+		title: plotTitleEl.value.trim(),
+		gig_date: plotGigDateEl.value.trim(),
+		venue: plotVenueEl.value.trim(),
+		is_public: plotPublicEl.checked,
 		elements: serializeCanvas(),
 		inputs: serializeInputs(),
 	});
@@ -396,7 +407,7 @@ function serializeCanvas() {
  * @returns {{ channels: Array<{num: string, label: string}>, details: string }}
  */
 function serializeInputs() {
-	const channels = Array.from(document.querySelectorAll("#channel-list .channel-row"))
+	const channels = Array.from(channelList.querySelectorAll(".channel-row"))
 		.map((row) => ({
 			num: row.querySelector(".channel-num").value.trim(),
 			label: row.querySelector(".channel-label").value.trim(),
@@ -405,7 +416,7 @@ function serializeInputs() {
 
 	return {
 		channels,
-		details: document.getElementById("inputs-details").value.trim(),
+		details: inputsDetailsEl.value.trim(),
 	};
 }
 
@@ -422,9 +433,8 @@ const STATUS_TEXT = { saving: "Saving…", saved: "Saved", unsaved: "Unsaved cha
  * @param {string} status - One of 'saving', 'saved', 'unsaved', or ''.
  */
 function setAutoSaveStatus(status) {
-	const el = document.getElementById("autosave-status");
-	el.dataset.status = status;
-	el.textContent = STATUS_TEXT[status] ?? "";
+	autosaveStatusEl.dataset.status = status;
+	autosaveStatusEl.textContent = STATUS_TEXT[status] ?? "";
 }
 
 /**
@@ -439,41 +449,44 @@ function scheduleAutoSave() {
 const GIG_DATE_PATTERN = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/;
 
 /**
+ * Posts the current plot state to the save API and returns the parsed JSON response.
+ * Both autoSavePlot and savePlot delegate the actual fetch here.
+ * @returns {Promise<object>}
+ */
+async function postSavePlot() {
+	const res = await fetch("/api/save-plot.php", {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({
+			plot_id:   currentPlotId,
+			title:     plotTitleEl.value.trim(),
+			gig_date:  plotGigDateEl.value.trim(),
+			venue:     plotVenueEl.value.trim() || null,
+			is_public: plotPublicEl.checked,
+			elements:  serializeCanvas(),
+			inputs:    serializeInputs(),
+		}),
+	});
+	return res.json();
+}
+
+/**
  * Performs the debounced auto-save. Skips if required fields are missing, the date format is
  * invalid, or there are no unsaved changes.
  */
 async function autoSavePlot() {
-	const title = document.getElementById("plot-title").value.trim();
-	const gigDate = document.getElementById("plot-gig-date").value.trim();
+	const title   = plotTitleEl.value.trim();
+	const gigDate = plotGigDateEl.value.trim();
 
 	if (!currentPlotId && (!title || !gigDate)) return;
 	if (gigDate && !GIG_DATE_PATTERN.test(gigDate)) return;
-	if (!hasUnsavedChanges()) {
-		setAutoSaveStatus("saved");
-		return;
-	}
+	if (!hasUnsavedChanges()) { setAutoSaveStatus("saved"); return; }
 
 	setAutoSaveStatus("saving");
-
 	try {
-		const res = await fetch("/api/save-plot.php", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({
-				plot_id: currentPlotId,
-				title,
-				gig_date: gigDate,
-				venue: document.getElementById("plot-venue").value.trim() || null,
-				is_public: document.getElementById("plot-public-toggle").checked,
-				elements: serializeCanvas(),
-				inputs: serializeInputs(),
-			}),
-		});
-
-		const data = await res.json();
-
+		const data = await postSavePlot();
 		if (data.success) {
-			currentPlotId = data.plot_id;
+			currentPlotId  = data.plot_id;
 			lastSavedState = getCurrentState();
 			setAutoSaveStatus("saved");
 		} else {
@@ -489,41 +502,23 @@ async function autoSavePlot() {
  * Stores the returned plot_id so subsequent saves perform an update.
  */
 async function savePlot() {
-	const title = document.getElementById("plot-title").value.trim();
-	const gigDate = document.getElementById("plot-gig-date").value.trim();
-	const venue = document.getElementById("plot-venue").value.trim();
+	const title   = plotTitleEl.value.trim();
+	const gigDate = plotGigDateEl.value.trim();
 
 	if (!title || !gigDate) {
 		alert("Title and Gig Date are required to save.");
 		return;
 	}
-
 	if (!GIG_DATE_PATTERN.test(gigDate)) {
 		alert("Gig Date must be in mm/dd/yyyy format (e.g. 06/15/2026).");
 		return;
 	}
 
 	closeDropdown();
-
 	try {
-		const res = await fetch("/api/save-plot.php", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({
-				plot_id: currentPlotId,
-				title,
-				gig_date: gigDate,
-				venue: venue || null,
-				is_public: document.getElementById("plot-public-toggle").checked,
-				elements: serializeCanvas(),
-				inputs: serializeInputs(),
-			}),
-		});
-
-		const data = await res.json();
-
+		const data = await postSavePlot();
 		if (data.success) {
-			currentPlotId = data.plot_id;
+			currentPlotId  = data.plot_id;
 			lastSavedState = getCurrentState();
 			clearTimeout(autoSaveTimer);
 			setAutoSaveStatus("saved");
@@ -601,10 +596,10 @@ async function loadPlot(plotId) {
 		}
 
 		// Restore meta fields
-		document.getElementById("plot-title").value = data.title;
-		document.getElementById("plot-gig-date").value = data.gig_date;
-		document.getElementById("plot-venue").value = data.venue ?? "";
-		document.getElementById("plot-public-toggle").checked = !!data.is_public;
+		plotTitleEl.value    = data.title;
+		plotGigDateEl.value  = data.gig_date;
+		plotVenueEl.value    = data.venue ?? "";
+		plotPublicEl.checked = !!data.is_public;
 		currentPlotId = data.plot_id;
 
 		// Clear the canvas and redraw elements
@@ -628,16 +623,16 @@ async function loadPlot(plotId) {
 
 		// Restore inputs panel
 		const inputs = data.inputs ?? { channels: [], details: "" };
-		document.getElementById("channel-list").innerHTML = "";
-		document.getElementById("inputs-details").value = inputs.details || "";
+		channelList.innerHTML = "";
+		inputsDetailsEl.value = inputs.details || "";
 		if (inputs.channels.length > 0) {
 			inputs.channels.forEach((ch) => {
-				document.getElementById("channel-list").appendChild(createChannelRow("", ch.num, ch.label));
+				channelList.appendChild(createChannelRow("", ch.num, ch.label));
 			});
 		} else {
 			const placeholders = ["Electric guitar", "Keyboard", "Snare...", "", ""];
 			for (let i = 0; i < 5; i++) {
-				document.getElementById("channel-list").appendChild(createChannelRow(placeholders[i], i + 1));
+				channelList.appendChild(createChannelRow(placeholders[i], i + 1));
 			}
 		}
 
@@ -655,12 +650,12 @@ async function loadPlot(plotId) {
 function resetPlot() {
 	deselectAll();
 	canvas.querySelectorAll(".placed-element").forEach((el) => el.remove());
-	document.getElementById("plot-title").value = "";
-	document.getElementById("plot-gig-date").value = "";
-	document.getElementById("plot-venue").value = "";
-	document.getElementById("plot-public-toggle").checked = false;
-	document.getElementById("inputs-details").value = "";
-	document.getElementById("channel-list").innerHTML = "";
+	plotTitleEl.value = "";
+	plotGigDateEl.value = "";
+	plotVenueEl.value = "";
+	plotPublicEl.checked = false;
+	inputsDetailsEl.value = "";
+	channelList.innerHTML = "";
 	currentPlotId = null;
 	lastSavedState = null;
 	clearTimeout(autoSaveTimer);
@@ -807,9 +802,9 @@ async function buildPdf() {
 
 	deselectAll();
 
-	const title = document.getElementById("plot-title").value.trim() || "Stage Plot";
-	const gigDate = document.getElementById("plot-gig-date").value.trim();
-	const venue = document.getElementById("plot-venue").value.trim();
+	const title   = plotTitleEl.value.trim() || "Stage Plot";
+	const gigDate = plotGigDateEl.value.trim();
+	const venue   = plotVenueEl.value.trim();
 	const canvasEl = document.querySelector(".stage-plot-canvas");
 	const canvasW = canvasEl.offsetWidth;
 	const canvasH = canvasEl.offsetHeight;
@@ -873,14 +868,14 @@ async function buildPdf() {
 
 	// ── Page 2: Inputs (channels + details) ─────────────────────────────────────
 
-	const channels = Array.from(document.querySelectorAll("#channel-list .channel-row"))
+	const channels = Array.from(channelList.querySelectorAll(".channel-row"))
 		.map((row) => ({
 			num: row.querySelector(".channel-num").value.trim(),
 			label: row.querySelector(".channel-label").value.trim(),
 		}))
 		.filter((ch) => ch.num || ch.label);
 
-	const details = document.getElementById("inputs-details").value.trim();
+	const details = inputsDetailsEl.value.trim();
 
 	if (channels.length > 0 || details) {
 		pdf.addPage();
@@ -1033,16 +1028,15 @@ document.getElementById("clear-stage-btn").addEventListener("click", () => {
 
 // ─── Auto-save change listeners ────────────────────────────────────────────────
 
-["plot-title", "plot-gig-date", "plot-venue"].forEach((id) => {
-	document.getElementById(id).addEventListener("input", scheduleAutoSave);
+[plotTitleEl, plotGigDateEl, plotVenueEl].forEach((el) => {
+	el.addEventListener("input", scheduleAutoSave);
 });
-document.getElementById("plot-public-toggle").addEventListener("change", scheduleAutoSave);
+plotPublicEl.addEventListener("change", scheduleAutoSave);
 
 // ─── Inputs Panel ──────────────────────────────────────────────────────────────
 
 const palette = document.querySelector(".palette");
 const inputsPanel = document.getElementById("inputs-panel");
-const channelList = document.getElementById("channel-list");
 const channelsView = document.getElementById("channels-view");
 const detailsView = document.getElementById("details-view");
 
@@ -1187,7 +1181,7 @@ document.getElementById("add-channel-btn").addEventListener("click", () => {
 	scheduleAutoSave();
 });
 
-document.getElementById("inputs-details").addEventListener("input", scheduleAutoSave);
+inputsDetailsEl.addEventListener("input", scheduleAutoSave);
 channelList.addEventListener("input", scheduleAutoSave);
 
 document.getElementById("channels-tab-btn").addEventListener("click", () => {

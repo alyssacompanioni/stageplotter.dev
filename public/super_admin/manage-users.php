@@ -64,6 +64,7 @@ $flash = $session->message();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Manage all users across the platform, including roles and permissions.">
     <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/utils.js" defer></script>
     <script src="/js/manage-users.js" defer></script>
   </head>
 
