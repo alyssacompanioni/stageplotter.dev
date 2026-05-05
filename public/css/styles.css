@@ -957,7 +957,7 @@ footer {
 
 .palette-container header {
   border-bottom: 1px solid var(--border-color);
-  gap: 2px;
+  gap: 8px;
   margin: 0;
 }
 
@@ -995,6 +995,7 @@ footer {
   align-items: center;
   display: flex;
   flex-direction: column;
+  margin-bottom: 6px;
   width: 100%;
 }
 
