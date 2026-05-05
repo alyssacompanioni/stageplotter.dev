@@ -55,6 +55,8 @@
   --light-orange2: #fff1ec;
   --marigold: #aa925a;
   --bright-yellow: #ffdd89;
+
+  --text-muted: #6b7280;
 }
 
 /******* General Styles *******/
@@ -841,7 +843,7 @@ footer {
 
 .autosave-status {
   color: var(--text-gray);
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   transition: color 0.2s;
 }
 
@@ -971,12 +973,14 @@ footer {
 
 .palette-container button:hover {
   background-color: var(--hover-bg);
+  color: #333;
 }
 
 .palette-container button.active-tab,
 .element-type-btn.active-tab {
   background-color: var(--blue-gray);
   border: 2px solid var(--medium-blue2);
+  color: #333;
 }
 
 .palette[hidden] {
@@ -1121,7 +1125,7 @@ footer {
 
 .channel-drag-handle {
   cursor: grab;
-  color: #aaa;
+  color: #767676;
   flex-shrink: 0;
   user-select: none;
 }
@@ -1203,12 +1207,12 @@ footer {
 }
 
 .my-plots-meta {
-  color: var(--text-gray);
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
 .my-plots-empty {
-  color: var(--text-gray);
+  color: var(--text-muted);
   padding: 12px 0;
   text-align: center;
 }
@@ -1226,7 +1230,7 @@ footer {
   border: 1px solid var(--border-color);
   border-radius: 6px;
   font-size: 0.875rem;
-  color: var(--text-gray);
+  color: var(--text-muted);
 }
 
 /* Shared Plot View */
@@ -1266,7 +1270,7 @@ footer {
 }
 
 .shared-plot-subtitle {
-  color: var(--text-gray);
+  color: var(--text-muted);
   margin: 0;
   font-size: 0.95rem;
 }
@@ -1316,7 +1320,7 @@ footer {
 .shared-details p {
   margin: 0;
   white-space: pre-wrap;
-  color: var(--text-gray);
+  color: var(--text-muted);
   font-size: 0.875rem;
 }
 
