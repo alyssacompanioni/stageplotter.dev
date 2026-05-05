@@ -120,7 +120,7 @@ $subtitle = implode(' — ', array_filter([$date, $plot['venue_staplot']]));
     	$plot['title_staplot'],
     ) ?>&rdquo; on Stage Plotter.">
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" href="/assets/favicon.ico">
   </head>
 
   <body>
@@ -181,3 +181,4 @@ $subtitle = implode(' — ', array_filter([$date, $plot['venue_staplot']]));
   </body>
 
 </html>
+

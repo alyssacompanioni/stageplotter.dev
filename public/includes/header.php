@@ -12,7 +12,7 @@
     <div class="header-left">
       <a href="/index.php" class="logo"><img src="/assets/brand/logo-final.svg" alt="Stage Plotter logo."></a>
       <?php if (isset($show_back) && $show_back): ?>
-        <button class="back-btn" onclick="history.back()" aria-label="Go back"><img src="/assets/icons/back.svg" alt="" width="20" height="20"></button>
+        <button class="back-btn" aria-label="Go back"><img src="/assets/icons/back.svg" alt="" width="20" height="20"></button>
       <?php endif; ?>
     </div>
 
@@ -67,3 +67,4 @@
   </div>
 </header>
 <script src="/js/header.js" defer></script>
+

@@ -71,17 +71,17 @@ function redirect_by_role(string $role): void {
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <title>Log In | Stage Plotter</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Log in to Stage Plotter to access your stage plots and manage your account.">
-  <link rel="stylesheet" href="css/styles.css">
-  <script src="/js/forms.js" defer></script>
-</head>
+  <head>
+    <meta charset="utf-8">
+    <title>Log In | Stage Plotter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Log in to Stage Plotter to access your stage plots and manage your account.">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="/js/forms.js" defer></script>
+  </head>
 
-<body>
-  <?php require_once __DIR__ . "/includes/header.php"; ?>
+  <body>
+    <?php require_once __DIR__ . "/includes/header.php"; ?>
   <div class="wrapper">
     <main class="login-main">
       <h1>Log In</h1>
@@ -106,6 +106,7 @@ function redirect_by_role(string $role): void {
     </main>
   </div>
   <?php require_once __DIR__ . "/includes/footer.php"; ?>
-</body>
+  </body>
 
 </html>
+

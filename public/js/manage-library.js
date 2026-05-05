@@ -6,6 +6,12 @@
  */
 
 (function () {
+	document.querySelectorAll("form[data-confirm]").forEach((form) => {
+		form.addEventListener("submit", function (e) {
+			if (!confirm(this.dataset.confirm)) e.preventDefault();
+		});
+	});
+
 	const zone       = document.getElementById("drop-zone");
 	const input      = document.getElementById("svg_file");
 	const stagedEl   = document.getElementById("drop-zone-staged");

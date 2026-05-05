@@ -25,7 +25,7 @@ require_once __DIR__ . '/../private/initialize.php'; ?>
         <p>Sorry, the page you are looking for does not exist.</p>
         <div>
           <video autoplay loop muted playsinline>
-            <source src="assets/brand/logo-animated2.mp4" type="video/mp4">
+            <source src="assets/brand/logo-animated.mp4" type="video/mp4">
           </video>
         </div>
         <p><a href="index.php">Return to Home Page</a></p>

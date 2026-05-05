@@ -19,7 +19,7 @@ $session->require_role('member');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Build a stage plot for your band or live event. Drag and drop instruments, equipment, and labels to design your setup.">
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" href="/assets/favicon.ico">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="/js/stage-plotter.js" defer></script>
   </head>
@@ -169,3 +169,4 @@ $session->require_role('member');
     </div>
   </body>
 </html>
+

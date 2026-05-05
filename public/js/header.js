@@ -4,6 +4,11 @@
  */
 
 document.addEventListener("click", function (e) {
+	if (e.target.closest(".back-btn")) {
+		history.back();
+		return;
+	}
+
 	const toggle = document.getElementById("dropdown-menu-toggle");
 	if (!toggle) return;
 

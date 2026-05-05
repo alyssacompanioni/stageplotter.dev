@@ -453,7 +453,7 @@ function render_section(string $section_title, string $delete_type, array $categ
                                 <img src="/assets/icons/edit.svg" alt="" width="16" height="16">
                               </button>
                               <form method="post"
-                                onsubmit="return confirm(<?= esc(json_encode('Delete ' . $img['filename'] . '?')) ?>);">
+                                data-confirm="<?= esc('Delete ' . $img['filename'] . '?') ?>">
                                 <input type="hidden" name="delete_file"
                                   value="<?= esc($img['rel_path']) ?>">
                                 <input type="hidden" name="delete_type"
@@ -533,7 +533,7 @@ function render_section(string $section_title, string $delete_type, array $categ
                   <input type="hidden" name="cleanup_scan" value="1">
                   <button type="submit" class="btn btn-update">Scan Again</button>
                 </form>
-                <form method="post" onsubmit="return confirm('<?= $confirm ?>');">
+                <form method="post" data-confirm="<?= esc($confirm) ?>">
                   <input type="hidden" name="cleanup_delete" value="1">
                   <button type="submit" class="btn btn-update delete-elements">Delete <?= $n ?> Broken <?= ucfirst(
  	$label,
@@ -551,3 +551,4 @@ function render_section(string $section_title, string $delete_type, array $categ
   </body>
 
 </html>
+

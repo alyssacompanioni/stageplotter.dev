@@ -75,3 +75,4 @@ $show_hero = !$session->is_logged_in();
     <?php require_once __DIR__ . '/includes/footer.php'; ?>
   </body>
 </html>
+
