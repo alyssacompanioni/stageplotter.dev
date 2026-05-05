@@ -1,3 +1,8 @@
+/**
+ * manage-users.js
+ * Handles sortable columns and live search filtering on the manage-users page.
+ */
+
 (function () {
 	const searchInput = document.getElementById("user-search");
 	const tbody = document.querySelector("tbody");
@@ -29,6 +34,9 @@
 		});
 	});
 
+	/**
+	 * Re-sorts all user rows by the currently active column and direction, then re-inserts them into the tbody.
+	 */
 	function sortRows() {
 		allRows.sort(function (a, b) {
 			const av = a.cells[sortColIdx].textContent.trim().toLowerCase();
@@ -42,6 +50,9 @@
 		});
 	}
 
+	/**
+	 * Hides user rows that do not match the current search query.
+	 */
 	function filterRows() {
 		const query = searchInput.value.trim().toLowerCase();
 		allRows.forEach(function (row) {
@@ -50,6 +61,10 @@
 		});
 	}
 
+	/**
+	 * Refreshes the sort arrow icon on each column header to reflect the active sort state.
+	 * @param {HTMLElement} activeTh - The header cell that was just clicked.
+	 */
 	function updateSortIndicators(activeTh) {
 		document.querySelectorAll("thead th[data-col]").forEach(function (th) {
 			th.removeAttribute("data-sort");

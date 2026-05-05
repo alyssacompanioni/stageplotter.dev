@@ -1,3 +1,9 @@
+/**
+ * manage-library.js
+ * Handles the SVG drop-zone upload, inline label/filename editing, sortable tables,
+ * and search filtering on the manage-library page.
+ */
+
 (function () {
 	const zone = document.getElementById("drop-zone");
 	const input = document.getElementById("svg_file");
@@ -21,6 +27,10 @@
 		});
 	});
 
+	/**
+	 * Stages the given file in the drop zone, attaching it to the hidden file input and showing the filename.
+	 * @param {File} file
+	 */
 	function setFile(file) {
 		if (!file) return;
 		const dt = new DataTransfer();
@@ -32,6 +42,9 @@
 		uploadBtn.disabled = false;
 	}
 
+	/**
+	 * Clears the staged file from the drop zone, resetting it to its initial empty state.
+	 */
 	function clearFile() {
 		input.value = "";
 		fileLabel.textContent = "";
@@ -99,6 +112,9 @@
 			});
 		});
 
+		/**
+		 * Re-sorts all rows in the table by the currently active column and direction, then re-inserts them.
+		 */
 		function sortRows() {
 			allRows.sort((a, b) => {
 				const av = a.cells[sortColIdx].textContent.trim().toLowerCase();
@@ -110,6 +126,10 @@
 			allRows.forEach((row) => tbody.appendChild(row));
 		}
 
+		/**
+		 * Refreshes the sort arrow icon on each column header for this table.
+		 * @param {HTMLElement} activeTh - The header cell that was just clicked.
+		 */
 		function updateSortIndicators(activeTh) {
 			table.querySelectorAll("thead th[data-col]").forEach((th) => {
 				th.removeAttribute("data-sort");
@@ -157,12 +177,14 @@
 			input.focus();
 			input.select();
 
+			/** Cancels inline label editing, restoring the original label text. */
 			function cancel() {
 				span.hidden = false;
 				wrap.remove();
 				cell.classList.remove("editing");
 			}
 
+			/** Submits the updated label to the server via a dynamically constructed form POST. */
 			function save() {
 				const form = document.createElement("form");
 				form.method = "post";
@@ -229,12 +251,14 @@
 			input.focus();
 			input.select();
 
+			/** Cancels inline filename editing, restoring the original filename text. */
 			function cancel() {
 				span.hidden = false;
 				wrap.remove();
 				cell.classList.remove("editing");
 			}
 
+			/** Submits the new filename (without extension) to the server via a dynamically constructed form POST. */
 			function save() {
 				const form = document.createElement("form");
 				form.method = "post";
@@ -283,6 +307,10 @@
 		});
 	}
 
+	/**
+	 * Filters the library tables by the current search query, hiding non-matching rows and
+	 * collapsing empty subcategory and section groups.
+	 */
 	function filterLibrary() {
 		const query = searchInput.value.trim().toLowerCase();
 

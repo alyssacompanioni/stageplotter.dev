@@ -1,5 +1,7 @@
-// view-plot.js
-// Renders a read-only stage plot from the PLOT_ELEMENTS array embedded by plot.php.
+/**
+ * view-plot.js
+ * Renders a read-only stage plot from the PLOT_ELEMENTS array embedded by view-plot.php.
+ */
 
 (function () {
 	const canvas = document.getElementById("shared-canvas");

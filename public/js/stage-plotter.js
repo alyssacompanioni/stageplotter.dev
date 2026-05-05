@@ -1,3 +1,10 @@
+/**
+ * stage-plotter.js
+ * Implements the interactive stage-plot editor: palette drag-and-drop, element
+ * manipulation (move, rotate, flip, resize, layer), auto-save, save/load/share/export,
+ * PDF generation, and the inputs panel (channels + details).
+ */
+
 // ─── Palette ───────────────────────────────────────────────────────────────────
 
 const cardContainer = document.querySelector(".element-card-container");
@@ -410,12 +417,19 @@ const AUTO_SAVE_DELAY = 2000;
 
 const STATUS_TEXT = { saving: "Saving…", saved: "Saved", unsaved: "Unsaved changes", "": "" };
 
+/**
+ * Updates the autosave status indicator element with the given status key.
+ * @param {string} status - One of 'saving', 'saved', 'unsaved', or ''.
+ */
 function setAutoSaveStatus(status) {
 	const el = document.getElementById("autosave-status");
 	el.dataset.status = status;
 	el.textContent = STATUS_TEXT[status] ?? "";
 }
 
+/**
+ * Marks the plot as having unsaved changes and debounces the auto-save by resetting the timer.
+ */
 function scheduleAutoSave() {
 	setAutoSaveStatus("unsaved");
 	clearTimeout(autoSaveTimer);
@@ -424,6 +438,10 @@ function scheduleAutoSave() {
 
 const GIG_DATE_PATTERN = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/;
 
+/**
+ * Performs the debounced auto-save. Skips if required fields are missing, the date format is
+ * invalid, or there are no unsaved changes.
+ */
 async function autoSavePlot() {
 	const title = document.getElementById("plot-title").value.trim();
 	const gigDate = document.getElementById("plot-gig-date").value.trim();
@@ -1031,6 +1049,10 @@ const detailsView = document.getElementById("details-view");
 /**
  * Creates and returns a new channel list item with a number input, text input,
  * and a delete button.
+ * @param {string} [placeholder=''] - Placeholder text for the label input.
+ * @param {number|null} [channelNum=null] - Pre-filled channel number, or null to leave blank.
+ * @param {string} [labelValue=''] - Pre-filled label value.
+ * @returns {HTMLLIElement}
  */
 function createChannelRow(placeholder = "", channelNum = null, labelValue = "") {
 	const li = document.createElement("li");
@@ -1113,7 +1135,10 @@ channelList.addEventListener("dragover", (e) => {
 const instrumentSubcategories = document.getElementById("instrument-subcategories");
 const equipmentSubcategories = document.getElementById("equipment-subcategories");
 
-/** Shows the inputs panel and hides the regular palette. */
+/**
+ * Shows the inputs panel (channels + details tabs) and hides the instrument/equipment palette.
+ * Seeds the channel list with five placeholder rows if it is currently empty.
+ */
 function showInputsPanel() {
 	palette.setAttribute("hidden", "");
 	inputsPanel.removeAttribute("hidden");
@@ -1131,7 +1156,9 @@ function showInputsPanel() {
 	}
 }
 
-/** Shows the instrument palette and hides everything else. */
+/**
+ * Shows the instrument palette and hides the inputs panel and equipment palette.
+ */
 function showInstrumentPalette() {
 	inputsPanel.setAttribute("hidden", "");
 	palette.removeAttribute("hidden");
@@ -1139,7 +1166,10 @@ function showInstrumentPalette() {
 	equipmentSubcategories.setAttribute("hidden", "");
 }
 
-/** Shows the equipment palette and hides everything else. */
+/**
+ * Shows the equipment palette, hides the inputs panel and instrument palette,
+ * and loads the default 'audio' equipment subcategory.
+ */
 function showEquipmentPalette() {
 	inputsPanel.setAttribute("hidden", "");
 	palette.removeAttribute("hidden");

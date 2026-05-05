@@ -1,3 +1,8 @@
+/**
+ * index.js
+ * Fetches and renders the public plots table on the index page, with client-side search and sort.
+ */
+
 (function () {
 	const PAGE_SIZE = 20;
 	let allPlots = [];
@@ -34,6 +39,9 @@
 		});
 	});
 
+	/**
+	 * Refreshes the sort arrow icon on each column header to reflect the current sort column and direction.
+	 */
 	function updateSortIndicators() {
 		document.querySelectorAll("thead th").forEach((th) => {
 			th.removeAttribute("data-sort");
@@ -51,6 +59,9 @@
 	}
 
 	// ── Render ───────────────────────────────────────────────
+	/**
+	 * Filters and sorts the loaded plots, then writes the result rows into the table body.
+	 */
 	function render() {
 		const query = document.getElementById("plot-search").value.trim().toLowerCase();
 		let results = allPlots;
@@ -104,6 +115,11 @@
 			.join("");
 	}
 
+	/**
+	 * Returns an HTML-escaped version of a string, safe for injection into innerHTML.
+	 * @param {string} str
+	 * @returns {string}
+	 */
 	function escHtml(str) {
 		return (str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 	}
