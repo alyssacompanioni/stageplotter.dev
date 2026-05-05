@@ -1077,8 +1077,8 @@ footer {
 
 .inputs-tab-btn {
   flex: 1;
-  background: var(--blue-gray);
-  color: #333;
+  background: var(--medium-blue2);
+  color: var(--text-light);
 }
 
 .inputs-tab-btn.active-tab {
