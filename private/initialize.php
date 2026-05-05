@@ -11,7 +11,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 function my_autoload($class)
 {
   if (preg_match('/\A\w+\Z/', $class)) {
-    include('classes/' . strtolower($class) . '.class.php');
+    include(__DIR__ . '/classes/' . strtolower($class) . '.class.php');
   }
 }
 spl_autoload_register('my_autoload');
