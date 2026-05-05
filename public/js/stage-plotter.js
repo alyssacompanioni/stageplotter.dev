@@ -56,6 +56,10 @@ document.getElementById("equipment-subcategories").addEventListener("click", (e)
  * @param {string} type - 'instruments' or 'equipment'
  */
 async function switchPalette(category, type = "instruments") {
+	document.querySelectorAll(".element-type-btn").forEach((b) => b.classList.remove("active-tab"));
+	const activeTypeBtn = document.querySelector(`.element-type-btn[value="${category}"][data-palette-type="${type}"]`);
+	if (activeTypeBtn) activeTypeBtn.classList.add("active-tab");
+
 	try {
 		const url = `/api/get-palette.php?type=${encodeURIComponent(type)}&category=${encodeURIComponent(category)}`;
 		const res = await fetch(url);
@@ -1134,6 +1138,7 @@ const equipmentSubcategories = document.getElementById("equipment-subcategories"
  * Seeds the channel list with five placeholder rows if it is currently empty.
  */
 function showInputsPanel() {
+	setActivePaletteToggle(document.getElementById("input-palette-toggle"));
 	palette.setAttribute("hidden", "");
 	inputsPanel.removeAttribute("hidden");
 
@@ -1154,6 +1159,7 @@ function showInputsPanel() {
  * Shows the instrument palette and hides the inputs panel and equipment palette.
  */
 function showInstrumentPalette() {
+	setActivePaletteToggle(document.getElementById("instrument-palette-toggle"));
 	inputsPanel.setAttribute("hidden", "");
 	palette.removeAttribute("hidden");
 	instrumentSubcategories.removeAttribute("hidden");
@@ -1165,11 +1171,23 @@ function showInstrumentPalette() {
  * and loads the default 'audio' equipment subcategory.
  */
 function showEquipmentPalette() {
+	setActivePaletteToggle(document.getElementById("equipment-palette-toggle"));
 	inputsPanel.setAttribute("hidden", "");
 	palette.removeAttribute("hidden");
 	equipmentSubcategories.removeAttribute("hidden");
 	instrumentSubcategories.setAttribute("hidden", "");
 	switchPalette("audio", "equipment");
+}
+
+const paletteToggles = [
+	document.getElementById("instrument-palette-toggle"),
+	document.getElementById("equipment-palette-toggle"),
+	document.getElementById("input-palette-toggle"),
+];
+
+function setActivePaletteToggle(btn) {
+	paletteToggles.forEach((b) => b.classList.remove("active-tab"));
+	btn.classList.add("active-tab");
 }
 
 document.getElementById("instrument-palette-toggle").addEventListener("click", showInstrumentPalette);
@@ -1199,4 +1217,5 @@ document.getElementById("details-tab-btn").addEventListener("click", () => {
 });
 
 // Load the default palette category on page load.
+document.getElementById("instrument-palette-toggle").classList.add("active-tab");
 switchPalette("guitars", "instruments");

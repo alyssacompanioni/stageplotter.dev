@@ -303,7 +303,7 @@ select {
 }
 
 .btn:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .btn-update,
@@ -967,6 +967,12 @@ footer {
 
 .palette-container button:hover {
     background-color: var(--hover-bg);
+}
+
+.palette-container button.active-tab,
+.element-type-btn.active-tab {
+    background-color: var(--blue-gray);
+    border: 2px solid var(--bright-accent-blue);
 }
 
 .palette[hidden] {
