@@ -4,7 +4,7 @@
  * Detects environment (local DDEV vs production) and opens a PDO database connection.
  */
 
-// ---- Envvironment Detection ----
+// ---- Environment Detection ----
 //DDEV sets an env variable we can check for:
 define('ENVIRONMENT', getenv('IS_DDEV_PROJECT') ? 'development' : 'production');
 

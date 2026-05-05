@@ -1212,6 +1212,10 @@ const paletteToggles = [
   document.getElementById("input-palette-toggle"),
 ];
 
+/**
+ * Sets the active state on the given palette toggle button, clearing it from all others.
+ * @param {HTMLElement} btn - The toggle button to mark as active.
+ */
 function setActivePaletteToggle(btn) {
   paletteToggles.forEach((b) => b.classList.remove("active-tab"));
   btn.classList.add("active-tab");
@@ -1253,6 +1257,10 @@ const NARROW_SCREEN_MODAL = document.getElementById("narrow-screen-modal");
 const MIN_WIDTH = 1150;
 let narrowScreenDismissed = false;
 
+/**
+ * Shows or hides the narrow-screen warning modal based on the current window width.
+ * Resets the dismissed flag when the window grows back above the minimum threshold.
+ */
 function checkScreenWidth() {
   if (!narrowScreenDismissed && window.innerWidth < MIN_WIDTH) {
     NARROW_SCREEN_MODAL.removeAttribute("hidden");

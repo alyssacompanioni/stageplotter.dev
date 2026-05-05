@@ -7,4 +7,8 @@
 (function () {
 	initSortableTable(document.querySelector("tbody"), document.getElementById("user-search"));
 	initFlashMessages();
+
+	document.querySelectorAll(".status-toggle").forEach((toggle) => {
+		toggle.addEventListener("change", () => toggle.form.submit());
+	});
 })();

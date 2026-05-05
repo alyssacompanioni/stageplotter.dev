@@ -20,7 +20,9 @@ if (document.getElementById("login-form")) {
 
 if (document.getElementById("register-form")) {
 	document.getElementById("register-form").addEventListener("submit", (e) => {
-		if (!validateAccountFields() | !validateNewPassword("password", "confirm_password")) {
+		const accountValid = validateAccountFields();
+		const passwordValid = validateNewPassword("password", "confirm_password");
+		if (!accountValid || !passwordValid) {
 			e.preventDefault();
 		}
 	});

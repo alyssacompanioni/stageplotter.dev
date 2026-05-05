@@ -116,7 +116,6 @@ $flash = $session->message();
                     <input type="hidden" name="action" value="toggle_active">
                     <input type="checkbox" class="status-toggle" role="switch"
                            <?= $user->is_active_usr ? 'checked' : '' ?>
-                           onchange="this.form.submit()"
                            aria-label="<?= $user->is_active_usr
                            	? 'Active — click to deactivate'
                            	: 'Inactive — click to activate' ?>">

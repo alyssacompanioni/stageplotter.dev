@@ -124,7 +124,7 @@ require_once __DIR__ . '/../private/initialize.php'; ?>
               <li>"Spotlight" icon by Rafiico Creative Studio from <a href="https://thenounproject.com/browse/icons/term/spotlight/" target="_blank" title="Spotlight Icons">Noun Project</a> (CC BY 3.0)</li>
               <li>"Stage Light" icon by TENTELIER from <a href="https://thenounproject.com/browse/icons/term/stage-light/" target="_blank" title="stage light Icons">Noun Project</a> (CC BY 3.0)</li>
               <li>"Studio Lighting Equipment" icon by Marco Livolsi from <a href="https://thenounproject.com/browse/icons/term/studio-lighting-equipment/" target="_blank" title="Studio lighting equipment Icons">Noun Project</a> (CC BY 3.0)</li>
-              <li>"stage lights by Tawny Whatmore from <a href="https://thenounproject.com/browse/icons/term/stage-lights/" target="_blank" title="stage lights Icons">Noun Project</a> (CC BY 3.0)</li>
+              <li>"Stage Lights" by Tawny Whatmore from <a href="https://thenounproject.com/browse/icons/term/stage-lights/" target="_blank" title="stage lights Icons">Noun Project</a> (CC BY 3.0)</li>
             </ul>
           </section>
 
@@ -152,7 +152,7 @@ require_once __DIR__ . '/../private/initialize.php'; ?>
             <li><a target="_blank" href="https://www.svgrepo.com/svg/183562/down-arrow" title="down-arrow icon">Down Arrow</a> icon by <a target="_blank" href="https://www.svgrepo.com/">SVGrepo</a></li>
             <li>"Delete" icon by AS Design from <a href="https://thenounproject.com/browse/icons/term/delete/" target="_blank" title="Delete Icons">Noun Project</a> (CC BY 3.0)</li>
             <li>Footer image inspiration: <a href="https://www.magnific.com/free-vector/collection-three-different-party-crowd-silhouettes_853867.htm#fromView=keyword&page=1&position=1&uuid=aee170c0-dc33-4499-bdfc-d43fa7691cc4&query=Svg+crowd+people">Image by kjpargeter on Magnific</a> (CC BY 4.0)</li>
-            <li>spot lamp (used for Equipment plot-elements) by Ainul abib from <a href="https://thenounproject.com/browse/icons/term/spot-lamp/" target="_blank" title="spot lamp Icons">Noun Project</a> (CC BY 3.0)
+            <li>spot lamp (used for Equipment plot-elements) by Ainul abib from <a href="https://thenounproject.com/browse/icons/term/spot-lamp/" target="_blank" title="spot lamp Icons">Noun Project</a> (CC BY 3.0)</li>
           </ul>
         </section>
 
