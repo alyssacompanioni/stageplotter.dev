@@ -10,8 +10,6 @@
  * Excluded from $db_columns (auto-managed by MySQL):
  *   created_at_staplot  — DEFAULT current_timestamp()
  *   updated_at_staplot  — DEFAULT current_timestamp() ON UPDATE current_timestamp()
- *
- * @author Alyssa Companioni
  */
 
 class StagePlot extends DatabaseObject

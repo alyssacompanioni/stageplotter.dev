@@ -1,14 +1,11 @@
 <?php
-/*
-* databaseobject.class.php
-* Creates class to manipulate the PHP Database Object for StagePlotter.dev
-*
-* Instantiates objects with data pulled from the database.
-* Defines CRUD operations, handles DB queries, and errors.
-*
-*@author Alyssa Companioni
-*
-*/
+/**
+ * databaseobject.class.php
+ * Base ORM class for all database-mapped objects in StagePlotter.
+ *
+ * Instantiates objects with data pulled from the database.
+ * Defines CRUD operations, handles DB queries, and errors.
+ */
 
 class DatabaseObject
 {

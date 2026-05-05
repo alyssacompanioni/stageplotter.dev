@@ -550,7 +550,9 @@ function render_section(string $section_title, string $delete_type, array $categ
                 </form>
                 <form method="post" onsubmit="return confirm('<?= $confirm ?>');">
                   <input type="hidden" name="cleanup_delete" value="1">
-                  <button type="submit" class="btn btn-delete">Delete <?= $n ?> Broken <?= ucfirst($label) ?></button>
+                  <button type="submit" class="btn btn-update delete-elements">Delete <?= $n ?> Broken <?= ucfirst(
+ 	$label,
+ ) ?></button>
                 </form>
               </div>
             <?php endif; ?>

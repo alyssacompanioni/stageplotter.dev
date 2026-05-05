@@ -12,8 +12,6 @@
  *   - Display info: SVG source path and element name
  *
  * Autoloaded as: PlotElement → plotelement.class.php
- *
- * @author Alyssa Companioni
  */
 
 class PlotElement extends DatabaseObject

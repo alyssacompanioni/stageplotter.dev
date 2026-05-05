@@ -1,7 +1,8 @@
 <?php
-// Database Connection File.
-// Detects environment (local DDEV vs production) and connects accordingly.
-// Alyssa Companioni
+/**
+ * db_connection.php
+ * Detects environment (local DDEV vs production) and opens a PDO database connection.
+ */
 
 // ---- Envvironment Detection ----
 //DDEV sets an env variable we can check for:

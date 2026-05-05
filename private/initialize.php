@@ -1,4 +1,8 @@
 <?php
+/**
+ * initialize.php
+ * Bootstraps the application: connects to the database, registers the class autoloader, and starts a hardened session.
+ */
 
 require_once('db_connection.php');
 require_once __DIR__ . '/../vendor/autoload.php';

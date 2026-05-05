@@ -8,8 +8,6 @@
  * because MySQL manages them automatically via DEFAULT and ON UPDATE.
  *
  * Autoloaded as: User → user.class.php
- *
- * @author Alyssa Companioni
  */
 
 class User extends DatabaseObject
