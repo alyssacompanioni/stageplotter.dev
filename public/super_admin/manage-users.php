@@ -1,5 +1,4 @@
 <?php
-
 /**
  * manage-users.php
  * Lists all admin and member accounts and lets super_admins activate or
@@ -9,18 +8,19 @@
  *
  * @author Alyssa Companioni
  */
-require_once __DIR__ . "/../../private/initialize.php";
-$session->require_role("super_admin");
+
+require_once __DIR__ . '/../../private/initialize.php';
+$session->require_role('super_admin');
 
 // ── Handle bulk role update POST ──────────────────────────────────────────────
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["roles"])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roles'])) {
 	$updated = 0;
-	foreach ((array) $_POST["roles"] as $user_id => $new_role) {
-		if (!in_array($new_role, ["member", "admin"])) {
+	foreach ((array) $_POST['roles'] as $user_id => $new_role) {
+		if (!in_array($new_role, ['member', 'admin'])) {
 			continue;
 		}
 		$user = User::find_by_id((int) $user_id);
-		if (!$user || !in_array($user->role_usr, ["member", "admin"])) {
+		if (!$user || !in_array($user->role_usr, ['member', 'admin'])) {
 			continue;
 		}
 		if ($user->role_usr === $new_role) {
@@ -31,25 +31,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["roles"])) {
 			$updated++;
 		}
 	}
-	$session->message($updated > 0 ? "Roles updated." : "No changes made.");
-	header("Location: manage-users.php");
+	$session->message($updated > 0 ? 'Roles updated.' : 'No changes made.');
+	header('Location: manage-users.php');
 	exit();
 }
 
 // ── Handle toggle active POST ─────────────────────────────────────────────────
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["user_id"])) {
-	$user = User::find_by_id((int) $_POST["user_id"]);
-	if ($user && in_array($user->role_usr, ["member", "admin"])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
+	$user = User::find_by_id((int) $_POST['user_id']);
+	if ($user && in_array($user->role_usr, ['member', 'admin'])) {
 		if ($user->toggle_active()) {
-			$label = $user->is_active_usr ? "activated" : "deactivated";
-			$session->message(esc($user->first_name_usr) . " has been " . $label . ".");
+			$label = $user->is_active_usr ? 'activated' : 'deactivated';
+			$session->message(esc($user->first_name_usr) . ' has been ' . $label . '.');
 		} else {
-			$session->message("Could not update user status. Please try again.");
+			$session->message('Could not update user status. Please try again.');
 		}
 	} else {
-		$session->message("User not found.");
+		$session->message('User not found.');
 	}
-	header("Location: manage-users.php");
+	header('Location: manage-users.php');
 	exit();
 }
 
@@ -71,12 +71,12 @@ $flash = $session->message();
   </head>
 
   <body>
-    <?php require_once "../includes/header.php"; ?>
+    <?php require_once '../includes/header.php'; ?>
     <div class="dashboard-wrapper">
       <main>
         <h1>Manage Users</h1>
 
-        <?php if ($flash !== "") { ?>
+        <?php if ($flash !== '') { ?>
         <div class="flash-message">
           <span><?= esc($flash) ?></span>
           <button type="button" class="msg-close-btn" aria-label="Dismiss">&times;</button>
@@ -101,14 +101,14 @@ $flash = $session->message();
           <tbody>
             <?php foreach ($users as $user) { ?>
             <tr>
-              <td data-label="Name"><?= esc($user->first_name_usr . " " . $user->last_name_usr) ?></td>
+              <td data-label="Name"><?= esc($user->first_name_usr . ' ' . $user->last_name_usr) ?></td>
               <td data-label="Username"><?= esc($user->username_usr) ?></td>
               <td data-label="Email"><?= esc($user->email_usr) ?></td>
               <td data-label="Role">
                 <select name="roles[<?= $user->id ?>]" form="roles-form"
-                        aria-label="Role for <?= esc($user->first_name_usr . " " . $user->last_name_usr) ?>">
-                  <option value="member" <?= $user->role_usr === "member" ? "selected" : "" ?>>Member</option>
-                  <option value="admin" <?= $user->role_usr === "admin" ? "selected" : "" ?>>Admin</option>
+                        aria-label="Role for <?= esc($user->first_name_usr . ' ' . $user->last_name_usr) ?>">
+                  <option value="member" <?= $user->role_usr === 'member' ? 'selected' : '' ?>>Member</option>
+                  <option value="admin" <?= $user->role_usr === 'admin' ? 'selected' : '' ?>>Admin</option>
                 </select>
               </td>
               <td data-label="Status">
@@ -117,13 +117,13 @@ $flash = $session->message();
                     <input type="hidden" name="user_id" value="<?= $user->id ?>">
                     <input type="hidden" name="action" value="toggle_active">
                     <input type="checkbox" class="status-toggle" role="switch"
-                           <?= $user->is_active_usr ? "checked" : "" ?>
+                           <?= $user->is_active_usr ? 'checked' : '' ?>
                            onchange="this.form.submit()"
                            aria-label="<?= $user->is_active_usr
-                           	? "Active — click to deactivate"
-                           	: "Inactive — click to activate" ?>">
+                           	? 'Active — click to deactivate'
+                           	: 'Inactive — click to activate' ?>">
                   </form>
-                  <span class="status-label"><?= $user->is_active_usr ? "Active" : "Inactive" ?></span>
+                  <span class="status-label"><?= $user->is_active_usr ? 'Active' : 'Inactive' ?></span>
                 </div>
               </td>
             </tr>
@@ -135,7 +135,7 @@ $flash = $session->message();
 
       </main>
     </div>
-    <?php require_once "../includes/footer.php"; ?>
+    <?php require_once '../includes/footer.php'; ?>
   </body>
 
 </html>

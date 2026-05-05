@@ -1,5 +1,4 @@
 <?php
-
 /**
  * header.php
  * Sitewide header. Displays a personalized logout link
@@ -7,7 +6,6 @@
  *
  * Requires: $session (provided by initialize.php on the parent page)
  *
- * @author Alyssa Companioni
  */
 ?>
 

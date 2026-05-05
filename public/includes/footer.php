@@ -1,3 +1,11 @@
+<?php
+/**
+ * footer.php
+ * Sitewide footer. Displays copyright information and credits.
+ *
+ */
+?>
+
 <footer>
   <div class="footer-top"></div>
   <div class="footer-bottom">
