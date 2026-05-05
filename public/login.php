@@ -6,30 +6,30 @@
  * Alyssa Companioni
  */
 
-require_once __DIR__ . '/../private/initialize.php';
+require_once __DIR__ . "/../private/initialize.php";
 
 $errors = [];
-$username = '';
-$password = '';
+$username = "";
+$password = "";
 
 // If already logged in, redirect
-if (isset($_SESSION['user_id'])) {
-  redirect_by_role($_SESSION['role']);
+if (isset($_SESSION["user_id"])) {
+	redirect_by_role($_SESSION["role"]);
 }
 
 // Handle form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $username = trim($_POST['username'] ?? '');
-  $password = $_POST['password'] ?? '';
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+	$username = trim($_POST["username"] ?? "");
+	$password = $_POST["password"] ?? "";
 
-  // Server-side validations
-  if (empty($username)) {
-    $errors[] = "Username cannot be blank.";
-  } elseif (empty($password)) {
-    $errors[] = "Password cannot be blank.";
-  } else {
-    // Query the database
-    $stmt = $db->prepare("SELECT id_usr,
+	// Server-side validations
+	if (empty($username)) {
+		$errors[] = "Username cannot be blank.";
+	} elseif (empty($password)) {
+		$errors[] = "Password cannot be blank.";
+	} else {
+		// Query the database
+		$stmt = $db->prepare("SELECT id_usr,
                                  username_usr,
                                  password_hash_usr,
                                  first_name_usr,
@@ -37,39 +37,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                            FROM user_usr
                            WHERE username_usr = ? 
                             AND is_active_usr = 1");
-    $stmt->execute([$username]);
-    $user = $stmt->fetch();
+		$stmt->execute([$username]);
+		$user = $stmt->fetch();
 
-    if ($user && password_verify($password, $user['password_hash_usr'])) {
-      //Successful login - set session variables
-      $session->login($user);
-      redirect_by_role($user['role_usr']);
-    } else {
-      // Intentionally vague - don't reveal which field is wrong for security measures
-      $errors[] = 'Invalid username or password.';
-    }
-  }
+		if ($user && password_verify($password, $user["password_hash_usr"])) {
+			//Successful login - set session variables
+			$session->login($user);
+			redirect_by_role($user["role_usr"]);
+		} else {
+			// Intentionally vague - don't reveal which field is wrong for security measures
+			$errors[] = "Invalid username or password.";
+		}
+	}
 }
 
 /**
  * Redirects the user to the correct dashboard based on their role
- * 
+ *
  * @param string $role The user's role ('member', 'admin', or 'super_admin').
- * @return void 
+ * @return void
  */
 
-function redirect_by_role(string $role): void
-{
-  $destinations = [
-    'super_admin' => '/super_admin/dashboard.php',
-    'admin'  => '/admin/dashboard.php',
-    'member' => '/stage-plotter.php',
-  ];
+function redirect_by_role(string $role): void {
+	$destinations = [
+		"super_admin" => "/super_admin/dashboard.php",
+		"admin" => "/admin/dashboard.php",
+		"member" => "/stage-plotter.php",
+	];
 
-  header('Location: ' . ($destinations[$role] ?? '/index.php'));
-  exit;
+	header("Location: " . ($destinations[$role] ?? "/index.php"));
+	exit();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -77,24 +75,23 @@ function redirect_by_role(string $role): void
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Log In | Stage Plotter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Log in to Stage Plotter to access your stage plots and manage your account.">
   <link rel="stylesheet" href="css/styles.css">
   <script src="/js/forms.js" defer></script>
 </head>
 
 <body>
-  <?php require_once __DIR__ . '/includes/header.php'; ?>
+  <?php require_once __DIR__ . "/includes/header.php"; ?>
   <div class="wrapper">
     <main class="login-main">
       <h1>Log In</h1>
 
       <?php if (!empty($errors)) { ?>
         <p class="error" role="alert"><?php foreach ($errors as $error) {
-                                        echo esc($error) . "<br>";
-                                      }
-                                      ?></p>
+        	echo esc($error) . "<br>";
+        } ?></p>
       <?php } ?>
 
       <form action="login.php" method="post" id="login-form">
@@ -110,7 +107,7 @@ function redirect_by_role(string $role): void
       <p>Don't have an account? <a href="/register.php">Sign Up</a></p>
     </main>
   </div>
-  <?php require_once __DIR__ . '/includes/footer.php'; ?>
+  <?php require_once __DIR__ . "/includes/footer.php"; ?>
 </body>
 
 </html>
