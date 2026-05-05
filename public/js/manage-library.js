@@ -241,5 +241,20 @@
 		});
 	}
 
+	// ── Maintenance scroll restoration ───────────────────────────────────────────
+
+	const cleanupSection = document.querySelector(".cleanup-section");
+
+	if (cleanupSection && sessionStorage.getItem("scrollToMaintenance")) {
+		sessionStorage.removeItem("scrollToMaintenance");
+		cleanupSection.scrollIntoView();
+	}
+
+	document.querySelectorAll(".btn-update").forEach((btn) => {
+		btn.closest("form")?.addEventListener("submit", () => {
+			sessionStorage.setItem("scrollToMaintenance", "1");
+		});
+	});
+
 	initFlashMessages();
 })();
