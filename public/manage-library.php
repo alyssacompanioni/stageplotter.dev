@@ -13,264 +13,260 @@ define('ASSETS_INSTRUMENTS_DIR', __DIR__ . '/assets/instruments/');
 define('ASSETS_EQUIPMENT_DIR', __DIR__ . '/assets/equipment/');
 
 $instrument_categories = INSTRUMENT_CATEGORIES;
-$equipment_categories  = EQUIPMENT_CATEGORIES;
+$equipment_categories = EQUIPMENT_CATEGORIES;
 
 // ── Handle SVG upload POST ────────────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['svg_file'])) {
-	$type = $_POST['type'] ?? '';
-	$subcategory = $_POST['subcategory'] ?? '';
+  $type = $_POST['type'] ?? '';
+  $subcategory = $_POST['subcategory'] ?? '';
 
-	// Validate type and subcategory
-	if ($type === 'instruments' && array_key_exists($subcategory, $instrument_categories)) {
-		$dest_dir = ASSETS_INSTRUMENTS_DIR . $subcategory . '/';
-	} elseif ($type === 'equipment' && array_key_exists($subcategory, $equipment_categories)) {
-		$dest_dir = ASSETS_EQUIPMENT_DIR . $subcategory . '/';
-	} else {
-		$session->message('Invalid category selection.');
-		header('Location: manage-library.php');
-		exit();
-	}
+  // Validate type and subcategory
+  if ($type === 'instruments' && array_key_exists($subcategory, $instrument_categories)) {
+    $dest_dir = ASSETS_INSTRUMENTS_DIR . $subcategory . '/';
+  } elseif ($type === 'equipment' && array_key_exists($subcategory, $equipment_categories)) {
+    $dest_dir = ASSETS_EQUIPMENT_DIR . $subcategory . '/';
+  } else {
+    $session->message('Invalid category selection.');
+    header('Location: manage-library.php');
+    exit();
+  }
 
-	if ($_FILES['svg_file']['error'] !== UPLOAD_ERR_OK) {
-		$session->message('Upload error. Please try again.');
-	} else {
-		$tmp = $_FILES['svg_file']['tmp_name'];
-		$ext = strtolower(pathinfo($_FILES['svg_file']['name'], PATHINFO_EXTENSION));
+  if ($_FILES['svg_file']['error'] !== UPLOAD_ERR_OK) {
+    $session->message('Upload error. Please try again.');
+  } else {
+    $tmp = $_FILES['svg_file']['tmp_name'];
+    $ext = strtolower(pathinfo($_FILES['svg_file']['name'], PATHINFO_EXTENSION));
 
-		if (mime_content_type($tmp) !== 'image/svg+xml' || $ext !== 'svg') {
-			$session->message('Only SVG files are accepted.');
-		} else {
-			$sanitizer = new enshrined\svgSanitize\Sanitizer();
-			$sanitizer->removeRemoteReferences(true);
-			$clean_svg = $sanitizer->sanitize(file_get_contents($tmp));
+    if (mime_content_type($tmp) !== 'image/svg+xml' || $ext !== 'svg') {
+      $session->message('Only SVG files are accepted.');
+    } else {
+      $sanitizer = new enshrined\svgSanitize\Sanitizer();
+      $sanitizer->removeRemoteReferences(true);
+      $clean_svg = $sanitizer->sanitize(file_get_contents($tmp));
 
-			if ($clean_svg === false || trim($clean_svg) === '') {
-				$session->message('The SVG file was rejected — it may contain disallowed elements or be malformed.');
-			} else {
-				$base = preg_replace(
-					'/[^a-z0-9_\-]/',
-					'_',
-					strtolower(pathinfo($_FILES['svg_file']['name'], PATHINFO_FILENAME)),
-				);
-				$filename = $base . '.svg';
-				$dest = $dest_dir . $filename;
+      if ($clean_svg === false || trim($clean_svg) === '') {
+        $session->message('The SVG file was rejected — it may contain disallowed elements or be malformed.');
+      } else {
+        $base = preg_replace(
+          '/[^a-z0-9_\-]/',
+          '_',
+          strtolower(pathinfo($_FILES['svg_file']['name'], PATHINFO_FILENAME)),
+        );
+        $filename = $base . '.svg';
+        $dest = $dest_dir . $filename;
 
-				// Appends a Unix timestamp if the filename already exists to avoid overwriting
-				if (file_exists($dest)) {
-					$filename = $base . '_' . time() . '.svg';
-					$dest = $dest_dir . $filename;
-				}
+        // Appends a Unix timestamp if the filename already exists to avoid overwriting
+        if (file_exists($dest)) {
+          $filename = $base . '_' . time() . '.svg';
+          $dest = $dest_dir . $filename;
+        }
 
-				if (file_put_contents($dest, $clean_svg) !== false) {
-					$session->message(esc($filename) . ' uploaded successfully.');
-				} else {
-					$session->message('Upload failed. Please try again.');
-				}
-			}
-		}
-	}
+        if (file_put_contents($dest, $clean_svg) !== false) {
+          $session->message(esc($filename) . ' uploaded successfully.');
+        } else {
+          $session->message('Upload failed. Please try again.');
+        }
+      }
+    }
+  }
 
-	header('Location: manage-library.php');
-	exit();
+  header('Location: manage-library.php');
+  exit();
 }
 
 // ── Handle delete POST ────────────────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_file'])) {
-	$type = $_POST['delete_type'] ?? 'instruments';
-	$base_dir = $type === 'equipment' ? ASSETS_EQUIPMENT_DIR : ASSETS_INSTRUMENTS_DIR;
-	$requested = $_POST['delete_file'];
+  $type = $_POST['delete_type'] ?? 'instruments';
+  $base_dir = $type === 'equipment' ? ASSETS_EQUIPMENT_DIR : ASSETS_INSTRUMENTS_DIR;
+  $requested = $_POST['delete_file'];
 
-	// Resolve to a real path and confirm it lives inside the expected base dir
-	$real_base = realpath($base_dir);
-	$real_file = realpath($base_dir . $requested);
+  // Resolve to a real path and confirm it lives inside the expected base dir
+  $real_base = realpath($base_dir);
+  $real_file = realpath($base_dir . $requested);
 
-	if ($real_file !== false && str_starts_with($real_file, $real_base . DIRECTORY_SEPARATOR) && is_file($real_file)) {
-		if (unlink($real_file)) {
-			$session->message(esc(basename($real_file)) . ' deleted.');
-		} else {
-			$session->message('Could not delete file. Please try again.');
-		}
-	} else {
-		$session->message('Invalid file path.');
-	}
+  if ($real_file !== false && str_starts_with($real_file, $real_base . DIRECTORY_SEPARATOR) && is_file($real_file)) {
+    if (unlink($real_file)) {
+      $session->message(esc(basename($real_file)) . ' deleted.');
+    } else {
+      $session->message('Could not delete file. Please try again.');
+    }
+  } else {
+    $session->message('Invalid file path.');
+  }
 
-	header('Location: manage-library.php');
-	exit();
+  header('Location: manage-library.php');
+  exit();
 }
 
 // ── Handle label edit POST ────────────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_label'])) {
-	$type = $_POST['label_type'] ?? '';
-	$subcategory = $_POST['label_subcategory'] ?? '';
-	$filename = basename($_POST['label_filename'] ?? '');
-	$new_label = trim($_POST['new_label'] ?? '');
+  $type = $_POST['label_type'] ?? '';
+  $subcategory = $_POST['label_subcategory'] ?? '';
+  $filename = basename($_POST['label_filename'] ?? '');
+  $new_label = trim($_POST['new_label'] ?? '');
 
-	if ($type === 'instruments' && array_key_exists($subcategory, $instrument_categories)) {
-		$dir = ASSETS_INSTRUMENTS_DIR . $subcategory . '/';
-	} elseif ($type === 'equipment' && array_key_exists($subcategory, $equipment_categories)) {
-		$dir = ASSETS_EQUIPMENT_DIR . $subcategory . '/';
-	} else {
-		$session->message('Invalid category.');
-		header('Location: manage-library.php');
-		exit();
-	}
+  if ($type === 'instruments' && array_key_exists($subcategory, $instrument_categories)) {
+    $dir = ASSETS_INSTRUMENTS_DIR . $subcategory . '/';
+  } elseif ($type === 'equipment' && array_key_exists($subcategory, $equipment_categories)) {
+    $dir = ASSETS_EQUIPMENT_DIR . $subcategory . '/';
+  } else {
+    $session->message('Invalid category.');
+    header('Location: manage-library.php');
+    exit();
+  }
 
-	if ($filename === '' || !is_file($dir . $filename)) {
-		$session->message('File not found.');
-		header('Location: manage-library.php');
-		exit();
-	}
+  if ($filename === '' || !is_file($dir . $filename)) {
+    $session->message('File not found.');
+    header('Location: manage-library.php');
+    exit();
+  }
 
-	$labels_file = $dir . 'labels.json';
-	$labels = [];
-	if (is_file($labels_file)) {
-		$decoded = json_decode(file_get_contents($labels_file), true);
-		if (is_array($decoded)) {
-			$labels = $decoded;
-		}
-	}
+  $labels_file = $dir . 'labels.json';
+  $labels = [];
+  if (is_file($labels_file)) {
+    $decoded = json_decode(file_get_contents($labels_file), true);
+    if (is_array($decoded)) {
+      $labels = $decoded;
+    }
+  }
 
-	if ($new_label === '') {
-		unset($labels[$filename]);
-	} else {
-		$labels[$filename] = $new_label;
-	}
+  if ($new_label === '') {
+    unset($labels[$filename]);
+  } else {
+    $labels[$filename] = $new_label;
+  }
 
-	if (file_put_contents($labels_file, json_encode($labels, JSON_PRETTY_PRINT)) !== false) {
-		$session->message('Label updated.');
-	} else {
-		$session->message('Could not save label. Please try again.');
-	}
+  if (file_put_contents($labels_file, json_encode($labels, JSON_PRETTY_PRINT)) !== false) {
+    $session->message('Label updated.');
+  } else {
+    $session->message('Could not save label. Please try again.');
+  }
 
-	header('Location: manage-library.php');
-	exit();
+  header('Location: manage-library.php');
+  exit();
 }
 
 // ── Handle file rename POST ───────────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rename_file'])) {
-	$type = $_POST['rename_type'] ?? '';
-	$subcategory = $_POST['rename_subcategory'] ?? '';
-	$old_filename = basename($_POST['old_filename'] ?? '');
-	$raw_new = trim($_POST['new_filename'] ?? '');
+  $type = $_POST['rename_type'] ?? '';
+  $subcategory = $_POST['rename_subcategory'] ?? '';
+  $old_filename = basename($_POST['old_filename'] ?? '');
+  $raw_new = trim($_POST['new_filename'] ?? '');
 
-	if ($type === 'instruments' && array_key_exists($subcategory, $instrument_categories)) {
-		$dir = ASSETS_INSTRUMENTS_DIR . $subcategory . '/';
-	} elseif ($type === 'equipment' && array_key_exists($subcategory, $equipment_categories)) {
-		$dir = ASSETS_EQUIPMENT_DIR . $subcategory . '/';
-	} else {
-		$session->message('Invalid category.');
-		header('Location: manage-library.php');
-		exit();
-	}
+  if ($type === 'instruments' && array_key_exists($subcategory, $instrument_categories)) {
+    $dir = ASSETS_INSTRUMENTS_DIR . $subcategory . '/';
+  } elseif ($type === 'equipment' && array_key_exists($subcategory, $equipment_categories)) {
+    $dir = ASSETS_EQUIPMENT_DIR . $subcategory . '/';
+  } else {
+    $session->message('Invalid category.');
+    header('Location: manage-library.php');
+    exit();
+  }
 
-	$new_base = preg_replace('/[^a-z0-9_\-]/', '_', strtolower(pathinfo($raw_new, PATHINFO_FILENAME)));
-	$new_filename = $new_base . '.svg';
+  $new_base = preg_replace('/[^a-z0-9_\-]/', '_', strtolower(pathinfo($raw_new, PATHINFO_FILENAME)));
+  $new_filename = $new_base . '.svg';
 
-	if (
-		$old_filename === '' ||
-		pathinfo($old_filename, PATHINFO_EXTENSION) !== 'svg' ||
-		!is_file($dir . $old_filename)
-	) {
-		$session->message('File not found.');
-		header('Location: manage-library.php');
-		exit();
-	}
+  if ($old_filename === '' || pathinfo($old_filename, PATHINFO_EXTENSION) !== 'svg' || !is_file($dir . $old_filename)) {
+    $session->message('File not found.');
+    header('Location: manage-library.php');
+    exit();
+  }
 
-	if ($new_base === '') {
-		$session->message('Invalid new filename.');
-		header('Location: manage-library.php');
-		exit();
-	}
+  if ($new_base === '') {
+    $session->message('Invalid new filename.');
+    header('Location: manage-library.php');
+    exit();
+  }
 
-	if ($old_filename === $new_filename) {
-		$session->message('Filename unchanged.');
-		header('Location: manage-library.php');
-		exit();
-	}
+  if ($old_filename === $new_filename) {
+    $session->message('Filename unchanged.');
+    header('Location: manage-library.php');
+    exit();
+  }
 
-	if (file_exists($dir . $new_filename)) {
-		$session->message(esc($new_filename) . ' already exists. Choose a different name.');
-		header('Location: manage-library.php');
-		exit();
-	}
+  if (file_exists($dir . $new_filename)) {
+    $session->message(esc($new_filename) . ' already exists. Choose a different name.');
+    header('Location: manage-library.php');
+    exit();
+  }
 
-	if (!rename($dir . $old_filename, $dir . $new_filename)) {
-		$session->message('Could not rename file. Please try again.');
-		header('Location: manage-library.php');
-		exit();
-	}
+  if (!rename($dir . $old_filename, $dir . $new_filename)) {
+    $session->message('Could not rename file. Please try again.');
+    header('Location: manage-library.php');
+    exit();
+  }
 
-	// Transfer any custom label from old key to new key in labels.json
-	$labels_file = $dir . 'labels.json';
-	if (is_file($labels_file)) {
-		$labels = json_decode(file_get_contents($labels_file), true) ?: [];
-		if (isset($labels[$old_filename])) {
-			$labels[$new_filename] = $labels[$old_filename];
-			unset($labels[$old_filename]);
-			file_put_contents($labels_file, json_encode($labels, JSON_PRETTY_PRINT));
-		}
-	}
+  // Transfer any custom label from old key to new key in labels.json
+  $labels_file = $dir . 'labels.json';
+  if (is_file($labels_file)) {
+    $labels = json_decode(file_get_contents($labels_file), true) ?: [];
+    if (isset($labels[$old_filename])) {
+      $labels[$new_filename] = $labels[$old_filename];
+      unset($labels[$old_filename]);
+      file_put_contents($labels_file, json_encode($labels, JSON_PRETTY_PRINT));
+    }
+  }
 
-	// Update all plot elements that reference the old src path
-	$old_src = '/assets/' . $type . '/' . $subcategory . '/' . $old_filename;
-	$new_src = '/assets/' . $type . '/' . $subcategory . '/' . $new_filename;
-	$stmt = $db->prepare('UPDATE plot_element_pele SET src_pele = ? WHERE src_pele = ?');
-	$stmt->execute([$new_src, $old_src]);
-	$updated = $stmt->rowCount();
+  // Update all plot elements that reference the old src path
+  $old_src = '/assets/' . $type . '/' . $subcategory . '/' . $old_filename;
+  $new_src = '/assets/' . $type . '/' . $subcategory . '/' . $new_filename;
+  $stmt = $db->prepare('UPDATE plot_element_pele SET src_pele = ? WHERE src_pele = ?');
+  $stmt->execute([$new_src, $old_src]);
+  $updated = $stmt->rowCount();
 
-	$msg = esc($old_filename) . ' renamed to ' . esc($new_filename) . '.';
-	if ($updated > 0) {
-		$msg .= ' Updated ' . $updated . ' plot element' . ($updated === 1 ? '' : 's') . '.';
-	}
-	$session->message($msg);
-	header('Location: manage-library.php');
-	exit();
+  $msg = esc($old_filename) . ' renamed to ' . esc($new_filename) . '.';
+  if ($updated > 0) {
+    $msg .= ' Updated ' . $updated . ' plot element' . ($updated === 1 ? '' : 's') . '.';
+  }
+  $session->message($msg);
+  header('Location: manage-library.php');
+  exit();
 }
 
 // ── Superadmin maintenance: cleanup broken elements ───────────────────────────
 $cleanup_results = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $session->has_role('super_admin')) {
-	if (isset($_POST['cleanup_scan'])) {
-		$all_rows = $db
-			->query(
-				"SELECT e.id_pele, e.src_pele, e.name_pele,
+  if (isset($_POST['cleanup_scan'])) {
+    $all_rows = $db
+      ->query(
+        "SELECT e.id_pele, e.src_pele, e.name_pele,
               COALESCE(s.title_staplot, '[deleted plot]') AS plot_title
        FROM plot_element_pele e
        LEFT JOIN stage_plot_staplot s ON s.id_staplot = e.id_staplot_pele
        ORDER BY s.title_staplot, e.name_pele",
-			)
-			->fetchAll();
+      )
+      ->fetchAll();
 
-		$cleanup_results = [];
-		foreach ($all_rows as $row) {
-			if (!file_exists(__DIR__ . $row['src_pele'])) {
-				$cleanup_results[] = $row;
-			}
-		}
-	} elseif (isset($_POST['cleanup_delete'])) {
-		$all_rows = $db->query('SELECT id_pele, src_pele FROM plot_element_pele')->fetchAll();
+    $cleanup_results = [];
+    foreach ($all_rows as $row) {
+      if (!file_exists(__DIR__ . $row['src_pele'])) {
+        $cleanup_results[] = $row;
+      }
+    }
+  } elseif (isset($_POST['cleanup_delete'])) {
+    $all_rows = $db->query('SELECT id_pele, src_pele FROM plot_element_pele')->fetchAll();
 
-		$broken_ids = [];
-		foreach ($all_rows as $row) {
-			if (!file_exists(__DIR__ . $row['src_pele'])) {
-				$broken_ids[] = $row['id_pele'];
-			}
-		}
+    $broken_ids = [];
+    foreach ($all_rows as $row) {
+      if (!file_exists(__DIR__ . $row['src_pele'])) {
+        $broken_ids[] = $row['id_pele'];
+      }
+    }
 
-		if (empty($broken_ids)) {
-			$session->message('No broken elements found. Nothing to delete.');
-		} else {
-			$placeholders = implode(',', array_fill(0, count($broken_ids), '?'));
-			$stmt = $db->prepare("DELETE FROM plot_element_pele WHERE id_pele IN ({$placeholders})");
-			$stmt->execute($broken_ids);
-			$deleted = $stmt->rowCount();
-			$session->message('Deleted ' . $deleted . ' broken plot element' . ($deleted === 1 ? '' : 's') . '.');
-		}
+    if (empty($broken_ids)) {
+      $session->message('No broken elements found. Nothing to delete.');
+    } else {
+      $placeholders = implode(',', array_fill(0, count($broken_ids), '?'));
+      $stmt = $db->prepare("DELETE FROM plot_element_pele WHERE id_pele IN ({$placeholders})");
+      $stmt->execute($broken_ids);
+      $deleted = $stmt->rowCount();
+      $session->message('Deleted ' . $deleted . ' broken plot element' . ($deleted === 1 ? '' : 's') . '.');
+    }
 
-		header('Location: manage-library.php');
-		exit();
-	}
+    header('Location: manage-library.php');
+    exit();
+  }
 }
 
 // ── Build image data grouped by section ──────────────────────────────────────
@@ -278,34 +274,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $session->has_role('super_admin')) 
  * Returns [ 'subcategory_slug' => [ ['slug'=>…, 'filename'=>…, 'src'=>…, 'label'=>…], … ], … ]
  */
 function gather_images(array $categories, string $base_dir, string $url_prefix): array {
-	$result = [];
-	foreach (array_keys($categories) as $slug) {
-		$dir = $base_dir . $slug . '/';
-		$files = is_dir($dir) ? (glob($dir . '*.{svg,png}', GLOB_BRACE) ?: []) : [];
-		sort($files);
+  $result = [];
+  foreach (array_keys($categories) as $slug) {
+    $dir = $base_dir . $slug . '/';
+    $files = is_dir($dir) ? (glob($dir . '*.{svg,png}', GLOB_BRACE) ?: []) : [];
+    sort($files);
 
-		$labels_file = $dir . 'labels.json';
-		$custom_labels = [];
-		if (is_file($labels_file)) {
-			$decoded = json_decode(file_get_contents($labels_file), true);
-			if (is_array($decoded)) {
-				$custom_labels = $decoded;
-			}
-		}
+    $labels_file = $dir . 'labels.json';
+    $custom_labels = [];
+    if (is_file($labels_file)) {
+      $decoded = json_decode(file_get_contents($labels_file), true);
+      if (is_array($decoded)) {
+        $custom_labels = $decoded;
+      }
+    }
 
-		$result[$slug] = array_map(function (string $file) use ($slug, $url_prefix, $custom_labels): array {
-			$filename = basename($file);
-			$auto_label = ucwords(str_replace(['-', '_'], ' ', pathinfo($filename, PATHINFO_FILENAME)));
-			return [
-				'slug' => $slug,
-				'filename' => $filename,
-				'rel_path' => $slug . '/' . $filename,
-				'src' => $url_prefix . $slug . '/' . rawurlencode($filename),
-				'label' => $custom_labels[$filename] ?? $auto_label,
-			];
-		}, $files);
-	}
-	return $result;
+    $result[$slug] = array_map(function (string $file) use ($slug, $url_prefix, $custom_labels): array {
+      $filename = basename($file);
+      $auto_label = ucwords(str_replace(['-', '_'], ' ', pathinfo($filename, PATHINFO_FILENAME)));
+      return [
+        'slug' => $slug,
+        'filename' => $filename,
+        'rel_path' => $slug . '/' . $filename,
+        'src' => $url_prefix . $slug . '/' . rawurlencode($filename),
+        'label' => $custom_labels[$filename] ?? $auto_label,
+      ];
+    }, $files);
+  }
+  return $result;
 }
 
 $instrument_images = gather_images($instrument_categories, ASSETS_INSTRUMENTS_DIR, '/assets/instruments/');
@@ -401,14 +397,14 @@ $flash = $session->message();
         <?php // ── Reusable helper: render one category section ──────────────────────
 
 function render_section(string $section_title, string $delete_type, array $categories, array $images_by_slug): void {
-        	?>
+          ?>
           <details class="library-section" open>
             <summary class="library-section-summary">
               <h2><?= esc($section_title) ?></h2>
             </summary>
 
             <?php foreach ($categories as $slug => $cat_label):
-            	$images = $images_by_slug[$slug] ?? []; ?>
+              $images = $images_by_slug[$slug] ?? []; ?>
               <details class="library-subcategory" open>
                 <summary class="library-subcategory-summary">
                   <h3><?= esc($cat_label) ?></h3>
@@ -459,7 +455,7 @@ function render_section(string $section_title, string $delete_type, array $categ
                                 <input type="hidden" name="delete_type"
                                   value="<?= esc($delete_type) ?>">
                                 <button type="submit" class="btn btn-delete" aria-label="Delete <?= esc(
-                                	$img['filename'],
+                                  $img['filename'],
                                 ) ?>">
                                   <img src="/assets/icons/trash.svg" alt="" width="16" height="16">
                                 </button>
@@ -536,7 +532,7 @@ function render_section(string $section_title, string $delete_type, array $categ
                 <form method="post" data-confirm="<?= esc($confirm) ?>">
                   <input type="hidden" name="cleanup_delete" value="1">
                   <button type="submit" class="btn btn-update delete-elements">Delete <?= $n ?> Broken <?= ucfirst(
- 	$label,
+   $label,
  ) ?></button>
                 </form>
               </div>

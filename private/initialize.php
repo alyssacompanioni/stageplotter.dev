@@ -4,23 +4,22 @@
  * Bootstraps the application: connects to the database, registers the class autoloader, and starts a hardened session.
  */
 
-require_once('db_connection.php');
+require_once 'db_connection.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
 // Autoload class definitions
-function my_autoload($class)
-{
+function my_autoload($class) {
   if (preg_match('/\A\w+\Z/', $class)) {
-    include(__DIR__ . '/classes/' . strtolower($class) . '.class.php');
+    include __DIR__ . '/classes/' . strtolower($class) . '.class.php';
   }
 }
 spl_autoload_register('my_autoload');
 
 // Use this if autoload fails:
 // Manually loads all files in classes folder with a loop
-// foreach (glob(__DIR__ . '/classes/*.class.php') as $file) {
-//   require_once($file);
-// }
+foreach (glob(__DIR__ . '/classes/*.class.php') as $file) {
+  require_once $file;
+}
 
 DatabaseObject::set_database($db);
 
@@ -29,14 +28,12 @@ DatabaseObject::set_database($db);
  * ENT_QUOTES escapes both " and ' (needed for single-quoted attribute values).
  * ENT_SUBSTITUTE replaces invalid UTF-8 sequences instead of returning ''.
  */
-function esc(?string $str): string
-{
+function esc(?string $str): string {
   return htmlspecialchars($str ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
 /** Converts a YYYY-MM-DD date string to mm/dd/yyyy for display. */
-function db_date_to_display(string $db_date): string
-{
+function db_date_to_display(string $db_date): string {
   if (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $db_date, $m)) {
     return $m[2] . '/' . $m[3] . '/' . $m[1];
   }
@@ -44,17 +41,21 @@ function db_date_to_display(string $db_date): string
 }
 
 /** Sends a JSON error response and exits. */
-function json_error(string $error, int $code = 400): never
-{
+function json_error(string $error, int $code = 400): never {
   http_response_code($code);
   header('Content-Type: application/json');
   echo json_encode(['success' => false, 'error' => $error]);
-  exit;
+  exit();
 }
 
 /** Validates the shared user profile fields. Returns an array of error strings. */
-function validate_user_fields(string $first_name, string $last_name, string $email, string $phone, string $username): array
-{
+function validate_user_fields(
+  string $first_name,
+  string $last_name,
+  string $email,
+  string $phone,
+  string $username,
+): array {
   $errors = [];
 
   if ($first_name === '') {
@@ -93,21 +94,21 @@ function validate_user_fields(string $first_name, string $last_name, string $ema
 }
 
 const INSTRUMENT_CATEGORIES = [
-  'guitars'    => 'Guitars',
-  'drums'      => 'Drums',
-  'keys'       => 'Keys',
-  'strings'    => 'Strings',
-  'brass'      => 'Brass',
-  'winds'      => 'Woodwinds',
+  'guitars' => 'Guitars',
+  'drums' => 'Drums',
+  'keys' => 'Keys',
+  'strings' => 'Strings',
+  'brass' => 'Brass',
+  'winds' => 'Woodwinds',
   'percussion' => 'Percussion',
-  'misc'       => 'Misc',
+  'misc' => 'Misc',
 ];
 
 const EQUIPMENT_CATEGORIES = [
-  'audio'     => 'Audio',
+  'audio' => 'Audio',
   'furniture' => 'Furniture',
-  'lighting'  => 'Lighting',
-  'misc'      => 'Misc',
+  'lighting' => 'Lighting',
+  'misc' => 'Misc',
 ];
 
 // Harden the session cookie before session_start() fires inside new Session().
@@ -122,4 +123,4 @@ session_set_cookie_params([
   'samesite' => 'Strict',
 ]);
 
-$session = new Session;
+$session = new Session();
