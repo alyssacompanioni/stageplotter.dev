@@ -66,6 +66,12 @@ function initSortableTable(tbody, searchInput = null, afterSort = null) {
 	 * Hides rows that do not match the current search query.
 	 */
 	function filterRows() {
+		if (!table.style.tableLayout) {
+			table.querySelectorAll("thead th").forEach((th) => {
+				th.style.width = th.offsetWidth + "px";
+			});
+			table.style.tableLayout = "fixed";
+		}
 		const query = searchInput.value.trim().toLowerCase();
 		allRows.forEach((row) => {
 			row.style.display = query === "" || row.textContent.toLowerCase().includes(query) ? "" : "none";
